@@ -1,6 +1,6 @@
 import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import StudentLogin from './components/StudentLogin.jsx';
+import StudentLogin from './components/Login/StudentLogin.jsx';
 
 function App() {
   return (
