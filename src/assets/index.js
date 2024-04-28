@@ -8,6 +8,7 @@ import Timetable from './Timetable.png'
 import Twitter from './Twitter.png'
 import logo from './logo.png'
 import LinkedIn from './LinkedIn.png' 
+import Menu from './menu.svg'
 
 import StudentMale from './Student Male.png';
 import AdministratorMale from './Administrator Male.png';
@@ -22,8 +23,12 @@ export{
     Twitter,
     logo,
     LinkedIn,
+<<<<<<< HEAD
     StudentMale,
     AdministratorMale,
+=======
+    Menu,
+>>>>>>> eaf98b29af8a90749ac5e5890995198e38953d55
 }
 
 
