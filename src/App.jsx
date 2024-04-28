@@ -1,8 +1,8 @@
 import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import StudentLogin from './components/Login/StudentLogin.jsx';
-import Navbar from './components/NavBar.jsx';
-// import NavBar from './components/NavBar/NavBar.jsx';
+import StudentLogin from './pages/Login/StudentLogin';
+import Navbar from './pages/NavBar/NavBar'
+import Home from './pages/Home/Home'
 
 function App() {
   return (
@@ -13,7 +13,8 @@ function App() {
         <p className='border border-black'>Welcome to the portal</p> */}
         
             {/* Correct syntax for defining a route */}
-            <StudentLogin />
+            {/* <StudentLogin />  */}
+            <Home/>
          
       </div>
     </>
