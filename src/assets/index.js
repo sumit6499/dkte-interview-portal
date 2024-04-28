@@ -8,6 +8,7 @@ import Timetable from './Timetable.png'
 import Twitter from './Twitter.png'
 import logo from './logo.png'
 import LinkedIn from './LinkedIn.png' 
+import Menu from './menu.svg'
 
 export{
     Chart,
@@ -20,5 +21,6 @@ export{
     Twitter,
     logo,
     LinkedIn,
+    Menu,
 }
 

@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button"
-import NavBar from "../NavBar/NavBar"
+// import NavBar from "../NavBar/NavBar"
 import {interview,CollaborationFemaleMale,MaleUser, logo, Instagram, Twitter, Gmail,LinkedIn} from '@/assets/index'
 import '@/App.css'
 import {
@@ -13,7 +13,7 @@ import {
 export default function Home() {
   return (
     <main className="min-h-screen antialiased">
-        <div className="hero min-h-[calc(100vh-80px)] flex pt-12">
+        <div className="hero min-h-[calc(100vh-80px)] flex pt-12 flex-col lg:flex-row">
             <div className="p-20 hero_content ">
                 <h3 className="w-full scroll-m-20 text-4xl font-semibold tracking-tight mt-16  text-[#1D1D1D]">
                 Navigating Success Together: 
@@ -31,7 +31,7 @@ export default function Home() {
         </div>
 
         <section className="w-full min-h-[400px] bg-[#FECC00] flex items-center ">
-            <div className="cards w-full px-[120px]  flex gap-12 p-8  justify-center">
+            <div className="cards w-full px-[120px]  flex flex-col lg:flex-row  gap-12 p-8  justify-center items-center">
 
                 {[1,2,3].map((data,index)=>{
                     return(
@@ -54,7 +54,7 @@ export default function Home() {
             </div>
         </section>
 
-        <section className="testimonials w-full min-h-[350px] flex justify-center items-center text-white font-light gap-6 flex-wrap py-4">
+        <section className="testimonials w-full min-h-[350px] flex justify-center items-center text-white font-light gap-6 flex-wrap py-4 p-4 lg:p-0">
 
                 {[1,2,3].map((data,index)=>{
                     return (
