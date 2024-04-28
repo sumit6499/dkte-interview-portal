@@ -23,12 +23,11 @@ export{
     Twitter,
     logo,
     LinkedIn,
-<<<<<<< HEAD
+
     StudentMale,
     AdministratorMale,
-=======
+
     Menu,
->>>>>>> eaf98b29af8a90749ac5e5890995198e38953d55
 }
 
 

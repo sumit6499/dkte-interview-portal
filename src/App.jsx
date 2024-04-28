@@ -1,11 +1,10 @@
 import './App.css';
-<<<<<<< HEAD
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 import LoginPage from "./pages/Login/LoginPage.jsx";
-=======
+
 // import StudentLogin from './pages/Login/StudentLogin';
->>>>>>> eaf98b29af8a90749ac5e5890995198e38953d55
+
 import Navbar from './pages/NavBar/NavBar'
 import Home from './pages/Home/Home'
 import SignUpPage from './pages/SignUp/SignUpPage.jsx';

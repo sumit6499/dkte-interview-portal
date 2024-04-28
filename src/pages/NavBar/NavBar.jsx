@@ -11,17 +11,10 @@ function NavBar() {
                 <img src={logo} alt="" className="h-[32px] w-[126px] object-contain"/>
                 <h1 className="">Ascendere</h1>
             </div>
-<<<<<<< HEAD
             <div className="navlinks flex gap-5 text-lg ">
                     <a href="/" className="hover:text-primary">Home</a>
                     <a href="/loginPage" className="hover:text-primary">Login</a>
                     <a href="/SignUpPage" className="hover:text-primary">Register</a>
-=======
-            <div className="navlinks lg:flex gap-5 text-lg hidden">
-                <a href="/" className="text-primary">Home</a>
-                <a href="/" className="hover:text-primary">Login</a>
-                <a href="/" className="hover:text-primary">Register</a>
->>>>>>> eaf98b29af8a90749ac5e5890995198e38953d55
                 <a href="/" className="hover:text-primary">Contact</a>
             </div>
             <div className="menu block lg:hidden">
