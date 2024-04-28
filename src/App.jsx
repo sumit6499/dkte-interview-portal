@@ -1,12 +1,14 @@
 import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import StudentLogin from './components/Login/StudentLogin.jsx';
+import Navbar from './components/NavBar.jsx';
 // import NavBar from './components/NavBar/NavBar.jsx';
 
 function App() {
   return (
     <>
       <div>
+        <Navbar/>
         {/* <NavBar/>
         <p className='border border-black'>Welcome to the portal</p> */}
         
