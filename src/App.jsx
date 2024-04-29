@@ -12,13 +12,14 @@ import StudentLogin from './pages/Login/StudentLogin.jsx';
 import AdminLogin from './pages/Login/AdminLogin';
 import StudentSignUp from './pages/SignUp/StudentSignUp.jsx';
 import AdminSignUp from './pages/SignUp/AdminSignUp.jsx';
+import Students from './pages/Students/Students';
 
-
+import InterviewSchedule from './pages/InterviewSchedule/InterviewSchedule';
 function App() {
   return (
     <>
       <Router>
-        <Navbar />
+        {/* <Navbar /> */}
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/loginPage" element={<LoginPage />} />
@@ -27,6 +28,8 @@ function App() {
           <Route path="/AdminLogin" element={<AdminLogin />} />
           <Route path="/StudentSignUp" element={<StudentSignUp />} />
           <Route path="/AdminSignUp" element={<AdminSignUp />} />
+          <Route path="/Students" element={<Students />} />
+          <Route path="/InterviewSchedule" element={<InterviewSchedule />} />
         </Routes>
       </Router>
     </>

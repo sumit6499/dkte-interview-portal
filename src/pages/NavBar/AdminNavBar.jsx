@@ -13,8 +13,8 @@ function NavBar() {
                 </div>
                 <div className="navlinks flex gap-5 text-lg space-x-5">
                     <a href="/" className="hover:text-primary ">Home</a>
-                    <a href="/loginPage" className="hover:text-primary ">Login</a>
-                    <a href="/SignUpPage" className="hover:text-primary">Register</a>
+                    <a href="/Students" className="hover:text-primary ">Students</a>
+                    <a href="/SignUpPage" className="hover:text-primary">Schedules</a>
                     <a href="/" className="hover:text-primary">Contact</a>
                 </div>
                 <div className="menu block lg:hidden">

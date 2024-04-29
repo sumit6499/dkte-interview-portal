@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button"
-// import NavBar from "../NavBar/NavBar"
+import NavBar from "../NavBar/NavBar"
+import Footer from '../Footer/Footer.jsx';
 import {interview,CollaborationFemaleMale,MaleUser, logo, Instagram, Twitter, Gmail,LinkedIn} from '@/assets/index'
 import '@/App.css'
 import {
@@ -10,22 +11,25 @@ import {
 } from "@/components/ui/card"
   
 
-export default function Home() {
+function Home() {
   return (
+    
     <main className="min-h-screen antialiased">
-        <div className="hero min-h-[calc(100vh-80px)] flex pt-12 flex-col lg:flex-row">
-            <div className="p-20 hero_content ">
-                <h3 className="w-full scroll-m-20 text-4xl font-semibold tracking-tight mt-16  text-[#1D1D1D]">
-                Navigating Success Together: 
-                Alumni Mentorship Hub
-                </h3>
-                <Button  className={" py-6 px-14 justify-center items-center mt-8"} size={"lg"}>Get Started</Button>
-            </div>
-            <div className="hero_image flex  ">
-                <img src={interview} alt="interview" className="w-[50rem] h-[25rem]"/>
-            </div>
-
-        </div>
+          <NavBar />
+          <div className="hero min-h-[calc(100vh-80px)] flex pt-12 flex-col lg:flex-row">
+              <div className="p-20 hero_content animate-slideFromLeft"> 
+                  <h3 className="w-full scroll-m-20 text-4xl font-semibold tracking-tight mt-16  text-[#1D1D1D] px-9">
+                      <div className="w-full mb-4">Navigating Success Together: </div>
+                      <div> Alumni Mentorship Hub</div>
+                  </h3>
+                  <div className="flex px-9">
+                      <Button className={" py-6 px-14 justify-center items-center mt-8 font-bold"} size={"lg"}>Get Started</Button>
+                  </div>
+              </div>
+              <div className="hero_image flex animate-slideFromLeft"> 
+                  <img src={interview} alt="interview" className="w-[45rem] h-[25rem]" />
+              </div>
+          </div>
         <div className="metas mt-8 text-lg font-normal mx-8 mb-10">
             <p className="bg-[#FECC00] p-3 rounded-xl text-center ">Seize Your Moment: Connecting You with Alumni Insights and Career Opportunities. Navigate your future with ease as alumni guide your journey through tailored interviews and seamless scheduling.</p>
         </div>
@@ -54,7 +58,7 @@ export default function Home() {
             </div>
         </section>
 
-        <section className="testimonials w-full min-h-[350px] flex justify-center items-center text-white font-light gap-6 flex-wrap py-4 p-4 lg:p-0">
+        <section className="testimonials w-full min-h-[350px] flex justify-center items-center text-white font-light gap-6 flex-wrap py-4 p-4 lg:p-0 my-10">
 
                 {[1,2,3].map((data,index)=>{
                     return (
@@ -70,20 +74,8 @@ export default function Home() {
                 })}
         </section>
 
-        <footer className="w-full min-h-[374px] bg-black text-white ">
-            <div className="footer_logo px-6 py-4 flex items-center justify-between">
-                <div className="dkte_logo flex items-center">
-                    <img src={logo} alt="" className="w-20 h-8 object-contain"/>
-                    <h4>Ascendere</h4>
-                </div>
-                <div className="social_media flex">
-                    <img src={Instagram} alt="" className="w-12 h-10"/>
-                    <img src={Gmail} alt="" className="w-12 h-10" />
-                    <img src={Twitter} alt="" className="w-12 h-10" />
-                    <img src={LinkedIn} alt="" className="w-12 h-10" />
-                </div>
-            </div>
-        </footer>
+        <Footer/>
     </main>
   )
 }
+export default Home;

@@ -5,3 +5,35 @@
 .card {
   box-shadow: 20px 20px 60px #bebebe, -20px -20px 60px #ffffff;
 }
+
+
+
+@keyframes slideFromLeft {
+    0% {
+        opacity: 0;
+        transform: translateX(-100%);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.animate-slideFromLeft {
+    animation: slideFromLeft 1s ease forwards;
+}
+
+@keyframes slideFromBottom {
+    0% {
+        opacity: 0;
+        transform: translateY(100%);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-slideFromBottom {
+    animation: slideFromBottom 1s ease forwards;
+}
