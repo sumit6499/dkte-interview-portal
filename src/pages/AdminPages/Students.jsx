@@ -4,6 +4,14 @@ import NavBar from "../NavBar/NavBar"
 import { MaleUser } from '@/assets/';
 
 function Students() {
+
+    const links = [
+        { label: 'Home', url: '/' },
+        { label: 'Students', url: '/students' },
+        { label: 'Schedules', url: '/schedules' },
+        { label: 'Contact', url: '/contact' },
+    ];
+
     const [searchInput, setSearchInput] = useState('');
     const [selectedBranch, setSelectedBranch] = useState('');
     const [selectedClass, setSelectedClass] = useState('');
@@ -15,14 +23,17 @@ function Students() {
 
     const fetchData = async () => {
         try {
-            //  GET request 
             const response = await axios.get('');
-            //  fetched data 
-            setStudentsData(response.data);
+            if (Array.isArray(response.data)) {
+                setStudentsData(response.data);
+            } else {
+                console.error('Error: Response data is not an array:', response.data);
+            }
         } catch (error) {
             console.error('Error fetching the data:', error);
         }
     };
+
 
     const filteredStudents = studentsData.filter(student =>
         student.prn.includes(searchInput) &&
@@ -31,6 +42,8 @@ function Students() {
     );
 
     return (
+        <>
+        <NavBar links = {links}/>
         <div className="bg-zinc-100">
             <div className="container mx-auto px-4">
                 <header className="py-5">
@@ -70,7 +83,9 @@ function Students() {
                 </div>
             </div>
         </div>
+        </>
     );
+    
 }
 
 export default Students;

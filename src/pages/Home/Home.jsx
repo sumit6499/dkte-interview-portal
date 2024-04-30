@@ -9,20 +9,38 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card"
+import { useEffect, useState } from "react";
   
 
 function Home() {
+    const links = [
+        { label: 'Home', url: '/' },
+        { label: 'Login', url: '/loginPage' },
+        { label: 'Register', url: '/SignUpPage' },
+        { label: 'Contact', url: '/' },
+    ];
+    const [isSmallScreen,setIsSmallerScreen] = useState(false);
+
+    useEffect(() =>{
+        const checkScreenSize = () =>{
+            setIsSmallerScreen(window.innerWidth<=640);
+        };
+        checkScreenSize();
+        window.addEventListener("resize",
+    checkScreenSize);
+    return () => window.removeEventListener("resize",checkScreenSize);
+    },[]);
   return (
     
     <main className="min-h-screen antialiased">
-          <NavBar />
+          <NavBar links={links}/>
           <div className="hero min-h-[calc(100vh-80px)] flex pt-12 flex-col lg:flex-row">
-              <div className="p-20 hero_content animate-slideFromLeft"> 
-                  <h3 className="w-full scroll-m-20 text-4xl font-semibold tracking-tight mt-16  text-[#1D1D1D] px-9">
+              <div className="hero_content animate-slideFromLeft"> 
+                  <h3 className={isSmallScreen ? 'w-full scroll-m-20 text-4xl font-semibold tracking-tight mt-16  text-[#1D1D1D] pl-8' : "w-full scroll-m-20 text-4xl font-semibold tracking-tight mt-16  text-[#1D1D1D] px-9"}>
                       <div className="w-full mb-4">Navigating Success Together: </div>
                       <div> Alumni Mentorship Hub</div>
                   </h3>
-                  <div className="flex px-9">
+                  <div className={isSmallScreen ?"flex p-8":"flex px-9"}>
                       <Button className={" py-6 px-14 justify-center items-center mt-8 font-bold"} size={"lg"}>Get Started</Button>
                   </div>
               </div>

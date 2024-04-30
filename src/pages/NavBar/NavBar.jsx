@@ -1,12 +1,15 @@
-
 import React, { useRef, useState, useEffect } from "react";
+import { Link } from "react-router-dom"; 
 import { logo } from '@/assets/'
 import MobileNav from "./MobileNav";
 import '@/App.css'
+import DropDownProfile from "@/components/ui/DropDownProfile";
 
-function NavBar() {
+function NavBar(props) {
+    const { links, drop } = props;
+
     const navRef = useRef();
-    const navLinksRef = useRef(); 
+    const navLinksRef = useRef();
     const [isSmallScreen, setIsSmallScreen] = useState(false);
 
     useEffect(() => {
@@ -14,7 +17,7 @@ function NavBar() {
             setIsSmallScreen(window.innerWidth <= 1024);
         };
 
-        checkScreenSize(); 
+        checkScreenSize();
         window.addEventListener("resize", checkScreenSize);
 
         return () => window.removeEventListener("resize", checkScreenSize);
@@ -28,10 +31,10 @@ function NavBar() {
                     <h1 className="">Ascendere</h1>
                 </div>
                 <div className={`navlinks flex gap-5 text-lg space-x-5 ${isSmallScreen ? 'hidden' : ''}`} ref={navLinksRef}>
-                    <a href="/" className="hover:text-primary">Home</a>
-                    <a href="/loginPage" className="hover:text-primary">Login</a>
-                    <a href="/SignUpPage" className="hover:text-primary">Register</a>
-                    <a href="/" className="hover:text-primary">Contact</a>
+                    {links && links.length > 0 && links.map((link, index) => (
+                        <Link key={index} to={link.url} className="hover:text-primary">{link.label}</Link> 
+                    ))}
+                    {drop && <DropDownProfile />}
                 </div>
 
                 <div className="menu block lg:hidden">
@@ -39,8 +42,7 @@ function NavBar() {
                 </div>
             </nav>
         </section>
-    )
+    );
 }
 
 export default NavBar;
-

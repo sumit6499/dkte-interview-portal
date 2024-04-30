@@ -4,9 +4,15 @@ import { AdministratorMale } from '@/assets/';
 import NavBar from "../NavBar/NavBar"
 import '@/App.css'
 function SignUpPage() {
+    const links = [
+        { label: 'Home', url: '/' },
+        { label: 'Login', url: '/loginPage' },
+        { label: 'Register', url: '/SignUpPage' },
+        { label: 'Contact', url: '/' },
+    ];
     return (
         <div>
-            <div><NavBar /></div>
+            <div><NavBar links={links} /></div>
 
             <div className="flex flex-row items-center justify-center h-screen bg-zinc-100 dark:bg-zinc-800">
 

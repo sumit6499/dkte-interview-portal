@@ -13,6 +13,8 @@ import Menu from './menu.svg'
 import StudentMale from './Student Male.png';
 import AdministratorMale from './Administrator Male.png';
 import interviewComposition from './interviewComposition.png';
+import Facebook from './Facebook.png';
+
 export {
     Chart,
     Gmail,
@@ -29,6 +31,7 @@ export {
     AdministratorMale,
     interviewComposition,
     Menu,
+    Facebook,
 }
 
 
