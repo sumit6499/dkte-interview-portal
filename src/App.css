@@ -37,3 +37,12 @@
 .animate-slideFromBottom {
     animation: slideFromBottom 1s ease forwards;
 }
+
+@media (max-width: 1024px) {
+    .navlinks {
+        display: none;
+    }
+}
+.hidden {
+    display: none;
+}

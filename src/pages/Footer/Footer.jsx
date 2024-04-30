@@ -1,6 +1,19 @@
 import { logo, Instagram, Twitter, Gmail, LinkedIn } from '@/assets/index'
+import { useEffect } from 'react';
 
 function Footer() {
+    // const [isSmallScreen,setIsSmallScreen] = useState(false);
+
+    // useEffect(() =>{
+    //     const checkScreenSize = () =>{
+    //         setIsSmallScreen(window.innerWidth <=675);
+    //     };
+    //     checkScreenSize();
+    //     window.addEventListener("resize",checkScreenSize);
+
+    //     return () => window.removeEventListener("resize",checkScreenSize);
+    // },[])
+
     return (
         <footer className="w-full min-h-[374px] bg-black text-white ">
             <div className="footer_logo px-6 py-4 flex items-center justify-between">
