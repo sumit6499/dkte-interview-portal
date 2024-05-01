@@ -21,8 +21,12 @@ app.post('/login', (req, res) => {
     if (!user) {
         return res.status(404).json({ message: 'User not found' });
     }
+
+    
     // Check password
     if (user.password !== password) {
+        console.log('Password: ' + user.password);
+        console.log('username: ' + user.username);
         return res.status(401).json({ message: 'Invalid credentials' });
     }
     

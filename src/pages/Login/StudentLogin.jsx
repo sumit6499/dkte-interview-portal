@@ -12,7 +12,8 @@ function StudentLogin() {
         {label:'Contact',url:'/'},
     ]
     const [formData, setFormData] = useState({
-        prn: "",
+        // prn: "",
+        username: "",
         password: ""
     });
 
@@ -21,8 +22,13 @@ function StudentLogin() {
         navigate("/")
     };
 
+    // const fields = [
+    //     { name: "prn", label: "PRN No.", type: "text" },
+    //     { name: "password", label: "Password", type: "password" }
+    // ];
+
     const fields = [
-        { name: "prn", label: "PRN No.", type: "text" },
+        { name: "username", label: "Username", type: "text" },
         { name: "password", label: "Password", type: "password" }
     ];
 
