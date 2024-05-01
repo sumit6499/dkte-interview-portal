@@ -28,8 +28,8 @@ function MobileNav() {
             <SheetDescription className="text-black min-h-full ">
             <div className="navlinks flex flex-col gap-5 text-lg ">
                 <a href="/" className="text-primary font-">Home</a>
-                <a href="/" className="hover:text-primary">Login</a>
-                <a href="/" className="hover:text-primary">Register</a>
+                              <a href="/loginPage" className="hover:text-primary">Login</a>
+                              <a href="/SignUpPage" className="hover:text-primary">Register</a>
                 <a href="/" className="hover:text-primary">Contact</a>
             </div>
             </SheetDescription>

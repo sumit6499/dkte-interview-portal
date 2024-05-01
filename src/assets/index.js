@@ -14,7 +14,8 @@ import StudentMale from './Student Male.png';
 import AdministratorMale from './Administrator Male.png';
 import interviewComposition from './interviewComposition.png';
 import Facebook from './Facebook.png';
-
+import NotVisibleEye from './NotVisibleEye.png';
+import visibleEye from './visibleEye.png';
 export {
     Chart,
     Gmail,
@@ -32,6 +33,8 @@ export {
     interviewComposition,
     Menu,
     Facebook,
+    NotVisibleEye,
+    visibleEye,
 }
 
 

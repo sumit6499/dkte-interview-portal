@@ -1,7 +1,8 @@
-import React from "react";
-import { StudentMale } from '@/assets/';
-import { AdministratorMale } from '@/assets/';
-import NavBar from "../NavBar/NavBar"
+import React, { useEffect, useState } from "react";
+import { StudentMale, AdministratorMale } from '@/assets/';
+import NavBar from "../NavBar/NavBar";
+import AuthButton from "@/components/ui/AuthButton";
+import { LogIn } from "lucide-react";
 
 function LoginPage() {
     const links = [
@@ -10,39 +11,42 @@ function LoginPage() {
         { label: 'Register', url: '/SignUpPage' },
         { label: 'Contact', url: '/' },
     ];
+
+    const [isSmallScreen, setIsSmallerScreen] = useState(false);
+
+    useEffect(() => {
+        const checkScreenSize = () => {
+            setIsSmallerScreen(window.innerWidth <= 1024);
+        };
+        checkScreenSize();
+        window.addEventListener('resize', checkScreenSize);
+        return () => window.removeEventListener('resize', checkScreenSize);
+    }, []);
+
     return (
         <div>
             <div>
-                <NavBar links={links}/>
+                <NavBar links={links} />
             </div>
-            <div className="flex flex-row items-center justify-center h-screen bg-zinc-100 dark:bg-zinc-800">
-
-                {/* <img src={StudentMale} alt="Admin Login" className="rounded-md" /> */}
-
-                <button
-                    onClick={() => window.location.href = '/StudentLogin'}
-                    className="flex flex-col items-center bg-yellow-400 dark:bg-yellow-600 rounded-lg p-4 shadow-lg animate-slideFromLeft">
-                    <img
-                        src={StudentMale}
-                        alt="Student Login"
-                        className="rounded-md "
-
-                    />
-                    <span className="mt-2 font-semibold">Student Login</span>
-                </button>
-                <button
-                    onClick={() => window.location.href = '/AdminLogin'}
-                    className="ml-4 flex flex-col items-center bg-yellow-400 dark:bg-yellow-600 rounded-lg p-4 shadow-lg animate-slideFromLeft">
-                    <img
-                        src={AdministratorMale}
-                        alt="Admin Login"
-                        className="rounded-md"
-                    />
-                    <span className="mt-2 font-semibold">Admin Login</span>
-                </button>
+            <div className={isSmallScreen ? "flex flex-row items-center justify-center h-screen bg-zinc-100 dark:bg-zinc-800 space-x-8" : "flex flex-row items-center justify-center h-screen bg-zinc-100 dark:bg-zinc-800 space-x-8"}  >
+                <AuthButton
+                    imageUrl={StudentMale}
+                    altText="Student Login"
+                    buttonText={"Student Login"}
+                    buttonUrl={"/StudentLogin"}
+                    isSmallScreen={isSmallScreen}
+                />
+                <AuthButton
+                    imageUrl={AdministratorMale}
+                    altText={"Admin Login"}
+                    buttonText={"Admin Login"}
+                    buttonUrl="/AdminLogin"
+                    isSmallScreen={isSmallScreen}
+                    className={isSmallScreen ? "text-sm ml-4" : " ml-4"}
+                />
             </div>
-        </div >
-    )
+        </div>
+    );
 }
 
 export default LoginPage;

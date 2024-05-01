@@ -26,8 +26,8 @@ const Footer = () => {
 
     return (
         <footer className={footerClasses}>
-            <div className={isSmallScreen ? 'text-center' : ''}>
-                <div className={isSmallScreen ? '' : gridClasses}>
+            <div className={isSmallScreen ? 'text-center  ' : ''}>
+                <div className={isSmallScreen ? 'space-y-8' : gridClasses}>
                     <FooterSection title="About Us">
                         <FooterLink to="#" text="About DKTE Society" />
                         <FooterLink to="#" text="Chairman's Message" />
@@ -50,9 +50,9 @@ const Footer = () => {
     );
 };
 
-const FooterSection = ({ title, children }) => {
+const FooterSection = ({ title, children, isSmallScreen }) => {
     return (
-        <div>
+        <div className={isSmallScreen ? 'pb-2' : ''}>
             <h3 className="font-bold text-lg mb-3">{title}</h3>
             <ul className="space-y-2">
                 {children}
@@ -60,6 +60,7 @@ const FooterSection = ({ title, children }) => {
         </div>
     );
 };
+
 
 const FooterLink = ({ to, text }) => {
     return (
