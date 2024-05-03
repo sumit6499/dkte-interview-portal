@@ -10,13 +10,15 @@ import {
     CardTitle,
 } from "@/components/ui/card"
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router";
   
 
 function Home() {
+    const navigate = useNavigate();
     const links = [
         { label: 'Home', url: '/' },
-        { label: 'Login', url: '/loginPage' },
-        { label: 'Register', url: '/SignUpPage' },
+        { label: 'Login', url: '/login' },
+        { label: 'Register', url: '/signup' },
         { label: 'Contact', url: '/' },
     ];
     const [isSmallScreen,setIsSmallerScreen] = useState(false);
@@ -30,6 +32,9 @@ function Home() {
     checkScreenSize);
     return () => window.removeEventListener("resize",checkScreenSize);
     },[]);
+    const gotToRegister = ()=>{
+        navigate('/signup');
+    }
   return (
     
     <main className="min-h-screen antialiased">
@@ -41,7 +46,7 @@ function Home() {
                       <div> Alumni Mentorship Hub</div>
                   </h3>
                   <div className={isSmallScreen ?"flex p-8":"flex px-9"}>
-                      <Button className={" py-6 px-14 justify-center items-center mt-8 font-bold"} size={"lg"}>Get Started</Button>
+                      <Button className={" py-6 px-14 justify-center items-center mt-8 font-bold"} size={"lg"} onClick = {gotToRegister}>Get Started</Button>
                   </div>
               </div>
               <div className="hero_image flex animate-slideFromLeft"> 

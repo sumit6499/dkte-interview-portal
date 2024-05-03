@@ -1,43 +1,86 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import NavBar from '../NavBar/NavBar';
-import { Pie } from 'react-chartjs-2';
+import { Pie, Bar } from 'react-chartjs-2';
 import { Chart, ArcElement } from 'chart.js';
-import { sharedClasses } from '@/components/styles/sharedStyles';
 import InterviewItem from '@/components/ui/InterviewItem';
 import { SampleBarGraph } from '@/assets/index.js';
-
+import {  registerables } from 'chart.js';
+Chart.register(...registerables);
 Chart.register(ArcElement);
+// Chart.register(category);
 
 const WelcomeMessage = () => {
     return (
-        <div className={`${sharedClasses.mt6} ${sharedClasses.bgYellow400} ${sharedClasses.p4} ${sharedClasses.textWhite} ${sharedClasses.roundedLg}`}>
-            <h1 className={`${sharedClasses.textXL} ${sharedClasses.fontBold}`}>Welcome back, DKTEian!</h1>
-            <p>Ready to Conqure the world?</p>
+        <div className="mt-6 bg-yellow-400 p-4 text-white rounded-lg">
+            <h1 className="text-xl font-bold">Welcome back, DKTEian!</h1>
+            <p>Ready to Conquer the world?</p>
+        </div>
+    );
+};
+const BarGraph = ({ interviews }) => {
+    // Calculate total scores for each interview
+    const totalScores = interviews.map(interview => {
+        return interview.technicalKnowledgeScore + interview.experienceScore + interview.behaviorScore;
+    });
+
+    const labels = interviews.map((interview, index) => `Interview ${index + 1}`);
+    const data = {
+        labels: labels,
+        datasets: [
+            {
+                label: 'Total Scores',
+                data: totalScores,
+                backgroundColor: '#36A2EB',
+            },
+        ],
+    };
+
+    const options = {
+        scales: {
+            x: {
+                type: 'category', // Specify the scale type for x-axis (labels)
+                labels: labels, // Assign the labels
+            },
+            y: {
+                beginAtZero: true, // Ensure the y-axis starts at zero
+            },
+        },
+    };
+
+    return (
+        <div className="w-full md:w-1/2 bg-white p-4 shadow-lg">
+            <h2 className="font-semibold text-zinc-800" >Student Scores in Interviews</h2>
+            <div className='h-48 sm:h-64 md:h-72 lg:h-80 xl:h-96'>
+                <Bar data={data} options={options} />
+            </div>
+             {/* Pass options to Bar component */}
         </div>
     );
 };
 
-const BarGraph = () => {
-    return (
-        <div className={`${sharedClasses.wFull} ${sharedClasses.mdW1_2} ${sharedClasses.bgWhite} ${sharedClasses.p4} ${sharedClasses.shadowLg}`}>
-            <h2 className={`${sharedClasses.fontSemibold} ${sharedClasses.textZinc800}`}>Bar Graph  overall </h2>
-            <img src={SampleBarGraph} alt="Bar Graph" />
-        </div>
-    );
-};
+
+// const BarGraph = () => {
+//     return (
+//         <div className="w-full md:w-1/2 bg-white p-4 shadow-lg">
+//             <h2 className="font-semibold text-zinc-800">Bar Graph overall</h2>
+//             <img src={SampleBarGraph} alt="Bar Graph" />
+//         </div>
+//     );
+// };
 
 const CircleChart = (props) => {
     const { interview } = props;
-    
+
     if (interview === null) {
         return (
-            <div className={`${sharedClasses.wFull} ${sharedClasses.mdW1_2} ${sharedClasses.bgWhite} ${sharedClasses.p4} ${sharedClasses.shadowLg}`}>
-                <h2 className={`${sharedClasses.fontSemibold} ${sharedClasses.textZinc800}`}>Chart </h2>
+            <div className="w-full md:w-1/2 bg-white p-4 shadow-lg" style={{ height: '50%' }}>
+                <h2 className="font-semibold text-zinc-800">Chart</h2>
                 {/* <Pie data={data} /> */}
             </div>
         )
-    } console.log("The interview is with values " + interview);
+    }
+
     const data = {
         labels: ['Technical Knowledge', 'Behavior', 'Other'],
         datasets: [
@@ -48,42 +91,43 @@ const CircleChart = (props) => {
             },
         ],
     };
-    
 
     return (
-
-        <div className={`${sharedClasses.wFull} ${sharedClasses.mdW1_2} ${sharedClasses.bgWhite} ${sharedClasses.p4} ${sharedClasses.shadowLg}`}>
-            <h2 className={`${sharedClasses.fontSemibold} ${sharedClasses.textZinc800}`}>Performance of Interview no {interview.id}</h2>
-            <Pie data={data} />
+        <div className="w-full md:w-1/2 bg-white p-4 shadow-lg md:mt-0 mt-4 " >
+            <h2 className="font-semibold text-zinc-800">Performance of Interview no {interview.id}</h2>
+         
+            <div className='h-48 sm:h-64 md:h-72 lg:h-80 xl:h-96 flex justify-center'>
+                <Pie data={data} />
+            </div>
         </div>
     );
 };
 
 const InterviewsList = (props) => {
     const { interviews, onPerformanceClick } = props;
-
     const [selectedInterview, setSelectedInterview] = useState(null);
 
     const handlePerformanceClick = (interview) => {
         setSelectedInterview(interview);
         onPerformanceClick(interview);
     }
+
     if (interviews.length === 0) {
         return (
-            <div className={`${sharedClasses.mt6} ${sharedClasses.bgWhite} ${sharedClasses.p4} ${sharedClasses.shadowLg}`}>
-                <h2 className={`${sharedClasses.fontSemibold} ${sharedClasses.textZinc800} ${sharedClasses.mb4}`}>Interviews List</h2>
+            <div className="mt-6 bg-white p-4 shadow-lg">
+                <h2 className="font-semibold text-zinc-800 mb-4">Interviews List</h2>
                 <p>No interviews available</p>
             </div>
         );
     }
+
     return (
-        <div className={`${sharedClasses.mt6} ${sharedClasses.bgWhite} ${sharedClasses.p4} ${sharedClasses.shadowLg}`}>
-            <h2 className={`${sharedClasses.fontSemibold} ${sharedClasses.textZinc800} ${sharedClasses.mb4}`}>Interviews List</h2>
+        <div className="mt-6 bg-white p-4 shadow-lg">
+            <h2 className="font-semibold text-zinc-800 mb-4">Interviews List</h2>
             <ul>
                 {interviews.map((interview, index) => (
                     <InterviewItem key={index} interview={interview} onPerformanceClick={handlePerformanceClick} />
                 ))}
-                {/* {selectedInterview && <CircleChart interview={selectedInterview} />} */}
             </ul>
         </div>
     );
@@ -105,7 +149,7 @@ const StudentDashboard = () => {
             if (Array.isArray(response.data)) {
                 setInterviews(response.data);
             } else {
-                console.log("THe response data is " + response.data);
+                console.log("The response data is " + response.data);
                 console.error("Invalid response format :", response);
                 setInterviews([]);
             }
@@ -114,10 +158,12 @@ const StudentDashboard = () => {
             setInterviews([]);
         }
     };
+
     const handlePerformanceClick = (interview) => {
         setInterviewSelected(true);
         setSelectedInterview(interview);
     }
+
     console.log("Interviews:", interviews);
 
     const links = [
@@ -130,20 +176,13 @@ const StudentDashboard = () => {
     return (
         <>
             <NavBar links={links} />
-            <div className={sharedClasses.bgZinc100}>
-                <div className={sharedClasses.container}>
+            <div className="bg-zinc-100">
+                <div className="container mx-auto px-4">
                     <WelcomeMessage />
-                    <div className='m-10'></div>
-                    <div className={"flex justify-between-10" + sharedClasses.flexWrap}>
-                        <div className='flex justify-between'>
-                            <div style={{ marginLeft: '40px' }} />
-                            <BarGraph />
-                            <div style={{ marginLeft: '300px' }} />
-                            {/* {!interviewSelected ? <CircleChart interviews={interviews[0]} /> : <CircleChart interview={selectedInterview} />} */}
-                            <CircleChart interview={selectedInterview} />
-                            {/* <CircleChart interviews={interviews[0]} /> */}
-                            {/* <CircleChart interview={interviews.length > 0 ?interviews[0]:null}/> */}
-                        </div>
+                    <div className="m-10"></div>
+                    <div className="flex flex-col md:flex-row gap-10">
+                        <BarGraph interviews={interviews}/>
+                        <CircleChart interview={selectedInterview} />
                     </div>
                     <InterviewsList interviews={interviews} onPerformanceClick={handlePerformanceClick} />
                 </div>

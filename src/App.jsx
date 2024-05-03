@@ -15,6 +15,7 @@ import InterviewSchedule from './pages/AdminPages/InterviewSchedule';
 import StudentHome from './pages/StudentPages/StudentHome';
 import UserProfile from './pages/StudentPages/UserProfile';
 import StudentDashboard from './pages/StudentPages/StudentDashboard';
+import InterviewerSignUp from './pages/SignUp/InterviewerSignUp';
 function App() {
  
   return (
@@ -22,17 +23,18 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/loginPage" element={<LoginPage />} />
-          <Route path="/SignUpPage" element={<SignUpPage />} />
-          <Route path="/StudentLogin" element={<StudentLogin />} />
-          <Route path="/AdminLogin" element={<AdminLogin />} />
-          <Route path="/StudentSignUp" element={<StudentSignUp />} />
-          <Route path="/AdminSignUp" element={<AdminSignUp />} />
-          <Route path="/Students" element={<Students />} />
-          <Route path="/InterviewSchedule" element={<InterviewSchedule />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/signup" element={<SignUpPage />} />
+          <Route path="/login/student" element={<StudentLogin />} />
+          <Route path="/login/admin" element={<AdminLogin />} />
+          <Route path="/signup/student" element={<StudentSignUp />} />
+          <Route path="/signup/admin" element={<AdminSignUp />} />
+          <Route path="/students" element={<Students />} />
+          <Route path="/interviewSchedule" element={<InterviewSchedule />} />
           <Route path="/StudentHome" element={<StudentHome />} />
           <Route path="/UserProfile" element={<UserProfile />} />
           <Route path="/StudentDashboard" element={<StudentDashboard />} />
+          <Route path="/InterviewerSignUp" element={<InterviewerSignUp />} />
         </Routes>
       </Router>
     </>

@@ -7,8 +7,8 @@ import AuthButton from "@/components/ui/AuthButton";
 function SignUpPage() {
     const links = [
         { label: 'Home', url: '/' },
-        { label: 'Login', url: '/loginPage' },
-        { label: 'Register', url: '/SignUpPage' },
+        { label: 'Login', url: '/login' },
+        { label: 'Register', url: '/signup' },
         { label: 'Contact', url: '/' },
     ];
     const [isSmallScreen, setIsSmallerScreen] = useState(false);
@@ -32,7 +32,7 @@ function SignUpPage() {
                     imageUrl={StudentMale}
                     altText="Student SignUp"
                     buttonText="Student SignUp"
-                    buttonUrl="/StudentSignUp"
+                    buttonUrl="/signup/student"
                     isSmallScreen={isSmallScreen}
                     // className={isSmallScreen ? "w-8 h-12":"w-20 h-20"}
                 />
@@ -40,7 +40,7 @@ function SignUpPage() {
                     imageUrl={AdministratorMale}
                     altText="Admin SignUp"
                     buttonText="Admin SignUp"
-                    buttonUrl="/AdminSignUp"
+                    buttonUrl="/signup/admin"
                     isSmallScreen={isSmallScreen}
                     className="ml-4"
                 />

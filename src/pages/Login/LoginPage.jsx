@@ -7,8 +7,8 @@ import { LogIn } from "lucide-react";
 function LoginPage() {
     const links = [
         { label: 'Home', url: '/' },
-        { label: 'Login', url: '/loginPage' },
-        { label: 'Register', url: '/SignUpPage' },
+        { label: 'Login', url: '/login' },
+        { label: 'Register', url: '/signup' },
         { label: 'Contact', url: '/' },
     ];
 
@@ -33,14 +33,14 @@ function LoginPage() {
                     imageUrl={StudentMale}
                     altText="Student Login"
                     buttonText={"Student Login"}
-                    buttonUrl={"/StudentLogin"}
+                    buttonUrl={"/login/student"}
                     isSmallScreen={isSmallScreen}
                 />
                 <AuthButton
                     imageUrl={AdministratorMale}
                     altText={"Admin Login"}
                     buttonText={"Admin Login"}
-                    buttonUrl="/AdminLogin"
+                    buttonUrl="/login/admin"
                     isSmallScreen={isSmallScreen}
                     className={isSmallScreen ? "text-sm ml-4" : " ml-4"}
                 />

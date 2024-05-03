@@ -7,8 +7,8 @@ function StudentLogin() {
     const navigate = useNavigate();
     const links=[
         {label:'Home',url:'/'},
-        {label:'Login',url:'/loginPage'},
-        {label:'Register',url:'/SignUpPage'},
+        {label:'Login',url:'/login'},
+        {label:'Register',url:'/signup'},
         {label:'Contact',url:'/'},
     ]
     const [formData, setFormData] = useState({

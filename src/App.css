@@ -30,7 +30,7 @@
     }
     100% {
         opacity: 1;
-        transform: translateY(0);
+        transform: translateY(3%);
     }
 }
 
@@ -68,4 +68,32 @@
     background-color: white;
     border-left: 1px solid gray;
     border-top: 1px solid gray;
+}
+
+@media (max-width: 510px) {
+    .Navlogo{
+        flex-direction: column;
+    }
+  .Navlogo img {
+    width: 80px; /* Adjust the width as needed */
+    height: auto; /* This will maintain the aspect ratio */
+  }
+  .Navlogo h1{
+    display: block;
+    /* margin-top: 1rem; */
+  }
+  
+}
+
+
+@media (max-width: 500px)
+{
+    .StudentHome{
+        flex-direction: column;
+        
+        /* display: block; */
+    }
+    .but1{
+        margin-left: 4px;
+    }
 }
