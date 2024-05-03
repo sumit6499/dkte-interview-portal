@@ -16,6 +16,10 @@ import interviewComposition from './interviewComposition.png';
 import Facebook from './Facebook.png';
 import NotVisibleEye from './NotVisibleEye.png';
 import visibleEye from './visibleEye.png';
+import StudentHomePicture from './StudentHomePicture.png'
+import ProfileImage from './ProfileImage.png';
+import CameraIcon from './CameraIcon.png';
+import SampleBarGraph from './SampleBarGraph.png';
 export {
     Chart,
     Gmail,
@@ -35,6 +39,10 @@ export {
     Facebook,
     NotVisibleEye,
     visibleEye,
+    StudentHomePicture,
+    ProfileImage,
+    CameraIcon,
+    SampleBarGraph,
 }
 
 

@@ -14,7 +14,14 @@ function NavBar(props) {
 
     useEffect(() => {
         const checkScreenSize = () => {
-            setIsSmallScreen(window.innerWidth <= 1024);
+            if(drop)
+            {
+                setIsSmallScreen(window.innerWidth <= 1108);
+            }
+            else{
+                setIsSmallScreen(window.innerWidth <= 1024);
+            }
+            
         };
 
         checkScreenSize();
@@ -34,11 +41,11 @@ function NavBar(props) {
                     {links && links.length > 0 && links.map((link, index) => (
                         <Link key={index} to={link.url} className="hover:text-primary">{link.label}</Link> 
                     ))}
-                    {drop && <DropDownProfile />}
+                    
                 </div>
-
+                {drop && <DropDownProfile />}
                 <div className="menu block lg:hidden">
-                    <MobileNav />
+                    <MobileNav drops={drop}/>
                 </div>
             </nav>
         </section>

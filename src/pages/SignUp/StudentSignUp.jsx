@@ -1,7 +1,10 @@
 import React from "react";
 import CommonSignUp from "@/components/ui/CommonSignUp";
 import NavBar from "../NavBar/NavBar";
+import { useNavigate } from "react-router";
 function StudentSignUp() {
+
+    const navigate = useNavigate();
     const links = [
         { label: 'Home', url: '/' },
         { label: 'Login', url: '/loginPage' },
@@ -10,6 +13,7 @@ function StudentSignUp() {
     ];
     const handleSubmit = (data) => {
         //  student sign up success 
+        navigate('/StudentHome');
     };
 
     const fields = [

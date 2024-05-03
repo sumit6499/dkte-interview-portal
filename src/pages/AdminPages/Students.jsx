@@ -2,9 +2,11 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import NavBar from "../NavBar/NavBar"
 import { MaleUser } from '@/assets/';
-
+import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 function Students() {
-
+    // const history = useHistory();
+    const navigate = useNavigate();
     const links = [
         { label: 'Home', url: '/' },
         { label: 'Students', url: '/students' },
@@ -17,13 +19,29 @@ function Students() {
     const [selectedClass, setSelectedClass] = useState('');
     const [studentsData, setStudentsData] = useState([]);
 
+    // const [selectedStudent,setSelectedStudent] = useState(false);
+
     useEffect(() => {
         fetchData();
     }, []);
 
+    // const fetchData = async () => {
+    //     try {
+    //         const response = await axios.get('');
+    //         if (Array.isArray(response.data)) {
+    //             setStudentsData(response.data);
+    //         } else {
+    //             console.error('Error: Response data is not an array:', response.data);
+    //         }
+    //     } catch (error) {
+    //         console.error('Error fetching the data:', error);
+    //     }
+    // };
+
+    //Testing
     const fetchData = async () => {
         try {
-            const response = await axios.get('');
+            const response = await axios.get('http://localhost:5000/api/students');
             if (Array.isArray(response.data)) {
                 setStudentsData(response.data);
             } else {
@@ -34,7 +52,17 @@ function Students() {
         }
     };
 
-
+    const gotoSchedule = (student) =>{
+        // <Link to={`/InterviewSchedule/${student.name}/${student.prn}/${student.branch}/${student.class}`}></Link>
+        // history.push(`/InterviewSchedule/${student.name}/${student.prn}/${student.branch}/${student.class}`);
+        console.log(student);
+        navigate({
+            pathname: '/InterviewSchedule',
+            state: {
+                student: student
+            }
+        });
+    }
     const filteredStudents = studentsData.filter(student =>
         student.prn.includes(searchInput) &&
         (selectedBranch === '' || student.branch === selectedBranch) &&
@@ -76,7 +104,19 @@ function Students() {
                                 </div>
                                 <p className="text-sm">{student.branch}</p>
                                 <p className="text-sm">{student.class}</p>
-                                <button className="bg-blue-500 text-white px-4 py-2 rounded">Schedule meeting</button>
+    <button onClick={() => {
+        const gotoSchedule = (student) => {
+            navigate('/InterviewSchedule', {
+                state: {
+                    student: student
+                }
+            });
+        };
+        gotoSchedule(student);
+    }} className="bg-blue-500 text-white px-4 py-2 rounded">
+                                    Schedule meeting
+                                </button>
+
                             </div>
                         </div>
                     ))}
@@ -87,5 +127,6 @@ function Students() {
     );
     
 }
+
 
 export default Students;

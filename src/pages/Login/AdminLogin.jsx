@@ -3,6 +3,7 @@ import LoginForm from '@/components/ui/LoginForm';
 import NavBar from '../NavBar/NavBar';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
 
 function AdminLogin() {
     const navigate = useNavigate();
@@ -19,6 +20,7 @@ function AdminLogin() {
 
     const handleSubmit = (data) => {
         //  admin login success 
+        toast.success('Login successful');
         navigate("/Students")
     };
 

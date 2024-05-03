@@ -30,7 +30,7 @@ function CommonSignUp({title,fields,onSubmit})
 
         try {
             //axios POST
-            const response = await axios.post("", formDataToSend, {
+            const response = await axios.post("http://localhost:5000/signup", formDataToSend, {
                 headers: {
                     "Content-Type": "multipart/form-data"
                 }

@@ -19,7 +19,7 @@ function StudentLogin() {
 
     const handleSubmit = (data) => {
         //  student login success
-        navigate("/")
+        navigate("/StudentHome")
     };
 
     // const fields = [

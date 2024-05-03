@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { interviewComposition, NotVisibleEye, visibleEye } from '@/assets/';
 
 function LoginForm({ title, fields, formData, onSubmit }) {
@@ -7,43 +9,44 @@ function LoginForm({ title, fields, formData, onSubmit }) {
     const [formValues, setFormValues] = useState(formData);
     const [showPassword, setShowPassword] = useState(false);
     const [userExists, setUserExists] = useState(true); // State variable to track user existence
-    const [successMessageVisible, setSuccesMessageVisible] = useState(false);
-    // Handle form input change
+
+    //  form input change
     const handleChange = (e) => {
         const { name, value } = e.target;
         // Update formValues state to reflect the changes
         setFormValues({ ...formValues, [name]: value });
     };
 
-    // Handle toggle password visibility
+    // toggle password visibility
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
     };
 
-    // Handle form submission
+    //  form submission
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            // Make Axios POST request to your backend
+            //  Axios POST    
             const response = await axios.post("http://localhost:5000/login", formValues);
             console.log("Response from server:", response.data);
             if (response.data.userExists) {
                 setUserExists(true);
-                // Handle success, maybe redirect or show a success message
+                //  success
                 console.log("Form values:", formValues);
-                setSuccesMessageVisible(true);
+                toast.success('Login successful');
                 onSubmit(response.data);
             } else {
                 setUserExists(false);
             }
         } catch (error) {
             console.error("Error submitting form:", error);
-            // Handle error, maybe show an error message to the user
+            //  error
         }
     };
 
     return (
         <div>
+            <ToastContainer position="top-center" autoClose={2000} />
             <div className="flex justify-center items-center h-screen animate-slideFromBottom flex-col pt-40 space-y-10">
                 <div className="bg-zinc-800 p-8 rounded-lg w-96">
                     <h2 className="text-white text-2xl mb-6 border-b border-zinc-600 pb-2 flex justify-center" id="title">{title}</h2>
@@ -58,7 +61,7 @@ function LoginForm({ title, fields, formData, onSubmit }) {
                                         name={field.name}
                                         value={formValues[field.name]}
                                         onChange={handleChange}
-                                        className="input-field focus:border-yellow-500 focus:ring-yellow-500 text-black" 
+                                        className="input-field focus:border-yellow-500 focus:ring-yellow-500 text-black"
                                         required
                                     />
                                     {field.name === 'password' && (
@@ -79,9 +82,6 @@ function LoginForm({ title, fields, formData, onSubmit }) {
                         ))}
                         {!userExists && (
                             <div className="text-red-500 text-center">User does not exist</div>
-                        )}
-                        {successMessageVisible &&(
-                            <div className='text-green-500 text-center'>Login successful</div>
                         )}
                         <div className="flex justify-center">
                             <button type="submit" className="w-30 bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
