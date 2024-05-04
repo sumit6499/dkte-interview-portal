@@ -16,7 +16,9 @@ import StudentHome from './pages/StudentPages/StudentHome';
 import UserProfile from './pages/StudentPages/UserProfile';
 import StudentDashboard from './pages/StudentPages/StudentDashboard';
 import InterviewerSignUp from './pages/SignUp/InterviewerSignUp';
+import InterviewerLogin from './pages/Login/InterviewerLogin';
 import Schedule from './components/ui/Schedules';
+
 function App() {
  
   return (
@@ -37,6 +39,7 @@ function App() {
           <Route path="/login/student/dashboard" element={<StudentDashboard />} />
           <Route path="/signup/interviewer" element={<InterviewerSignUp />} />
           <Route path="/Schedule" element={<Schedule />} />
+          <Route path="/login/interviewer" element={<InterviewerLogin />} />
         </Routes>
       </Router>
     </>

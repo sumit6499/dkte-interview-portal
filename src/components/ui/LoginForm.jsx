@@ -61,7 +61,7 @@ function LoginForm({ title, fields, formData, onSubmit }) {
                                         name={field.name}
                                         value={formValues[field.name]}
                                         onChange={handleChange}
-                                        className="input-field focus:border-yellow-500 focus:ring-yellow-500 text-black"
+                                        className="input-field font-bold p-1 focus:border-yellow-500 focus:ring-yellow-500 text-black"
                                         required
                                     />
                                     {field.name === 'password' && (
