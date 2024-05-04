@@ -1,7 +1,6 @@
 
 import React, { useState } from 'react';
 import NavBar from '../NavBar/NavBar';
-import { StudentHomePicture } from '@/assets/index.js';
 import '@/App.css'
 
 

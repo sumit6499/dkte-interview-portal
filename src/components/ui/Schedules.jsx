@@ -1,5 +1,5 @@
 import React from "react";
-import { StudentHomePicture } from "@/assets";
+import { HomePicture } from "@/assets";
 
 
 import '@/App.css'
@@ -21,7 +21,7 @@ const Schedule = () =>{
                     </div>
                 </div>
                 <div className="mt-10 flex justify-center">
-                    <img src={StudentHomePicture} alt="Interview Illustration" />
+                    <img src={HomePicture} alt="Interview Illustration" />
                 </div>
             </div>
         </>

@@ -5,13 +5,14 @@ import '@/App.css'
 import Schedule from '@/components/ui/Schedules';
 
 
-const AdminSchedules = () => {
+const InterviewerIntervieweSchedules = () => {
     const links = [
         { label: 'Home', url: '/' },
-        { label: 'Students', url: '/login/admin/students' },
-        { label: 'Schedules', url: '/login/admin/schedules' },
+        { label: 'Students', url: '/login/interviewer/students' },
+        { label: 'Schedules', url: '/login/interviewer/schedules' },
         { label: 'Contact', url: '/' }
     ];
+
 
     const drop = true;
 
@@ -28,4 +29,4 @@ const AdminSchedules = () => {
     );
 };
 
-export default AdminSchedules;
+export default InterviewerIntervieweSchedules;

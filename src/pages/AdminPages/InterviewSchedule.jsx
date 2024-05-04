@@ -3,7 +3,7 @@ import NavBar from '../NavBar/NavBar';
 import { useLocation } from 'react-router';
 import axios from 'axios';
 import { useNavigate } from 'react-router';
-function InterviewSchedule() {
+function AdminInterviewSchedule() {
     const location = useLocation();
     let student = location.state && location.state.student; 
     console.log("the student is " + student)
@@ -82,4 +82,4 @@ function InterviewSchedule() {
     );
 }
 
-export default InterviewSchedule;
+export default AdminInterviewSchedule;
