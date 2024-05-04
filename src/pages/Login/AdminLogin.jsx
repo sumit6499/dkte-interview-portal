@@ -25,7 +25,7 @@ function AdminLogin() {
     };
 
     const fields = [
-        { name: "username", label: "Username", type: "text" },
+        { name: "name", label: "Username", type: "text" },
         { name: "password", label: "Password", type: "password" }
     ];
 

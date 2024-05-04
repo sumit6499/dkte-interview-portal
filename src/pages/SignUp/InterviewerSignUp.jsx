@@ -10,18 +10,28 @@ const InterviewerSignUp = () => {
         { label: 'Contact', url: '/' },
     ];
 
-   
+
     const [selectedDays, setSelectedDays] = useState(['Monday']);
     const [selectedTimes, setSelectedTimes] = useState({
         Monday: { start: '', end: '' },
     });
 
-    
+
     const handleDayChange = (e) => {
-        setSelectedDays(Array.from(e.target.selectedOptions, option => option.value));
+        const newSelectedDays = Array.from(e.target.selectedOptions, option => option.value);
+        setSelectedDays(newSelectedDays);
+
+        const newSelectedTimes = { ...selectedTimes };
+        newSelectedDays.forEach(day => {
+            if (!newSelectedTimes[day]) {
+                newSelectedTimes[day] = { start: '', end: '' };
+            }
+        });
+        setSelectedTimes(newSelectedTimes);
     };
 
-   
+
+
     const handleTimeRangeChange = (e, day, field) => {
         setSelectedTimes({
             ...selectedTimes,
@@ -56,8 +66,8 @@ const InterviewerSignUp = () => {
                     </div>
                     <div>
                         <label htmlFor="days" className="block mb-2 text-white">Days Of Week You're Available:</label>
-                        <select id="days" className="w-full p-2 bg-zinc-700 rounded" multiple onChange={handleDayChange}>
-                            <option selected>Monday</option>
+                        <select id="days" className="w-full p-2 bg-zinc-700 rounded" multiple onChange={handleDayChange} defaultValue={['Monday']}>
+                            <option>Monday</option>
                             <option>Tuesday</option>
                             <option>Wednesday</option>
                             <option>Thursday</option>
@@ -65,8 +75,9 @@ const InterviewerSignUp = () => {
                             <option>Saturday</option>
                             <option>Sunday</option>
                         </select>
+
                     </div>
-                   
+
                     {selectedDays.map((day, index) => (
                         <div key={index}>
                             <label htmlFor={`start-time-${day}`} className="block mb-2 text-white">{day} Preferred Interview Start Time:</label>

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { interviewComposition } from "@/assets";
 
-function CommonSignUp({ title, fields, onSubmit, currentStage, className ,onPrev}) {
+function CommonSignUp({ title, fields, onSubmit, currentStage, className, onPrev, studentSignup }) {
     // State variable
     const [formData, setFormData] = useState(
         fields.reduce((acc, field) => {
@@ -50,7 +50,7 @@ function CommonSignUp({ title, fields, onSubmit, currentStage, className ,onPrev
         }
     };
 
-    // Render form fields based on the current stage
+   
     const renderFormFields = () => {
         return fields.map((field) => (
             <div key={field.name}>
@@ -116,7 +116,7 @@ function CommonSignUp({ title, fields, onSubmit, currentStage, className ,onPrev
                                     Prev
                                 </button>
                             )}
-                            {currentStage < 3 && (
+                                {currentStage === 1 && studentSignup && (
                                 <button
                                     type="button"
                                     onClick={() => onSubmit(formData)}
@@ -126,7 +126,15 @@ function CommonSignUp({ title, fields, onSubmit, currentStage, className ,onPrev
                                 </button>
                             )}
                             </div>
-                            {currentStage === 3 && (
+                            {currentStage === 1 && !studentSignup && (
+                                <button
+                                    type="submit"
+                                    className="block mx-auto py-3 px-6 bg-yellow-500 text-black font-bold rounded-md hover:bg-yellow-600"
+                                >
+                                    SignUp
+                                </button>
+                            )}
+                            {currentStage === 2 && studentSignup  && (
                                 <button
                                     type="submit"
                                     className="block mx-auto py-3 px-6 bg-yellow-500 text-black font-bold rounded-md hover:bg-yellow-600"
