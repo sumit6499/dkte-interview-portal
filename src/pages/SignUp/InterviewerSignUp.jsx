@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import NavBar from '../NavBar/NavBar';
 import { interviewComposition } from '@/assets';
+
 const InterviewerSignUp = () => {
     const links = [
         { label: 'Home', url: '/' },
@@ -9,35 +10,33 @@ const InterviewerSignUp = () => {
         { label: 'Contact', url: '/' },
     ];
 
-    // State to hold selected days and times
+   
     const [selectedDays, setSelectedDays] = useState(['Monday']);
     const [selectedTimes, setSelectedTimes] = useState({
-        Monday:'',
+        Monday: { start: '', end: '' },
     });
 
-    // Handler for selecting days
+    
     const handleDayChange = (e) => {
         setSelectedDays(Array.from(e.target.selectedOptions, option => option.value));
     };
 
-    // Handler for selecting time for a specific day
-    const handleTimeChange = (e, day) => {
+   
+    const handleTimeRangeChange = (e, day, field) => {
         setSelectedTimes({
             ...selectedTimes,
-            [day]: e.target.value
+            [day]: {
+                ...selectedTimes[day],
+                [field]: e.target.value
+            }
         });
     };
-    useEffect(()=>{
-        setSelectedTimes(prevState =>({
-            ...prevState,
-            Monday:'09:00',
-        }));
-    },[]);
+
     return (
         <>
             <NavBar links={links} />
             <div className="max-w-2xl mx-auto p-8 bg-zinc-800 mt-10 rounded-lg mb-10 ">
-                <h1 className="text-xl font-bold mb-6 text-white flex  justify-center">Interviewer SignUp</h1>
+                <h1 className="text-xl font-bold mb-6 text-white flex justify-center">Interviewer SignUp</h1>
                 <form className="grid grid-cols-2 gap-10">
                     <div>
                         <label htmlFor="name" className="block mb-2 text-white">Full Name:</label>
@@ -67,21 +66,29 @@ const InterviewerSignUp = () => {
                             <option>Sunday</option>
                         </select>
                     </div>
+                   
                     {selectedDays.map((day, index) => (
                         <div key={index}>
-                            <label htmlFor={`time-${day}`} className="block mb-2 text-white">{day} Preferred Interview Time:</label>
+                            <label htmlFor={`start-time-${day}`} className="block mb-2 text-white">{day} Preferred Interview Start Time:</label>
                             <input
                                 type="time"
-                                id={`time-${day}`}
+                                id={`start-time-${day}`}
                                 className="w-full p-2 bg-zinc-700 rounded text-white"
-                                onChange={(e) => handleTimeChange(e, day)}
-                                value={selectedTimes[day] || ''}
+                                onChange={(e) => handleTimeRangeChange(e, day, 'start')}
+                                value={selectedTimes[day].start || ''}
+                            />
+                            <label htmlFor={`end-time-${day}`} className="block mb-2 text-white">{day} Preferred Interview End Time:</label>
+                            <input
+                                type="time"
+                                id={`end-time-${day}`}
+                                className="w-full p-2 bg-zinc-700 rounded text-white"
+                                onChange={(e) => handleTimeRangeChange(e, day, 'end')}
+                                value={selectedTimes[day].end || ''}
                             />
                         </div>
                     ))}
-                   
-                    <button type="submit" className="ml-80 px-16 py-2  bg-yellow-500 rounded hover:bg-yellow-600 flex justify-self-center whitespace-nowrap text-center">Sign Up</button>
-                   
+
+                    <button type="submit" className="ml-80 px-16 py-2 bg-yellow-500 rounded hover:bg-yellow-600 flex justify-self-center whitespace-nowrap text-center">Sign Up</button>
                 </form>
             </div>
             <div>
