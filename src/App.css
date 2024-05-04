@@ -97,3 +97,12 @@
         margin-left: 4px;
     }
 }
+
+@media (max-width:600px)
+{
+    .signbox{
+        flex-direction: column;
+         space-x-16: 0; /* Reset any spacing set on larger screens */
+         space-y-4: 1rem; 
+    }
+}

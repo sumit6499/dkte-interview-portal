@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { StudentMale, AdministratorMale } from '@/assets/';
 import NavBar from "../NavBar/NavBar";
 import AuthButton from "@/components/ui/AuthButton";
-
+import '@/App.css';
 function SignUpPage() {
     const links = [
         { label: 'Home', url: '/' },
@@ -12,22 +12,25 @@ function SignUpPage() {
         { label: 'Contact', url: '/' },
     ];
     const [isSmallScreen, setIsSmallerScreen] = useState(false);
-
+   
     useEffect(() => {
         const checkScreenSize = () => {
-            setIsSmallerScreen(window.innerWidth <= 1024);
+            setIsSmallerScreen(window.innerWidth <= 600);
+            
         };
         checkScreenSize();
         window.addEventListener('resize', checkScreenSize);
         return () => window.removeEventListener('resize', checkScreenSize);
     }, []);
+    
 
     return (
         <div>
             <div>
                 <NavBar links={links} />
             </div>
-            <div className="flex flex-row items-center justify-center h-screen bg-zinc-100 dark:bg-zinc-800 space-x-16">
+            <div className={isSmallScreen ? "flex flex-col items-center justify-center h-screen bg-zinc-100 dark:bg-zinc-800 space-y-4" : "flex flex-row items-center justify-center h-screen bg-zinc-100 dark:bg-zinc-800 space-x-8"}>
+
                 <AuthButton
                     imageUrl={StudentMale}
                     altText="Student SignUp"
@@ -41,6 +44,14 @@ function SignUpPage() {
                     altText="Admin SignUp"
                     buttonText="Admin SignUp"
                     buttonUrl="/signup/admin"
+                    isSmallScreen={isSmallScreen}
+                    className="ml-4"
+                />
+                <AuthButton
+                    imageUrl={AdministratorMale}
+                    altText="Interviewer SignUp"
+                    buttonText="Interviewer SignUp"
+                    buttonUrl="/signup/interviewer"
                     isSmallScreen={isSmallScreen}
                     className="ml-4"
                 />

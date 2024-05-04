@@ -16,7 +16,7 @@ function LoginPage() {
 
     useEffect(() => {
         const checkScreenSize = () => {
-            setIsSmallerScreen(window.innerWidth <= 1024);
+            setIsSmallerScreen(window.innerWidth <= 600); // Changed to 600px
         };
         checkScreenSize();
         window.addEventListener('resize', checkScreenSize);
@@ -28,7 +28,7 @@ function LoginPage() {
             <div>
                 <NavBar links={links} />
             </div>
-            <div className={isSmallScreen ? "flex flex-row items-center justify-center h-screen bg-zinc-100 dark:bg-zinc-800 space-x-8" : "flex flex-row items-center justify-center h-screen bg-zinc-100 dark:bg-zinc-800 space-x-8"}  >
+            <div className={isSmallScreen ? "flex flex-col items-center justify-center h-screen bg-zinc-100 dark:bg-zinc-800 space-y-4" : "flex flex-row items-center justify-center h-screen bg-zinc-100 dark:bg-zinc-800 space-x-8"}>
                 <AuthButton
                     imageUrl={StudentMale}
                     altText="Student Login"
@@ -42,14 +42,15 @@ function LoginPage() {
                     buttonText={"Admin Login"}
                     buttonUrl="/login/admin"
                     isSmallScreen={isSmallScreen}
-                    className={isSmallScreen ? "text-sm ml-4" : " ml-4"}
-                /><AuthButton
+                    className={isSmallScreen ? "text-sm" : ""}
+                />
+                <AuthButton
                     imageUrl={AdministratorMale}
                     altText={"Interviewer Login"}
                     buttonText={"Interviewer Login"}
                     buttonUrl="/login/interviewer"
                     isSmallScreen={isSmallScreen}
-                    className={isSmallScreen ? "text-sm ml-4" : " ml-4"}
+                    className={isSmallScreen ? "text-sm" : ""}
                 />
             </div>
         </div>

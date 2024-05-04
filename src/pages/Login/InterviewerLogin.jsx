@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 
-function AdminLogin() {
+function InterviewerLogin() {
     const navigate = useNavigate();
     const links = [
         { label: 'Home', url: '/' },
@@ -21,7 +21,7 @@ function AdminLogin() {
     const handleSubmit = (data) => {
         //  admin login success 
         toast.success('Login successful');
-        navigate("/login/admin/students")
+        navigate("/login/interviewer/interviewerhome")
     };
 
     const fields = [
@@ -32,9 +32,9 @@ function AdminLogin() {
     return (
         <>
             <NavBar links={links} />
-            <LoginForm title="Admin Login" fields={fields} formData={formData} onSubmit={handleSubmit} />
+            <LoginForm title="Interviewer Login" fields={fields} formData={formData} onSubmit={handleSubmit} />
         </>
     );
 }
 
-export default AdminLogin;
+export default InterviewerLogin;
