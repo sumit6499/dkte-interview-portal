@@ -4,17 +4,17 @@ import NavBar from '../NavBar/NavBar';
 import { StudentHomePicture } from '@/assets/index.js';
 import '@/App.css'
 
-
 import Schedule from '@/components/ui/Schedules';
 
 
-const StudentHome = () => {
+const AdminSchedules = () => {
     const links = [
         { label: 'Home', url: '/' },
-        { label: 'Schedules', url: '/login/student/studenthome' },
-        { label: 'DashBoard', url: '/login/student/dashboard' },
+        { label: 'Students', url: '/login/admin/students' },
+        { label: 'Schedules', url: '/login/admin/schedules' },
         { label: 'Contact', url: '/' }
     ];
+
     const drop = true;
 
     return (
@@ -30,4 +30,4 @@ const StudentHome = () => {
     );
 };
 
-export default StudentHome;
+export default AdminSchedules;

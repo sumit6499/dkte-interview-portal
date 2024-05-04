@@ -43,6 +43,13 @@ function LoginPage() {
                     buttonUrl="/login/admin"
                     isSmallScreen={isSmallScreen}
                     className={isSmallScreen ? "text-sm ml-4" : " ml-4"}
+                /><AuthButton
+                    imageUrl={AdministratorMale}
+                    altText={"Interviewer Login"}
+                    buttonText={"Interviewer Login"}
+                    buttonUrl="/login/interviewer"
+                    isSmallScreen={isSmallScreen}
+                    className={isSmallScreen ? "text-sm ml-4" : " ml-4"}
                 />
             </div>
         </div>

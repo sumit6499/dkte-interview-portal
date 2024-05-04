@@ -29,6 +29,7 @@
     "react-dom": "^18.2.0",
     "react-router": "^6.23.0",
     "react-router-dom": "^6.23.0",
+    "react-time-picker": "^7.0.0",
     "react-toastify": "^10.0.5",
     "tailwind-merge": "^2.3.0",
     "tailwindcss-animate": "^1.0.7"

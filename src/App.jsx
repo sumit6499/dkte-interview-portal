@@ -16,6 +16,7 @@ import StudentHome from './pages/StudentPages/StudentHome';
 import UserProfile from './pages/StudentPages/UserProfile';
 import StudentDashboard from './pages/StudentPages/StudentDashboard';
 import InterviewerSignUp from './pages/SignUp/InterviewerSignUp';
+import Schedule from './components/ui/Schedules';
 function App() {
  
   return (
@@ -29,12 +30,13 @@ function App() {
           <Route path="/login/admin" element={<AdminLogin />} />
           <Route path="/signup/student" element={<StudentSignUp />} />
           <Route path="/signup/admin" element={<AdminSignUp />} />
-          <Route path="/students" element={<Students />} />
-          <Route path="/interviewSchedule" element={<InterviewSchedule />} />
+          <Route path="/login/admin/students" element={<Students />} />
+          <Route path="/login/admin/interviewschedules" element={<InterviewSchedule />} />
           <Route path="/StudentHome" element={<StudentHome />} />
-          <Route path="/UserProfile" element={<UserProfile />} />
-          <Route path="/StudentDashboard" element={<StudentDashboard />} />
-          <Route path="/InterviewerSignUp" element={<InterviewerSignUp />} />
+          <Route path="/login/student/profile" element={<UserProfile />} />
+          <Route path="/login/student/dashboard" element={<StudentDashboard />} />
+          <Route path="/signup/interviewer" element={<InterviewerSignUp />} />
+          <Route path="/Schedule" element={<Schedule />} />
         </Routes>
       </Router>
     </>

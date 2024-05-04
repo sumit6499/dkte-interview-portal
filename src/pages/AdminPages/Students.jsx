@@ -9,8 +9,8 @@ function Students() {
     const navigate = useNavigate();
     const links = [
         { label: 'Home', url: '/' },
-        { label: 'Students', url: '/students' },
-        { label: 'Schedules', url: '/schedules' },
+        { label: 'Students', url: '/login/admin/students' },
+        { label: 'Schedules', url: '/login/admin/interviewschedules' },
         { label: 'Contact', url: '/' },
     ];
 
@@ -73,8 +73,8 @@ function Students() {
         <>
             <NavBar links={links} />
 
-            <div className="bg-zinc-100">
-                <div className="container mx-auto px-4">
+            {/* <div className="bg-zinc-100"> */}
+                <div className="container mx-auto px-4 bg-zinc-100">
                     <header className="py-5">
                         <h1 className="text-3xl font-bold text-center">Students</h1>
                     </header>
@@ -99,17 +99,21 @@ function Students() {
                         </div>
                     </div>
                     </div>
-                    <div className="mt-20 ">
+                    <div className="mt-20 bg-zinc-100">
                         {filteredStudents.map(student => (
                             <div key={student.id} className="bg-white p-4 rounded-lg shadow-md mb-4">
-                                <div className="flex items-center space-x-4 py-2 border-b border-zinc-200">
-                                    <img src={MaleUser} alt="Profile" className="rounded-full" />
-                                    <div className="flex-1">
-                                        <p className="font-semibold">{student.name}</p>
-                                        <p className="text-sm text-zinc-600">{student.prn}</p>
+                                <div className="flex items-center justify-between space-x-4 py-2 border-b border-zinc-200 h-6">
+                                    <div className="flex items-center space-x-2">
+                                        <img src={MaleUser} alt="Profile" className="rounded-full h-6" />
+                                        <div className='flex '>
+                                            <p className="font-semibold pr-2">{student.name}</p>
+                                            <p className="text-sm text-zinc-600">{student.prn}</p>
+                                        </div>
                                     </div>
-                                    <p className="text-sm">{student.branch}</p>
-                                    <p className="text-sm">{student.class}</p>
+                                    <div className="flex items-center space-x-2">
+                                        <p className="text-sm">{student.branch}</p>
+                                        <p className="text-sm">{student.class}</p>
+                                    </div>
                                     <button onClick={() => {
                                         const gotoSchedule = (student) => {
                                             navigate('/InterviewSchedule', {
@@ -119,16 +123,15 @@ function Students() {
                                             });
                                         };
                                         gotoSchedule(student);
-                                    }} className="bg-blue-500 text-white px-4 py-2 rounded">
+                                    }} className="bg-blue-500 text-white pb-1 mb-3 px-2 py-0.6 rounded">
                                         Schedule meeting
                                     </button>
-
                                 </div>
                             </div>
                         ))}
                     </div>
-                </div>
-            </div>
+                    </div>
+            {/* </div> */}
         </>
     );
 

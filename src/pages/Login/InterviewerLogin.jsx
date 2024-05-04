@@ -31,8 +31,8 @@ function AdminLogin() {
 
     return (
         <>
-        <NavBar links={links} />
-        <LoginForm title="Admin Login" fields={fields} formData={formData} onSubmit={handleSubmit} />
+            <NavBar links={links} />
+            <LoginForm title="Admin Login" fields={fields} formData={formData} onSubmit={handleSubmit} />
         </>
     );
 }

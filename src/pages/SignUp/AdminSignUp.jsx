@@ -1,7 +1,10 @@
 import React from "react";
 import CommonSignUp from "@/components/ui/CommonSignUp";
 import NavBar from "../NavBar/NavBar";
+import { useNavigate } from "react-router";
 function AdminSignUp() {
+
+const navigate = useNavigate();
     const links = [
         { label: 'Home', url: '/' },
         { label: 'Login', url: '/login' },
@@ -11,6 +14,7 @@ function AdminSignUp() {
     const handleSubmit1 = (data) => {
         //  admin sign up success 
         console.log("success: "+data);
+        navigate("/login/admin");
     };
 
     const fields = [
