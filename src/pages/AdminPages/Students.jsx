@@ -102,7 +102,7 @@ function Students() {
                                     </div>
                                     <button onClick={() => {
                                         const gotoSchedule = (student) => {
-                                            navigate('/InterviewSchedule', {
+                                            navigate('/login/admin/interviewschedules', {
                                                 state: {
                                                     student: student
                                                 }

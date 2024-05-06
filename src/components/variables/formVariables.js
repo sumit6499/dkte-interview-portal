@@ -73,7 +73,7 @@ export const InterviewerLoginfields = [
 export const   AdminSchedulesNavlinks = [
         { label: 'Home', url: '/' },
         { label: 'Students', url: '/login/admin/students' },
-        { label: 'Schedules', url: '/login/admin/schedules' },
+        { label: 'Schedules', url: '/login/admin/adminschedules' },
         { label: 'Contact', url: '/' }
     ];
 export const AdminStudentsNavlinks = [
