@@ -82,9 +82,8 @@ export const AdminStudentsNavlinks = [
         { label: 'Schedules', url: '/login/admin/interviewschedules' },
         { label: 'Contact', url: '/' },
     ];
-export const TimeRangeButton = "block mx-auto py-1 px-2  bg-gray-500 text-black font-bold rounded-md hover:bg-yellow-600"
 
-export const fileInputClasses = "block w-full text-sm text-zinc-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-yellow-400 file:text-zinc-700 hover:file:bg-yellow-500";
+
 export const InterviewerProfileNavlinkslinks = [
         { label: 'Home', url: '/' },
         { label: 'Schedules', url: '/' },

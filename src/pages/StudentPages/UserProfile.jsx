@@ -4,7 +4,7 @@ import axios from 'axios';
 import NavBar from '../NavBar/NavBar';
 import { ProfileImage, CameraIcon } from '@/assets/index.js';
 import StudentLogin from '../Login/StudentLogin';
-import { fileInputClasses } from '@/components/variables/formVariables';
+import { fileInputClasses } from '@/components/styles/sharedStyles';
 import { StudentProfileNavlinks } from '@/components/variables/formVariables';
 
 
