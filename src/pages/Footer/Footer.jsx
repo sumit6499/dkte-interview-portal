@@ -4,7 +4,6 @@ import { Instagram, Twitter, Facebook } from '@/assets/index.js';
 import { footerClasses, gridClasses, linkClasses } from '@/components/styles/sharedStyles'
 import { socialMediaLinks } from '@/components/variables/formVariables';
 
-
 const Footer = () => {
     const [isSmallScreen, setIsSmallerScreen] = useState(false);
 

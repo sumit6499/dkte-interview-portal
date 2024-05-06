@@ -8,7 +8,7 @@ export const departmentOptions = [
     "CIVIL",
 ];
 
-export const stdfieldsStage1 = [
+export const stdFieldsStage1 = [
     { name: "name", label: "Full Name", type: "text" },
     { name: "email", label: "Email", type: "email" },
     { name: "phone", label: "Phone", type: "tel" },
@@ -25,7 +25,7 @@ export const stdfieldsStage1 = [
     { name: "resume", label: "Resume", type: "file" },
 ];
 
-export const stdfieldsStage2 = [{ name: "payment", label: "Payment", type: "text" }];
+export const stdFieldsStage2 = [{ name: "payment", label: "Payment", type: "text" }];
 
 export  const Adminfields = [
         { name: "name", label: "Full Name", type: "text" },
@@ -113,6 +113,7 @@ export const StudentProfileNavlinks = [
     ];
 
 //fotter
+import { Instagram, Twitter, Facebook } from '@/assets/index.js';
 export const socialMediaLinks = [
     { name: 'Twitter', url: 'https://Twitter.com', icon: Twitter },
     { name: 'Instagram', url: 'https://instagram.com', icon: Instagram },
