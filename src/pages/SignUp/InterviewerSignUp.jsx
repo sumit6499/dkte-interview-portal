@@ -108,6 +108,15 @@ const InterviewerSignUp = () => {
                         <input type="tel" id="phone" className="w-full p-2 bg-zinc-700 rounded text-white" value={formData.phone} onChange={(e) => setFormData({ ...formData, phone: e.target.value })} />
                     </div>
                     <div>
+                        <label htmlFor="password" className="block mb-2 text-white">Password:</label>
+                        <input type="text" id="password" className="w-full p-2 bg-zinc-700 rounded text-white" value={formData.password} onChange={(e) => setFormData({ ...formData, password: e.target.value })} />
+                    </div>
+                    <div>
+                        <label htmlFor="profession" className="block mb-2 text-white">Profession:</label>
+                        <input type="text" id="profession" className="w-full p-2 bg-zinc-700 rounded text-white" value={formData.profession} onChange={(e) => setFormData({ ...formData, profession: e.target.value })} />
+                    </div>
+                    
+                    <div>
                         <label htmlFor="idcard" className="block mb-2 text-white">ID Card:</label>
                         <input type="file" id="idcard" className="mt-1 block w-full text-sm text-zinc-900 file:mr-4 file:py-2 file:px-4 file:border-0 file:text-sm file:font-semibold file:bg-yellow-500 file:text-black hover:file:bg-yellow-600 hover:pointer" onChange={(e) => setFormData({ ...formData, idcard: e.target.files[0] })} />
                     </div>
