@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import NavBar from '../NavBar/NavBar';
 import { interviewComposition } from '@/assets';
 import axios from 'axios';
-import { InterviewerNavlinks } from '@/components/variables/formVariables';
+import { InterviewerNavLinks } from '@/components/variables/formVariables';
+import '@/App.css'
 const InterviewerSignUp = () => {
     
 
@@ -11,7 +12,7 @@ const InterviewerSignUp = () => {
         Monday: [{ start: '', end: '' }],
 
     });
-
+    const [isSmallScreen,setIsSmallerScreen] = useState(false);
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -79,13 +80,21 @@ const InterviewerSignUp = () => {
         // Update formData with new selectedTimes
         setFormData(prevState => ({ ...prevState, selectedTimes: newSelectedTimes }));
     };
+    useEffect (()=>{
+        const checkScreenSize = () =>{
+            setIsSmallerScreen(window.innerWidth<=600);
+        }
+        checkScreenSize();
+        window.addEventListener("resize",checkScreenSize);
 
+        return () => window.removeEventListener("resize",checkScreenSize);
+    },[]);
     return (
         <>
-            <NavBar links={InterviewerNavlinks} />
+            <NavBar links={InterviewerNavLinks} />
             <div className="max-w-2xl mx-auto p-8 bg-zinc-800 mt-10 rounded-lg mb-10 ">
                 <h1 className="text-xl font-bold mb-6 text-white flex justify-center">Interviewer SignUp</h1>
-                <form className="grid grid-cols-2 gap-10">
+                <form className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                         <label htmlFor="name" className="block mb-2 text-white">Full Name:</label>
                         <input type="text" id="name" className="w-full p-2 bg-zinc-700 rounded text-white" value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} />
@@ -147,8 +156,12 @@ const InterviewerSignUp = () => {
                             </div>
                         </div>
                     ))}
-
-                    <button type="submit" className="ml-80 px-16 py-2 bg-yellow-500 rounded hover:bg-yellow-600 flex justify-self-center whitespace-nowrap text-center" onClick={handleSubmit}>Sign Up</button>
+                 
+                    <div className='grid grid-cols-1 '>
+                        <button type="submit" className={" block mx-auto py-3 px-6 bg-yellow-500 text-black font-bold rounded-md hover:bg-yellow-600"} onClick={handleSubmit}>Sign Up</button>
+                    </div>
+                    {/* <button type="submit" className="col-span-2 sm:col-auto px-16 py-2 bg-yellow-500 rounded hover:bg-yellow-600 whitespace-nowrap text-center" onClick={handleSubmit}>Sign Up</button> */}
+                    {/* interviewSignup px-16 py-2 bg-yellow-500 rounded hover:bg-yellow-600 flex justify-self-center whitespace-nowrap text-center ml-80 */}
                 </form>
             </div>
             <div>

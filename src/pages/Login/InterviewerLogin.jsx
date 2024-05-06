@@ -4,7 +4,7 @@ import NavBar from '../NavBar/NavBar';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
-import { InterviewerNavlinks, InterviewerLoginfields } from '@/components/variables/formVariables';
+import { InterviewerNavLinks, InterviewerLoginfields } from '@/components/variables/formVariables';
 function InterviewerLogin() {
     const navigate = useNavigate();
     
@@ -23,7 +23,7 @@ function InterviewerLogin() {
 
     return (
         <>
-            <NavBar links={InterviewerNavlinks} />
+            <NavBar links={InterviewerNavLinks} />
             <LoginForm title="Interviewer Login" fields={InterviewerLoginfields} formData={formData} onSubmit={handleSubmit} />
         </>
     );

@@ -106,3 +106,12 @@
          space-y-4: 1rem; 
     }
 }
+
+@media (max-width:600px){
+    .interviewSignup{
+       margin-left: 80px;
+       display: block;
+       justify-content: start;
+       padding: 40px;
+    }
+}

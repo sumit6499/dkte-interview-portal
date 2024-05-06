@@ -60,7 +60,7 @@ export const StduentLoginfields = [
         { name: "username", label: "Username", type: "text" },
         { name: "password", label: "Password", type: "password" }
     ];
-export const InterviewerNavlinks = [
+export const InterviewerNavLinks = [
         { label: 'Home', url: '/' },
         { label: 'Login', url: '/login' },
         { label: 'Register', url: '/signup' },
