@@ -1,12 +1,9 @@
 import React from "react";
 import { HomePicture } from "@/assets";
-
+import { BUTTON_CLASS, HOVER_CLASS, PROFILE_MENU_CLASS } from "../styles/sharedStyles";
 
 import '@/App.css'
 
-const BUTTON_CLASS = 'bg-yellow-400 text-white px-4 py-3 rounded m-2';
-const HOVER_CLASS = 'hover:bg-zinc-700';
-const PROFILE_MENU_CLASS = 'absolute right-0 top-full bg-white text-black w-32 p-2 rounded hidden';
 
 
 const Schedule = () =>{
@@ -15,9 +12,11 @@ const Schedule = () =>{
             <div className=" flex-1 p-10 justify-center items-center">
                 <div className=" flex justify-center items-center ">
                     <div className="StudentHome flex  space-x-4 ">
-                        <button className={`but1 ${BUTTON_CLASS} mr-2`}>Today's Interview</button>
-                        <button className={BUTTON_CLASS}>Upcoming Interview</button>
-                        <button className={`${BUTTON_CLASS} mr-2`}>Interviews History</button>
+                        
+                            <button className="bg-yellow-400 text-white px-12  py-3 rounded m-2 ml-6">Today's Interview</button>
+                  
+                        <button className="bg-yellow-400 text-white px-12 py-3 rounded m-2">Upcoming Interview</button>
+                        <button className="bg-yellow-400 text-white px-12 py-3 rounded m-2">Interviews History</button>
                     </div>
                 </div>
                 <div className="mt-10 flex justify-center">

@@ -45,3 +45,7 @@ export const linkClasses = 'hover:text-zinc-300';
 export const TimeRangeButton = "block mx-auto py-1 px-2  bg-gray-500 text-black font-bold rounded-md hover:bg-yellow-600"
 
 export const fileInputClasses = "block w-full text-sm text-zinc-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-yellow-400 file:text-zinc-700 hover:file:bg-yellow-500";
+
+export const BUTTON_CLASS = 'bg-yellow-400 text-white px-4 py-3 rounded m-2';
+export const HOVER_CLASS = 'hover:bg-zinc-700';
+export const PROFILE_MENU_CLASS = 'absolute right-0 top-full bg-white text-black w-32 p-2 rounded hidden';

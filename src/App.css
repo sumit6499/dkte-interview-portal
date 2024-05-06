@@ -90,11 +90,13 @@
 {
     .StudentHome{
         flex-direction: column;
-        
+        /* margin-left: 2rem; */
         /* display: block; */
     }
     .but1{
-        margin-left: 4px;
+        /* margin-left: 1rem; */
+        /* width: 14rem; */
+        /* padding-left: 1rem; */
     }
 }
 
