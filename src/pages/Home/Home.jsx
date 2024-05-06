@@ -11,16 +11,11 @@ import {
 } from "@/components/ui/card"
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
-  
+import { Navlink } from "@/components/variables/formVariables";
 
 function Home() {
     const navigate = useNavigate();
-    const links = [
-        { label: 'Home', url: '/' },
-        { label: 'Login', url: '/login' },
-        { label: 'Register', url: '/signup' },
-        { label: 'Contact', url: '/' },
-    ];
+    
     const [isSmallScreen,setIsSmallerScreen] = useState(false);
 
     useEffect(() =>{
@@ -38,7 +33,7 @@ function Home() {
   return (
     
     <main className="min-h-screen antialiased">
-          <NavBar links={links}/>
+          <NavBar links={Navlink}/>
           <div className="hero min-h-[calc(100vh-80px)] flex pt-12 flex-col lg:flex-row">
               <div className="hero_content animate-slideFromLeft"> 
                   <h3 className={isSmallScreen ? 'w-full scroll-m-20 text-4xl font-semibold tracking-tight mt-16  text-[#1D1D1D] pl-8' : "w-full scroll-m-20 text-4xl font-semibold tracking-tight mt-16  text-[#1D1D1D] px-9"}>

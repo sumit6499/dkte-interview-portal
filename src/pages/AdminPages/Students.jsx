@@ -4,15 +4,11 @@ import NavBar from "../NavBar/NavBar"
 import { MaleUser } from '@/assets/';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import { AdminStudentsNavlinks } from '@/components/variables/formVariables';
 function Students() {
     // const history = useHistory();
     const navigate = useNavigate();
-    const links = [
-        { label: 'Home', url: '/' },
-        { label: 'Students', url: '/login/admin/students' },
-        { label: 'Schedules', url: '/login/admin/interviewschedules' },
-        { label: 'Contact', url: '/' },
-    ];
+    
 
     const [searchInput, setSearchInput] = useState('');
     const [selectedBranch, setSelectedBranch] = useState('');
@@ -52,17 +48,7 @@ function Students() {
         }
     };
 
-    const gotoSchedule = (student) => {
-        // <Link to={`/InterviewSchedule/${student.name}/${student.prn}/${student.branch}/${student.class}`}></Link>
-        // history.push(`/InterviewSchedule/${student.name}/${student.prn}/${student.branch}/${student.class}`);
-        console.log(student);
-        navigate({
-            pathname: '/InterviewSchedule',
-            state: {
-                student: student
-            }
-        });
-    }
+    
     const filteredStudents = studentsData.filter(student =>
         student.prn.includes(searchInput) &&
         (selectedBranch === '' || student.branch === selectedBranch) &&
@@ -71,7 +57,7 @@ function Students() {
 
     return (
         <>
-            <NavBar links={links} />
+            <NavBar links={AdminStudentsNavlinks} />
 
             {/* <div className="bg-zinc-100"> */}
                 <div className="container mx-auto px-4 bg-zinc-100">
@@ -131,7 +117,7 @@ function Students() {
                         ))}
                     </div>
                     </div>
-            {/* </div> */}
+           
         </>
     );
 

@@ -1,0 +1,123 @@
+export const departmentOptions = [
+    "CSE",
+    "AI",
+    "AIDS",
+    "ENTC",
+    "MECH",
+    "ELECTRIC",
+    "CIVIL",
+];
+
+export const stdfieldsStage1 = [
+    { name: "name", label: "Full Name", type: "text" },
+    { name: "email", label: "Email", type: "email" },
+    { name: "phone", label: "Phone", type: "tel" },
+    {
+        name: "dept",
+        label: "Department",
+        type: "select",
+        options: departmentOptions,
+    },
+    { name: "class", label: "Class", type: "text" },
+    { name: "PRN", label: "PRN", type: "text" },
+    { name: "password", label: "Password", type: "text" },
+    { name: "idcard", label: "ID Card", type: "file" },
+    { name: "resume", label: "Resume", type: "file" },
+];
+
+export const stdfieldsStage2 = [{ name: "payment", label: "Payment", type: "text" }];
+
+export  const Adminfields = [
+        { name: "name", label: "Full Name", type: "text" },
+        { name: "email", label: "Email", type: "email" },
+        { name: "phone", label: "Phone", type: "tel" },
+        { name: "password", label: "Password", type: "text" },
+        { name: "idcard", label: "ID Card", type: "file" }
+    ];
+export const Navlink = [
+        { label: 'Home', url: '/' },
+        { label: 'Login', url: '/login' },
+        { label: 'Register', url: '/signup' },
+        { label: 'Contact', url: '/' },
+    ];
+export const AdminNavLinks = [
+        { label: 'Home', url: '/' },
+        { label: 'Login', url: '/login' },
+        { label: 'Register', url: '/signup' },
+        { label: 'Contact', url: '/' },
+    ];
+export  const AdminLoginfields = [
+        { name: "name", label: "Username", type: "text" },
+        { name: "password", label: "Password", type: "password" }
+    ];
+export  const StudentNavlinks = [
+        { label: 'Home', url: '/' },
+        { label: 'Login', url: '/login' },
+        { label: 'Register', url: '/signup' },
+        { label: 'Contact', url: '/' },
+    ];
+export const StduentLoginfields = [
+        { name: "username", label: "Username", type: "text" },
+        { name: "password", label: "Password", type: "password" }
+    ];
+export const InterviewerNavlinks = [
+        { label: 'Home', url: '/' },
+        { label: 'Login', url: '/login' },
+        { label: 'Register', url: '/signup' },
+        { label: 'Contact', url: '/' },
+    ];
+export const InterviewerLoginfields = [
+        { name: "username", label: "Username", type: "text" },
+        { name: "password", label: "Password", type: "password" }
+    ];
+export const   AdminSchedulesNavlinks = [
+        { label: 'Home', url: '/' },
+        { label: 'Students', url: '/login/admin/students' },
+        { label: 'Schedules', url: '/login/admin/schedules' },
+        { label: 'Contact', url: '/' }
+    ];
+export const AdminStudentsNavlinks = [
+        { label: 'Home', url: '/' },
+        { label: 'Students', url: '/login/admin/students' },
+        { label: 'Schedules', url: '/login/admin/interviewschedules' },
+        { label: 'Contact', url: '/' },
+    ];
+export const TimeRangeButton = "block mx-auto py-1 px-2  bg-gray-500 text-black font-bold rounded-md hover:bg-yellow-600"
+
+export const fileInputClasses = "block w-full text-sm text-zinc-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-yellow-400 file:text-zinc-700 hover:file:bg-yellow-500";
+export const InterviewerProfileNavlinkslinks = [
+        { label: 'Home', url: '/' },
+        { label: 'Schedules', url: '/' },
+        { label: 'DashBoard', url: '/' },
+        { label: 'Contact', url: '/' }
+    ];
+
+export  const StudentDashboardNavlinks = [
+        { label: 'Home', url: '/' },
+        { label: 'Schedules', url: '/StudentHome' },
+        { label: 'Dashboard', url: '/StudentDashboard' },
+        { label: 'Contact', url: '/' },
+    ];
+
+export const StudentHomeNavlinks  = [
+        { label: 'Home', url: '/' },
+        { label: 'Schedules', url: '/login/student/studenthome' },
+        { label: 'DashBoard', url: '/login/student/dashboard' },
+        { label: 'Contact', url: '/' }
+    ];
+
+export const StudentProfileNavlinks = [
+        { label: 'Home', url: '/' },
+        { label: 'Schedules', url: '/' },
+        { label: 'DashBoard', url: '/' },
+        { label: 'Contact', url: '/' }
+    ];
+
+//fotter
+export const socialMediaLinks = [
+    { name: 'Twitter', url: 'https://Twitter.com', icon: Twitter },
+    { name: 'Instagram', url: 'https://instagram.com', icon: Instagram },
+    { name: 'Facebook', url: 'https://Facebook.com', icon: Facebook }
+];
+
+

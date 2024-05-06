@@ -4,8 +4,8 @@ import axios from 'axios';
 import NavBar from '../NavBar/NavBar';
 import { ProfileImage, CameraIcon } from '@/assets/index.js';
 import StudentLogin from '../Login/StudentLogin';
+import { fileInputClasses, InterviewerProfileNavlinkslinks } from '@/components/variables/formVariables';
 
-const fileInputClasses = "block w-full text-sm text-zinc-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-yellow-400 file:text-zinc-700 hover:file:bg-yellow-500";
 
 
 const Login = () => {
@@ -252,17 +252,12 @@ const InterviwerPorfile = () => {
     //     const file = e.target.files[0];
     //     handlePictureChange(file);
     // }
-    const links = [
-        { label: 'Home', url: '/' },
-        { label: 'Schedules', url: '/' },
-        { label: 'DashBoard', url: '/' },
-        { label: 'Contact', url: '/' }
-    ];
+    
     return (
         <>
 
 
-            <NavBar links={links} />
+            <NavBar links={InterviewerProfileNavlinkslinks} />
             <div className="max-w-4xl mx-auto p-5">
                 <div className="flex items-center bg-yellow-400 p-4 rounded-lg mb-6">
                     <img src={ProfileImage} alt="User Profile" className="rounded-full w-10 h-10" />

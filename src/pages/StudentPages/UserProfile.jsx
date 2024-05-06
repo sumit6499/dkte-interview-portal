@@ -4,24 +4,24 @@ import axios from 'axios';
 import NavBar from '../NavBar/NavBar';
 import { ProfileImage, CameraIcon } from '@/assets/index.js';
 import StudentLogin from '../Login/StudentLogin';
-
-const fileInputClasses = "block w-full text-sm text-zinc-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-yellow-400 file:text-zinc-700 hover:file:bg-yellow-500";
+import { fileInputClasses } from '@/components/variables/formVariables';
+import { StudentProfileNavlinks } from '@/components/variables/formVariables';
 
 
 const Login = () => {
-    // State to store user details
+    //  store user details
     const [user, setUser] = useState(null);
 
-    //   fetch user details after login
+    //    user details after login
     const fetchUserDetails = async () => {
-        //  backend API endpoint to fetch user details
+        //  backend API endpoint 
         const response = await fetch('/api/user');
         const userData = await response.json();
         setUser(userData);
     };
 
     useEffect(() => {
-        // Fetch user details after login
+        //  user details after login
         fetchUserDetails();
     }, []);
 
@@ -42,17 +42,17 @@ const ProfileDetailsForm = () => {
         class: ''
     });
 
-    //  handle form input changes
+    //   form input changes
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
     };
 
-    // handle form submission
+    //  form submission
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            // Send form data to backend API endpoint 
+            // Send form data  
             const response = await fetch('/api/update-profile', {
                 method: 'POST',
                 headers: {
@@ -137,7 +137,7 @@ const ProfilePicture = () => {
                     }
                 });
 
-                // Update profile picture URL 
+               
                 if (response.data.result) {
                     setSelectedPicture(response.data.result);
                 }
@@ -145,10 +145,10 @@ const ProfilePicture = () => {
                 console.error('Error uploading image:', error);
             }
 
-            // Read the file to display on the page
+           
             const reader = new FileReader();
             reader.onload = () => {
-                // Update the selected picture in state
+               
                 setSelectedPicture(reader.result);
             };
             reader.readAsDataURL(file);
@@ -199,12 +199,12 @@ const ProfilePicture = () => {
 const UpdateResume = () => {
     const [resumeFile, setResumeFile] = useState(null);
 
-    //function to handle file input change
+    
     const handleFileChange = (e) => {
         const file = e.target.files[0];
         setResumeFile(file);
     };
-    //handle form submission
+   
     const handleSubmit = async (e) => {
         e.preventdefault();
         try {
@@ -248,21 +248,13 @@ const UpdateResume = () => {
 };
 
 const UserProfile = () => {
-    // const handleChange = (e) =>{
-    //     const file = e.target.files[0];
-    //     handlePictureChange(file);
-    // }
-    const links = [
-        { label: 'Home', url: '/' },
-        { label: 'Schedules', url: '/' },
-        { label: 'DashBoard', url: '/' },
-        { label: 'Contact', url: '/' }
-    ];
+   
+    
     return (
         <>
 
 
-            <NavBar links={links} />
+            <NavBar links={StudentProfileNavlinks} />
             <div className="max-w-4xl mx-auto p-5">
                 <div className="flex items-center bg-yellow-400 p-4 rounded-lg mb-6">
                     <img src={ProfileImage} alt="User Profile" className="rounded-full w-10 h-10" />

@@ -4,15 +4,10 @@ import NavBar from '../NavBar/NavBar';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
-
+import { AdminNavLinks, AdminLoginfields } from '@/components/variables/formVariables';
 function AdminLogin() {
     const navigate = useNavigate();
-    const links = [
-        { label: 'Home', url: '/' },
-        { label: 'Login', url: '/login' },
-        { label: 'Register', url: '/signup' },
-        { label: 'Contact', url: '/' },
-    ];
+   
     const [formData, setFormData] = useState({
         username: "",
         password: ""
@@ -24,15 +19,12 @@ function AdminLogin() {
         navigate("/login/admin/students")
     };
 
-    const fields = [
-        { name: "name", label: "Username", type: "text" },
-        { name: "password", label: "Password", type: "password" }
-    ];
+   
 
     return (
         <>
-        <NavBar links={links} />
-        <LoginForm title="Admin Login" fields={fields} formData={formData} onSubmit={handleSubmit} />
+            <NavBar links={AdminNavLinks} />
+            <LoginForm title="Admin Login" fields={AdminLoginfields} formData={formData} onSubmit={handleSubmit} />
         </>
     );
 }

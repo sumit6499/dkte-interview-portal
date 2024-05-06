@@ -3,22 +3,17 @@ import React, { useState } from 'react';
 import NavBar from '../NavBar/NavBar';
 import '@/App.css'
 
-
+import { StudentHomeNavlinks } from '@/components/variables/formVariables';
 import Schedule from '@/components/ui/Schedules';
 
 
 const StudentHome = () => {
-    const links = [
-        { label: 'Home', url: '/' },
-        { label: 'Schedules', url: '/login/student/studenthome' },
-        { label: 'DashBoard', url: '/login/student/dashboard' },
-        { label: 'Contact', url: '/' }
-    ];
+   
     const drop = true;
 
     return (
         <>
-            <NavBar links={links} drop={drop} />
+            <NavBar links={StudentHomeNavlinks} drop={drop} />
             <div className="bg-zinc-100 h-screen">
                 <div className="flex h-screen">
 

@@ -2,35 +2,52 @@ import React from "react";
 import CommonSignUp from "@/components/ui/CommonSignUp";
 import NavBar from "../NavBar/NavBar";
 import { useNavigate } from "react-router";
+import axios from "axios";
+import { Adminfields, AdminNavLinks } from "@/components/variables/formVariables";
+
 function AdminSignUp() {
     const studentSignup = false;
+   const isAdminSignUp = true;
 const navigate = useNavigate();
-    const links = [
-        { label: 'Home', url: '/' },
-        { label: 'Login', url: '/login' },
-        { label: 'Register', url: '/signup' },
-        { label: 'Contact', url: '/' },
-    ];
-    const handleSubmit = (data) => {
+    
+    const handleSubmit = async (data) => {
         //  admin sign up success 
-        console.log("success: "+data);
+        data.preventDefault();
+        const formDataToSend   = new FormData();
+        fields.forEach((field) =>{
+            formDataToSend.append(field.name,
+                data[field.name]
+            );
+        })
+        try{
+            const response = await axios.post("http://localhost:3000/signup",
+            formDataToSend,
+            {
+                headers:{
+                    "Content-Type":"multipart/form-data",
+                },
+            })
+        }
+        catch (error) {
+            console.error("Error submitting form:", error);
+            // Error handle
+            // Error page
+        }
+        console.log("success: "+response.data);
         navigate("/login/admin");
     };
+  
 
-    const fields = [
-        { name: "name", label: "Full Name", type: "text" },
-        { name: "email", label: "Email", type: "email" },
-        { name: "phone", label: "Phone", type: "tel" },
-        { name: "password", label: "Password", type: "text" },
-        { name: "idcard", label: "ID Card", type: "file" }
-    ];
+   
 
     return (
         <>
-        <NavBar links={links} />
-        <CommonSignUp title="Admin SignUp" fields={fields} onSubmit={handleSubmit} 
+            <NavBar links={AdminNavLinks} />
+            <CommonSignUp title="Admin SignUp" fields={Adminfields} onSubmit={handleSubmit} 
                 studentSignup={studentSignup}
-                currentStage={1}/>
+                currentStage={1}
+                 isAdminSignUp= {true}
+                />
         </>
     );
 }

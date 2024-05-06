@@ -37,3 +37,8 @@ export const sharedClasses = {
     roundedFull: 'rounded-full',
     // Add more common styles as needed
 };
+
+export const footerClasses = 'bg-black text-white p-8';
+export const gridClasses = 'max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8';
+export const linkClasses = 'hover:text-zinc-300';
+

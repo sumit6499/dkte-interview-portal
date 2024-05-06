@@ -50,7 +50,7 @@ function CommonSignUp({ title, fields, onSubmit, currentStage, className, onPrev
         }
     };
 
-   
+
     const renderFormFields = () => {
         return fields.map((field) => (
             <div key={field.name}>
@@ -108,23 +108,23 @@ function CommonSignUp({ title, fields, onSubmit, currentStage, className, onPrev
                                 {renderFormFields()}
                             </div>
                             <div className="flex justify-between ">
-                            {currentStage >1 && (
-                                <button
-                                type="button"
-                                onClick={onPrev}
-                                className="block mx-auto py-3 px-6 bg-gray-500 text-black font-bold rounded-md hover:bg-yellow-600">
-                                    Prev
-                                </button>
-                            )}
+                                {currentStage > 1 && (
+                                    <button
+                                        type="button"
+                                        onClick={onPrev}
+                                        className="block mx-auto py-3 px-6 bg-gray-500 text-black font-bold rounded-md hover:bg-yellow-600">
+                                        Prev
+                                    </button>
+                                )}
                                 {currentStage === 1 && studentSignup && (
-                                <button
-                                    type="button"
-                                    onClick={() => onSubmit(formData)}
-                                    className="block mx-auto py-3 px-6 bg-yellow-500 text-black font-bold rounded-md hover:bg-yellow-600"
-                                >
-                                    Next
-                                </button>
-                            )}
+                                    <button
+                                        type="button"
+                                        onClick={() => onSubmit(formData)}
+                                        className="block mx-auto py-3 px-6 bg-yellow-500 text-black font-bold rounded-md hover:bg-yellow-600"
+                                    >
+                                        Next
+                                    </button>
+                                )}
                             </div>
                             {currentStage === 1 && !studentSignup && (
                                 <button
@@ -134,7 +134,7 @@ function CommonSignUp({ title, fields, onSubmit, currentStage, className, onPrev
                                     SignUp
                                 </button>
                             )}
-                            {currentStage === 2 && studentSignup  && (
+                            {currentStage === 2 && studentSignup && (
                                 <button
                                     type="submit"
                                     className="block mx-auto py-3 px-6 bg-yellow-500 text-black font-bold rounded-md hover:bg-yellow-600"

@@ -4,15 +4,10 @@ import NavBar from '../NavBar/NavBar';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
-
+import { InterviewerNavlinks, InterviewerLoginfields } from '@/components/variables/formVariables';
 function InterviewerLogin() {
     const navigate = useNavigate();
-    const links = [
-        { label: 'Home', url: '/' },
-        { label: 'Login', url: '/login' },
-        { label: 'Register', url: '/signup' },
-        { label: 'Contact', url: '/' },
-    ];
+    
     const [formData, setFormData] = useState({
         username: "",
         password: ""
@@ -24,15 +19,12 @@ function InterviewerLogin() {
         navigate("/login/interviewer/interviewerhome")
     };
 
-    const fields = [
-        { name: "username", label: "Username", type: "text" },
-        { name: "password", label: "Password", type: "password" }
-    ];
+    
 
     return (
         <>
-            <NavBar links={links} />
-            <LoginForm title="Interviewer Login" fields={fields} formData={formData} onSubmit={handleSubmit} />
+            <NavBar links={InterviewerNavlinks} />
+            <LoginForm title="Interviewer Login" fields={InterviewerLoginfields} formData={formData} onSubmit={handleSubmit} />
         </>
     );
 }

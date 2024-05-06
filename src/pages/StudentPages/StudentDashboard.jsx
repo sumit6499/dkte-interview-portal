@@ -4,11 +4,12 @@ import NavBar from '../NavBar/NavBar';
 import { Pie, Bar } from 'react-chartjs-2';
 import { Chart, ArcElement } from 'chart.js';
 import InterviewItem from '@/components/ui/InterviewItem';
+import { StudentDashboardNavlinks } from '@/components/variables/formVariables';
 import { SampleBarGraph } from '@/assets/index.js';
 import {  registerables } from 'chart.js';
 Chart.register(...registerables);
 Chart.register(ArcElement);
-// Chart.register(category);
+
 
 const WelcomeMessage = () => {
     return (
@@ -19,7 +20,7 @@ const WelcomeMessage = () => {
     );
 };
 const BarGraph = ({ interviews }) => {
-    // Calculate total scores for each interview
+   
     const totalScores = interviews.map(interview => {
         return interview.technicalKnowledgeScore + interview.experienceScore + interview.behaviorScore;
     });
@@ -39,11 +40,11 @@ const BarGraph = ({ interviews }) => {
     const options = {
         scales: {
             x: {
-                type: 'category', // Specify the scale type for x-axis (labels)
-                labels: labels, // Assign the labels
+                type: 'category',// for x-axis (labels)
+                labels: labels, //   labels
             },
             y: {
-                beginAtZero: true, // Ensure the y-axis starts at zero
+                beginAtZero: true, //y-axis 
             },
         },
     };
@@ -54,7 +55,7 @@ const BarGraph = ({ interviews }) => {
             <div className='h-48 sm:h-64 md:h-72 lg:h-80 xl:h-96'>
                 <Bar data={data} options={options} />
             </div>
-             {/* Pass options to Bar component */}
+             
         </div>
     );
 };
@@ -166,16 +167,11 @@ const StudentDashboard = () => {
 
     console.log("Interviews:", interviews);
 
-    const links = [
-        { label: 'Home', url: '/' },
-        { label: 'Schedules', url: '/StudentHome' },
-        { label: 'Dashboard', url: '/StudentDashboard' },
-        { label: 'Contact', url: '/' },
-    ];
+   
 
     return (
         <>
-            <NavBar links={links} />
+            <NavBar links={StudentDashboardNavlinks} />
             <div className="bg-zinc-100">
                 <div className="container mx-auto px-4">
                     <WelcomeMessage />

@@ -3,6 +3,7 @@ import NavBar from '../NavBar/NavBar';
 import { useLocation } from 'react-router';
 import axios from 'axios';
 import { useNavigate } from 'react-router';
+import { AdminSchedulesNavlinks } from '@/components/variables/formVariables';
 function AdminInterviewSchedule() {
     const location = useLocation();
     let student = location.state && location.state.student; 
@@ -21,12 +22,7 @@ function AdminInterviewSchedule() {
     const [dateTime, setDateTime] = useState('');
     const [link,setlink] = useState('');
     
-    const links = [
-        { label: 'Home', url: '/' },
-        { label: 'Students', url: '/' },
-        { label: 'Schedules', url: '/' },
-        { label: 'Contact', url: '/' }
-    ]
+   
     const getLink = () => {
         window.open('https://meet.google.com/', '_blank');
     }
@@ -56,7 +52,7 @@ function AdminInterviewSchedule() {
 
     return (
         <>
-            <NavBar links={links} />
+            <NavBar links={AdminSchedulesNavlinks} />
             <div className="white text-white mb-10">
                 <div className="max-w-lg mx-auto mt-10 p-6 bg-zinc-800 rounded-lg">
                     <h1 className="text-xl font-bold mb-4 border-b border-zinc-600 pb-2">Schedule Interview</h1>

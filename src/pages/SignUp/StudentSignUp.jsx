@@ -2,21 +2,21 @@ import React ,{useState}from "react";
 import CommonSignUp from "@/components/ui/CommonSignUp";
 import NavBar from "../NavBar/NavBar";
 import { useNavigate } from "react-router";
+import axios from "axios";
+import { stdFieldsStage1, stdFieldsStage2, StudentNavlinks } from '@/components/variables/formVariables.js';
+
 function StudentSignUp() {
     const [stage, setStage] = useState(1);
     const navigate = useNavigate();
-    const links = [
-        { label: 'Home', url: '/' },
-        { label: 'Login', url: '/login' },
-        { label: 'Register', url: '/signup' },
-        { label: 'Contact', url: '/' },
-    ];
+   
     const studentSignup =  true
+    const IsInterviwerSignUp = false;
+
     // const handleSubmit = (data) => {
     //     //  student sign up success 
     //     navigate('/StudentHome');
     // };
-    const handleSubmit = (formData) => {
+    const handleSubmit = async  (formData) => {
         // Perform validation and processing for each stage
         if (stage === 1) {
             // Validation for stage 1
@@ -25,9 +25,34 @@ function StudentSignUp() {
         } else if (stage === 2) {
             // Validation for stage 2
             // Proceed to stage 3
-            console.log("Form submitted:", formData);
-            // Redirect to success page
-            navigate('/login/student');
+            
+            formData.preventDefault();
+            const formDataToSend = new FormData();
+            fields.forEach((field) => {
+                formDataToSend.append(field.name, formData[field.name]);
+            });
+
+            try {
+                // Axios POST
+                const response = await axios.post(
+                    "http://localhost:5000/signup",
+                    formDataToSend,
+                    {
+                        headers: {
+                            "Content-Type": "multipart/form-data",
+                        },
+                    }
+                );
+                console.log("Response from server:", response.data);
+                // console.log("success: " + data);
+                navigate("/login/student");
+                // Success
+                // Can send data to parent component
+            } catch (error) {
+                console.error("Error submitting form:", error);
+                // Error handle
+                // Error page
+            }
             // setStage(3);
         } else {
             // Final stage submission
@@ -35,51 +60,21 @@ function StudentSignUp() {
            
         }
     };
-    const departmentOptions = [
-        "CSE",
-        "AI",
-        "AIDS",
-        "ENTC",
-        "MECH",
-        "ELECTRIC",
-        "CIVIL",
-    ]
-
-    const fieldsStage1 = [
-        { name: "name", label: "Full Name", type: "text" },
-        { name: "email", label: "Email", type: "email" },
-        { name: "phone", label: "Phone", type: "tel" },
-        {
-            name:"dept",
-            label:"Department",
-            type:"select",
-            options:departmentOptions
-        },
-        { name: "class", label: "Class", type: "text" },
-        { name: "PRN", label: "PRN", type: "text" },
-        { name: "password", label: "Password", type: "text" },
-        { name: "idcard", label: "ID Card", type: "file" },
-        { name: "resume", label: "Resume", type: "file" }
-    ];
-    const fieldsStage2 = [
-        { name: "payment", label: "Payment", type: "text" },
-        
-    ];
-
-    const fields = stage === 1 ? fieldsStage1 : fieldsStage2;
+    
     
     return (
         <>
-            <NavBar links={links} />
+            <NavBar links={StudentNavlinks} />
             <CommonSignUp
                 // title={`Student SignUp - Stage ${stage}`}
                 title={"Student SignUp" }
-                fields={fields}
+                fields={stage === 1 ? stdFieldsStage1 : stdFieldsStage2 }
                 onSubmit={handleSubmit}
                 className="pt-20"
                 currentStage={stage} 
                 onPrev={() => setStage(stage - 1)} // Pass current stage to the form component
                 studentSignup={studentSignup}
+                IsInterviwerSignUp={IsInterviwerSignUp}
             />
         </>
     );
