@@ -25,7 +25,7 @@ export const stdFieldsStage1 = [
     { name: "resume", label: "Resume", type: "file" },
 ];
 
-export const stdFieldsStage2 = [{ name: "payment", label: "Payment", type: "text" }];
+export const stdFieldsStage2 = [];
 
 export  const Adminfields = [
         { name: "name", label: "Full Name", type: "text" },

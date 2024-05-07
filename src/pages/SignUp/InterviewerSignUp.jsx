@@ -15,7 +15,7 @@ const InterviewerSignUp = () => {
         name: '',
         email: '',
         phone: '',
-        password: '', // Add password field
+        password: '',
         profession: '',
         idcard: '',
     });
@@ -44,7 +44,8 @@ const InterviewerSignUp = () => {
         
         if (!Object.values(formData).every(value => value !== '')) {
             // toast.error('Please fill in all fields!', { position: toast.POSITION.TOP_CENTER });
-            alert("Fill the details");
+            showToast("Please fill all the fields");
+
             return;
         }
 
@@ -61,7 +62,9 @@ const InterviewerSignUp = () => {
             // toast.error('An error occurred while submitting the form!', { position: toast.POSITION.TOP_CENTER });
         }
     };
-
+    const showToast = (message) => {
+        toast.error(message);
+    };
 
     return (
         <>

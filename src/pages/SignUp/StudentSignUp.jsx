@@ -74,6 +74,7 @@ function StudentSignUp() {
                 // title={`Student SignUp - Stage ${stage}`}
                 title={"Student SignUp" }
                 fields={stage === 1 ? stdFieldsStage1 : stdFieldsStage2 }
+                // fields={ stdFieldsStage1  }
                 onSubmit={handleSubmit}
                 className="pt-20"
                 currentStage={stage} 
