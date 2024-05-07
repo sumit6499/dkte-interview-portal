@@ -37,6 +37,7 @@ function SignUpPage() {
                     buttonText="Student SignUp"
                     buttonUrl="/signup/student"
                     isSmallScreen={isSmallScreen}
+                    // className="p"
                     // className={isSmallScreen ? "w-8 h-12":"w-20 h-20"}
                 />
                 <AuthButton
