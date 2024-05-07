@@ -10,7 +10,7 @@ const AuthButton = ({ onClick, imageUrl, altText, buttonText, buttonUrl, isSmall
             <img
                 src={imageUrl}
                 alt={altText}
-                className={`rounded-md ${isSmallScreen ? 'w-35 h-35 p-3' : 'w-40 h-40 '}`}
+                className={`rounded-md ${isSmallScreen ? 'w-40 h-35 p-3' : 'w-40 h-40 '}`}
             />
             <span className={`mt-2 font-semibold ${isSmallScreen ? 'text-sm' : 'text-lg'}`}>{buttonText}</span>
         </button>
