@@ -4,6 +4,8 @@ import NavBar from "../NavBar/NavBar";
 import { useNavigate } from "react-router";
 import axios from "axios";
 import { stdFieldsStage1, stdFieldsStage2, StudentNavlinks } from '@/components/variables/formVariables.js';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function StudentSignUp() {
     const [stage, setStage] = useState(1);
@@ -45,6 +47,8 @@ function StudentSignUp() {
                 );
                 console.log("Response from server:", response.data);
                 // console.log("success: " + data);
+                toast.success('Signup Successful!', { position: toast.POSITION.TOP_CENTER });
+
                 navigate("/login/student");
                 // Success
                 // Can send data to parent component
@@ -65,6 +69,7 @@ function StudentSignUp() {
     return (
         <>
             <NavBar links={StudentNavlinks} />
+            <ToastContainer />
             <CommonSignUp
                 // title={`Student SignUp - Stage ${stage}`}
                 title={"Student SignUp" }

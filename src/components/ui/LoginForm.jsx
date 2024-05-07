@@ -9,6 +9,8 @@ function LoginForm({ title, fields, formData, onSubmit }) {
     const [formValues, setFormValues] = useState(formData);
     const [showPassword, setShowPassword] = useState(false);
     const [userExists, setUserExists] = useState(true); // State variable to track user existence
+    const [forgotPasswordEmail, setForgotPasswordEmail] = useState('');
+    const [showForgotPassword, setShowForgotPassword] = useState(false);
 
     //  form input change
     const handleChange = (e) => {
@@ -42,6 +44,15 @@ function LoginForm({ title, fields, formData, onSubmit }) {
             console.error("Error submitting form:", error);
             //  error
         }
+    };
+
+    // handle forgot password submission
+    const handleForgotPasswordSubmit = async (e) => {
+        e.preventDefault();
+        // Implement forgot password logic here
+        console.log("Forgot Password email submitted:", forgotPasswordEmail);
+        setShowForgotPassword(false);
+        toast.success('Password reset instructions sent to your email');
     };
 
     return (
@@ -87,8 +98,37 @@ function LoginForm({ title, fields, formData, onSubmit }) {
                             <button type="submit" className="w-30 bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
                                 Login
                             </button>
+                            <button
+                                type="button"
+                                className="ml-2 text-sm text-yellow-500 hover:text-yellow-600 focus:outline-none"
+                                onClick={() => setShowForgotPassword(true)}
+                            >
+                                Forgot Password?
+                            </button>
                         </div>
                     </form>
+                    {showForgotPassword && (
+                        <form onSubmit={handleForgotPasswordSubmit}>
+                            <div className="mt-4 text-center">
+                                <input
+                                    type="email"
+                                    placeholder="Enter your email"
+                                    value={forgotPasswordEmail}
+                                    onChange={(e) => setForgotPasswordEmail(e.target.value)}
+                                    className="input-field font-bold p-1 focus:border-yellow-500 focus:ring-yellow-500 text-black"
+                                    required
+                                />
+                            </div>
+                            <div className="flex justify-center mt-4">
+                                <button
+                                    type="submit"
+                                    className="w-30 bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                                >
+                                    Reset Password
+                                </button>
+                            </div>
+                        </form>
+                    )}
                 </div>
                 <img src={interviewComposition} alt="" />
             </div>

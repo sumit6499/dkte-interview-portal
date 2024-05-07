@@ -26,4 +26,12 @@ const Schedule = () =>{
         </>
     );
 }
+{/* <div className='flex mt-2 justify-between'>
+                                <button type='button' onClick={() => addTimeRange(day)} className="block mx-auto py-1 px-2 bg-gray-500 text-black font-bold rounded-md hover:bg-yellow-600 mr-2">
+                                    Add Time Range
+                                </button>
+                                <button type='button' onClick={() => removeTimeRange(day)} className="block mx-auto py-1 px-2 bg-gray-500 text-black font-bold rounded-md hover:bg-yellow-600">
+                                    Delete Time Range
+                                </button>
+                            </div> */}
 export default Schedule;

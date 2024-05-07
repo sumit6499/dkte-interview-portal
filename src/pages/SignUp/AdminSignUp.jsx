@@ -4,6 +4,8 @@ import NavBar from "../NavBar/NavBar";
 import { useNavigate } from "react-router";
 import axios from "axios";
 import { Adminfields, AdminNavLinks } from "@/components/variables/formVariables";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function AdminSignUp() {
     const studentSignup = false;
@@ -27,6 +29,8 @@ const navigate = useNavigate();
                     "Content-Type":"multipart/form-data",
                 },
             })
+            toast.success('Signup Successful!', { position: toast.POSITION.TOP_CENTER });
+
         }
         catch (error) {
             console.error("Error submitting form:", error);
@@ -43,6 +47,7 @@ const navigate = useNavigate();
     return (
         <>
             <NavBar links={AdminNavLinks} />
+            <ToastContainer />
             <CommonSignUp title="Admin SignUp" fields={Adminfields} onSubmit={handleSubmit} 
                 studentSignup={studentSignup}
                 currentStage={1}

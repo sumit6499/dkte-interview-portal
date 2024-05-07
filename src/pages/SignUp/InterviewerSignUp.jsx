@@ -3,126 +3,95 @@ import NavBar from '../NavBar/NavBar';
 import { interviewComposition } from '@/assets';
 import axios from 'axios';
 import { InterviewerNavLinks } from '@/components/variables/formVariables';
-import '@/App.css'
+import { ToastContainer, toast } from 'react-toastify'; // Make sure to import toast from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css';
+import '@/App.css';
+
 const InterviewerSignUp = () => {
-    
+    const [selectedDays, setSelectedDays] = useState([]);
+    const [selectedTimes, setSelectedTimes] = useState({});
 
-    const [selectedDays, setSelectedDays] = useState(['Monday']);
-    const [selectedTimes, setSelectedTimes] = useState({
-        Monday: [{ start: '', end: '' }],
-
-    });
-    const [isSmallScreen,setIsSmallerScreen] = useState(false);
     const [formData, setFormData] = useState({
         name: '',
         email: '',
         phone: '',
         idcard: '',
-        selectedTimes: {
-            Monday: [{ start: '', end: '' }],
-            Tuesday: [{ start: '', end: '' }],
-            Wednesday: [{ start: '', end: '' }],
-            Thursday: [{ start: '', end: '' }],
-            Friday: [{ start: '', end: '' }],
-            Saturday: [{ start: '', end: '' }],
-            Sunday: [{ start: '', end: '' }]
-        }
     });
 
+    const handleTimeRangeChange = (e, day, field) => {
+        const newSelectedTimes = { ...selectedTimes };
+        newSelectedTimes[day][field] = e.target.value;
+        setSelectedTimes(newSelectedTimes);
+        setFormData(prevState => ({ ...prevState, selectedTimes: newSelectedTimes }));
+    };
+
+    useEffect(() => {
+        const initialSelectedTimes = {};
+        selectedDays.forEach(day => {
+            initialSelectedTimes[day] = {
+                start: '',
+                end: ''
+            };
+        });
+        setSelectedTimes(initialSelectedTimes);
+    }, [selectedDays]);
 
     const handleSubmit = async (e) => {
-        Object.keys(selectedTimes).forEach(day => {
-            console.log(`${day}:`, selectedTimes[day]);
-        });
         e.preventDefault();
+
+        
+        if (!Object.values(formData).every(value => value !== '')) {
+            // toast.error('Please fill in all fields!', { position: toast.POSITION.TOP_CENTER });
+            alert("Fill the details");
+            return;
+        }
+
         try {
             const response = await axios.post('http://localhost:5000/submit-form', formData);
             console.log(response.data);
+            // toast.success('Signup Successful!', { position: toast.POSITION.TOP_CENTER });
         } catch (error) {
             console.error('Error submitting form:', error);
+            // toast.error('An error occurred while submitting the form!', { position: toast.POSITION.TOP_CENTER });
         }
     };
-    const handleDayChange = (e) => {
-        const newSelectedDays = Array.from(e.target.selectedOptions, option => option.value);
-        setSelectedDays(newSelectedDays);
 
-        const newSelectedTimes = { ...selectedTimes };
-        newSelectedDays.forEach(day => {
-            if (!newSelectedTimes[day]) {
-                newSelectedTimes[day] = [{ start: '', end: '' }];
-            }
-        });
-        setSelectedTimes(newSelectedTimes);
-        // Update formData with new selectedTimes
-        setFormData(prevState => ({ ...prevState, selectedTimes: newSelectedTimes }));
-    };
 
-    const handleTimeRangeChange = (e, day, index, field) => {
-        const newSelectedTimes = { ...selectedTimes };
-        newSelectedTimes[day][index][field] = e.target.value;
-        setSelectedTimes(newSelectedTimes);
-        // Update formData with new selectedTimes
-        setFormData(prevState => ({ ...prevState, selectedTimes: newSelectedTimes }));
-    };
-
-    const addTimeRange = (day) => {
-        const newSelectedTimes = { ...selectedTimes };
-        newSelectedTimes[day].push({ start: '', end: '' });
-        setSelectedTimes(newSelectedTimes);
-        // Update formData with new selectedTimes
-        setFormData(prevState => ({ ...prevState, selectedTimes: newSelectedTimes }));
-    };
-
-    const removeTimeRange = (day, index) => {
-        const newSelectedTimes = { ...selectedTimes };
-        newSelectedTimes[day].splice(index, 1);
-        setSelectedTimes(newSelectedTimes);
-        // Update formData with new selectedTimes
-        setFormData(prevState => ({ ...prevState, selectedTimes: newSelectedTimes }));
-    };
-    useEffect (()=>{
-        const checkScreenSize = () =>{
-            setIsSmallerScreen(window.innerWidth<=600);
-        }
-        checkScreenSize();
-        window.addEventListener("resize",checkScreenSize);
-
-        return () => window.removeEventListener("resize",checkScreenSize);
-    },[]);
     return (
         <>
             <NavBar links={InterviewerNavLinks} />
+            <ToastContainer />
             <div className="max-w-2xl mx-auto p-8 bg-zinc-800 mt-10 rounded-lg mb-10 ">
                 <h1 className="text-xl font-bold mb-6 text-white flex justify-center">Interviewer SignUp</h1>
-                <form className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <form className="grid grid-cols-1 md:grid-cols-2 gap-6" onSubmit={handleSubmit}>
                     <div>
                         <label htmlFor="name" className="block mb-2 text-white">Full Name:</label>
-                        <input type="text" id="name" className="w-full p-2 bg-zinc-700 rounded text-white" value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} />
+                        <input type="text" id="name" className="w-full p-2 bg-zinc-700 rounded text-white" value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} required />
                     </div>
                     <div>
                         <label htmlFor="email" className="block mb-2 text-white">Email:</label>
-                        <input type="email" id="email" className="w-full p-2 bg-zinc-700 rounded text-white" value={formData.email} onChange={(e) => setFormData({ ...formData, email: e.target.value })} />
+                        <input type="email" id="email" className="w-full p-2 bg-zinc-700 rounded text-white" value={formData.email} onChange={(e) => setFormData({ ...formData, email: e.target.value })} required />
                     </div>
                     <div>
                         <label htmlFor="phone" className="block mb-2 text-white">Phone:</label>
-                        <input type="tel" id="phone" className="w-full p-2 bg-zinc-700 rounded text-white" value={formData.phone} onChange={(e) => setFormData({ ...formData, phone: e.target.value })} />
+                        <input type="tel" id="phone" className="w-full p-2 bg-zinc-700 rounded text-white" value={formData.phone} onChange={(e) => setFormData({ ...formData, phone: e.target.value })} required />
                     </div>
                     <div>
                         <label htmlFor="password" className="block mb-2 text-white">Password:</label>
-                        <input type="text" id="password" className="w-full p-2 bg-zinc-700 rounded text-white" value={formData.password} onChange={(e) => setFormData({ ...formData, password: e.target.value })} />
+                        <input type="text" id="password" className="w-full p-2 bg-zinc-700 rounded text-white" value={formData.password} onChange={(e) => setFormData({ ...formData, password: e.target.value })} required />
                     </div>
                     <div>
                         <label htmlFor="profession" className="block mb-2 text-white">Profession:</label>
-                        <input type="text" id="profession" className="w-full p-2 bg-zinc-700 rounded text-white" value={formData.profession} onChange={(e) => setFormData({ ...formData, profession: e.target.value })} />
+                        <input type="text" id="profession" className="w-full p-2 bg-zinc-700 rounded text-white" value={formData.profession} onChange={(e) => setFormData({ ...formData, profession: e.target.value })} required />
                     </div>
-                    
                     <div>
+
                         <label htmlFor="idcard" className="block mb-2 text-white">ID Card:</label>
                         <input type="file" id="idcard" className="mt-1 block w-full text-sm text-zinc-900 file:mr-4 file:py-2 file:px-4 file:border-0 file:text-sm file:font-semibold file:bg-yellow-500 file:text-black hover:file:bg-yellow-600 hover:pointer " onChange={(e) => setFormData({ ...formData, idcard: e.target.files[0] })} />
                     </div>
                     <div>
                         <label htmlFor="days" className="block mb-2 text-white">Days Of Week You're Available:</label>
-                        <select id="days" className="w-full p-2 bg-zinc-700 rounded text-white" multiple onChange={handleDayChange} defaultValue={['Monday']}>
+                        <select id="days" className="w-full p-2 bg-zinc-700 rounded text-white" multiple onChange={(e) => setSelectedDays(Array.from(e.target.selectedOptions, option => option.value))} defaultValue={['Monday']}>
                             <option>Monday</option>
                             <option>Tuesday</option>
                             <option>Wednesday</option>
@@ -133,45 +102,31 @@ const InterviewerSignUp = () => {
                         </select>
                     </div>
 
-                    {selectedDays.map((day, dayIndex) => (
-                        <div key={dayIndex}>
-                            {selectedTimes[day].map((time, index) => (
-                                <div key={index}>
-                                    <label htmlFor={`start-time-${day}-${index}`} className="block mb-2 text-white">{day} Preferred Interview Start Time:</label>
-                                    <input
-                                        type="time"
-                                        id={`start-time-${day}-${index}`}
-                                        className="w-full p-2 bg-zinc-700 rounded text-white"
-                                        onChange={(e) => handleTimeRangeChange(e, day, index, 'start')}
-                                        value={selectedTimes[day][index].start || ''}
-                                    />
-                                    <label htmlFor={`end-time-${day}-${index}`} className="block mb-2 text-white">{day} Preferred Interview End Time:</label>
-                                    <input
-                                        type="time"
-                                        id={`end-time-${day}-${index}`}
-                                        className="w-full p-2 bg-zinc-700 rounded text-white"
-                                        onChange={(e) => handleTimeRangeChange(e, day, index, 'end')}
-                                        value={selectedTimes[day][index].end || ''}
-                                    />
-                                </div>
-                            ))}
-                            <div className='flex mt-2 justify-between'>
-                                <button type='button' onClick={() => addTimeRange(day)} className="block mx-auto py-1 px-2 bg-gray-500 text-black font-bold rounded-md hover:bg-yellow-600 mr-2">
-                                    Add Time Range
-                                </button>
-                                <button type='button' onClick={() => removeTimeRange(day)} className="block mx-auto py-1 px-2 bg-gray-500 text-black font-bold rounded-md hover:bg-yellow-600">
-                                    Delete Time Range
-                                </button>
-                            </div>
+                    {selectedDays.map((day) => (
+                        <div key={day}>
+                            <label htmlFor={`start-time-${day}`} className="block mb-2 text-white">{day} Preferred Interview Start Time:</label>
+                            <input
+                                type="time"
+                                id={`start-time-${day}`}
+                                className="w-full p-2 bg-zinc-700 rounded text-white"
+                                onChange={(e) => handleTimeRangeChange(e, day, 'start')}
+                                value={selectedTimes[day]?.start || ''}
+                            />
+                            <label htmlFor={`end-time-${day}`} className="block mb-2 text-white">{day} Preferred Interview End Time:</label>
+                            <input
+                                type="time"
+                                id={`end-time-${day}`}
+                                className="w-full p-2 bg-zinc-700 rounded text-white"
+                                onChange={(e) => handleTimeRangeChange(e, day, 'end')}
+                                value={selectedTimes[day]?.end || ''}
+                            />
                         </div>
                     ))}
-                 
-                    <div className='grid grid-cols-1 '>
-                        <button type="submit" className={" block mx-auto py-3 px-6 bg-yellow-500 text-black font-bold rounded-md hover:bg-yellow-600"} onClick={handleSubmit}>Sign Up</button>
-                    </div>
-                    {/* <button type="submit" className="col-span-2 sm:col-auto px-16 py-2 bg-yellow-500 rounded hover:bg-yellow-600 whitespace-nowrap text-center" onClick={handleSubmit}>Sign Up</button> */}
-                    {/* interviewSignup px-16 py-2 bg-yellow-500 rounded hover:bg-yellow-600 flex justify-self-center whitespace-nowrap text-center ml-80 */}
+
                 </form>
+                <div className='grid grid-cols-1 '>
+                    <button type="button" onClick={handleSubmit} className={"mt-10 block mx-auto py-3 px-6 bg-yellow-500 text-black font-bold rounded-md hover:bg-yellow-600"}>Sign Up</button>
+                </div>
             </div>
             <div>
                 <img src={interviewComposition} alt="" />

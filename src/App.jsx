@@ -19,7 +19,7 @@ import InterviewerSignUp from './pages/SignUp/InterviewerSignUp';
 import InterviewerLogin from './pages/Login/InterviewerLogin';
 import InterviewerIntervieweSchedules from './pages/InterviewerPages/InterviewSchedules';
 import Schedule from './components/ui/Schedules';
-
+import InterviwerPorfile from './pages/InterviewerPages/interviewerProfile';
 function App() {
  
   return (
@@ -43,6 +43,7 @@ function App() {
           <Route path="/Schedule" element={<Schedule />} />
           <Route path="/login/interviewer" element={<InterviewerLogin />} />
           <Route path="/login/interviewer/schedules" element={<InterviewerIntervieweSchedules />} />
+          <Route path="/login/interviewer/profile" element={<InterviwerPorfile />} />
         </Routes>
       </Router>
     </>

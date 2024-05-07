@@ -84,7 +84,7 @@ export const AdminStudentsNavlinks = [
     ];
 
 
-export const InterviewerProfileNavlinkslinks = [
+export const InterviewerProfileNavLinks = [
         { label: 'Home', url: '/' },
         { label: 'Schedules', url: '/' },
         { label: 'DashBoard', url: '/' },

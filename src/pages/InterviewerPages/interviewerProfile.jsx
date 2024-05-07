@@ -4,8 +4,8 @@ import axios from 'axios';
 import NavBar from '../NavBar/NavBar';
 import { ProfileImage, CameraIcon } from '@/assets/index.js';
 import StudentLogin from '../Login/StudentLogin';
-import { fileInputClasses, InterviewerProfileNavlinkslinks } from '@/components/styles/sharedStyles';
-
+import { fileInputClasses } from '@/components/styles/sharedStyles';
+import { InterviewerProfileNavLinks } from '@/components/variables/formVariables';
 
 
 const Login = () => {
@@ -96,8 +96,6 @@ const ProfileDetailsForm = () => {
 
 const ProfilePicture = () => {
     const [selectedPicture, setSelectedPicture] = useState(null);
-
-
     //To send the updated picture to backend
     // const handlePictureChange = async (e) => {
     //     const file = e.target.files[0];
@@ -252,12 +250,9 @@ const InterviwerPorfile = () => {
     //     const file = e.target.files[0];
     //     handlePictureChange(file);
     // }
-    
     return (
         <>
-
-
-            <NavBar links={InterviewerProfileNavlinkslinks} />
+            <NavBar links={InterviewerProfileNavLinks} />
             <div className="max-w-4xl mx-auto p-5">
                 <div className="flex items-center bg-yellow-400 p-4 rounded-lg mb-6">
                     <img src={ProfileImage} alt="User Profile" className="rounded-full w-10 h-10" />
@@ -269,10 +264,7 @@ const InterviwerPorfile = () => {
                 </div>
                 <ProfileDetailsForm />
             </div>
-
-
         </>
     );
 };
-
 export default InterviwerPorfile;

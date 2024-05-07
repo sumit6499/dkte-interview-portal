@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import NavBar from '../NavBar/NavBar';
 import '@/App.css'
 import Schedule from '@/components/ui/Schedules';
-import { InterviewerProfileNavlinkslinks } from '@/components/variables/formVariables';
+import { InterviewerProfileNavLinks } from '@/components/variables/formVariables';
 
 const InterviewerIntervieweSchedules = () => {
     
@@ -11,7 +11,7 @@ const InterviewerIntervieweSchedules = () => {
 
     return (
         <>
-            <NavBar links={InterviewerProfileNavlinkslinks} drop={drop} />
+            <NavBar links={InterviewerProfileNavLinks} drop={drop} />
             <div className="bg-zinc-100 h-screen">
                 <div className="flex h-screen">
 

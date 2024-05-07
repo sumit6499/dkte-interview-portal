@@ -170,6 +170,7 @@ const ProfilePicture = () => {
     //     }
     // };
 
+    
     return (
         <div className="bg-white p-4 rounded-lg shadow">
             <h3 className="text-lg font-semibold mb-3">Profile Picture</h3>
