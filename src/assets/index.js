@@ -20,6 +20,8 @@ import HomePicture from './StudentHomePicture.png'
 import ProfileImage from './ProfileImage.png';
 import CameraIcon from './CameraIcon.png';
 import SampleBarGraph from './SampleBarGraph.png';
+import Interviewer from './Interviewer.png'
+import SignUpLoginHome from './signup_login_home_pic.png';
 export {
     Chart,
     Gmail,
@@ -43,6 +45,8 @@ export {
     ProfileImage,
     CameraIcon,
     SampleBarGraph,
+    Interviewer,
+    SignUpLoginHome,
 }
 
 

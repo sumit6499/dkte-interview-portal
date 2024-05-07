@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router";
+
 const AuthButton = ({ onClick, imageUrl, altText, buttonText, buttonUrl, isSmallScreen }) => {
     const navigate = useNavigate();
     return (

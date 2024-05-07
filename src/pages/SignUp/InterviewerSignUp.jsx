@@ -27,6 +27,7 @@ const InterviewerSignUp = () => {
         setFormData(prevState => ({ ...prevState, selectedTimes: newSelectedTimes }));
     };
 
+    //to display time in time boxes
     useEffect(() => {
         const initialSelectedTimes = {};
         selectedDays.forEach(day => {

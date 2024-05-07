@@ -1,8 +1,9 @@
 
 import React, { useEffect, useState } from "react";
-import { StudentMale, AdministratorMale } from '@/assets/';
+import { StudentMale, AdministratorMale, Interviewer, SignUpLoginHome } from '@/assets/';
 import NavBar from "../NavBar/NavBar";
 import AuthButton from "@/components/ui/AuthButton";
+
 import '@/App.css';
 function SignUpPage() {
     const links = [
@@ -49,13 +50,16 @@ function SignUpPage() {
                     className="ml-4"
                 />
                 <AuthButton
-                    imageUrl={AdministratorMale}
+                    imageUrl={Interviewer}
                     altText="Interviewer SignUp"
                     buttonText="Interviewer SignUp"
                     buttonUrl="/signup/interviewer"
                     isSmallScreen={isSmallScreen}
                     className="ml-4"
                 />
+            </div>
+            <div className="bg-zinc-100 flex justify-center">
+                <img src={SignUpLoginHome} alt="" />
             </div>
         </div>
     );
