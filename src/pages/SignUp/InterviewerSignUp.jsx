@@ -15,6 +15,8 @@ const InterviewerSignUp = () => {
         name: '',
         email: '',
         phone: '',
+        password: '', // Add password field
+        profession: '',
         idcard: '',
     });
 
@@ -47,7 +49,11 @@ const InterviewerSignUp = () => {
         }
 
         try {
-            const response = await axios.post('http://localhost:5000/submit-form', formData);
+            const formDataToSend = new FormData();
+            Object.keys(formData).forEach(key =>{
+                formDataToSend.append(key,formData[key]);
+            })
+            const response = await axios.post('http://localhost:5000/submit-form', formDataToSend);
             console.log(response.data);
             // toast.success('Signup Successful!', { position: toast.POSITION.TOP_CENTER });
         } catch (error) {
@@ -87,7 +93,7 @@ const InterviewerSignUp = () => {
                     <div>
 
                         <label htmlFor="idcard" className="block mb-2 text-white">ID Card:</label>
-                        <input type="file" id="idcard" className="mt-1 block w-full text-sm text-zinc-900 file:mr-4 file:py-2 file:px-4 file:border-0 file:text-sm file:font-semibold file:bg-yellow-500 file:text-black hover:file:bg-yellow-600 hover:pointer " onChange={(e) => setFormData({ ...formData, idcard: e.target.files[0] })} />
+                        <input type="file" id="idcard" className="mt-1 block w-full text-sm  file:mr-4 file:py-2 file:px-4 file:border-0 file:text-sm file:font-semibold file:bg-yellow-500 file:text-black hover:file:bg-yellow-600 hover:pointer text-white" onChange={(e) => setFormData({ ...formData, idcard: e.target.files[0] })} />
                     </div>
                     <div>
                         <label htmlFor="days" className="block mb-2 text-white">Days Of Week You're Available:</label>
