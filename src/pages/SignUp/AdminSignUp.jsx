@@ -9,26 +9,32 @@ import 'react-toastify/dist/ReactToastify.css';
 
 function AdminSignUp() {
     const studentSignup = false;
-   const isAdminSignUp = true;
-const navigate = useNavigate();
-    
+    const isAdminSignUp = true;
+    const navigate = useNavigate();
+    const showToast = (message) => {
+        toast.error(message)
+    }
     const handleSubmit = async (data) => {
         //  admin sign up success 
         data.preventDefault();
-        const formDataToSend   = new FormData();
-        fields.forEach((field) =>{
+        if (Object.values(data).every(value => value !== '')) {
+            showToast("All fields are required");
+            return;
+        }
+        const formDataToSend = new FormData();
+        fields.forEach((field) => {
             formDataToSend.append(field.name,
                 data[field.name]
             );
         })
-        try{
+        try {
             const response = await axios.post("http://localhost:3000/signup",
-            formDataToSend,
-            {
-                headers:{
-                    "Content-Type":"multipart/form-data",
-                },
-            })
+                formDataToSend,
+                {
+                    headers: {
+                        "Content-Type": "multipart/form-data",
+                    },
+                })
             toast.success('Signup Successful!', { position: toast.POSITION.TOP_CENTER });
 
         }
@@ -37,22 +43,22 @@ const navigate = useNavigate();
             // Error handle
             // Error page
         }
-        console.log("success: "+response.data);
+        console.log("success: " + response.data);
         navigate("/login/admin");
     };
-  
 
-   
+
+
 
     return (
         <>
             <NavBar links={AdminNavLinks} />
             <ToastContainer />
-            <CommonSignUp title="Admin SignUp" fields={Adminfields} onSubmit={handleSubmit} 
+            <CommonSignUp title="Admin SignUp" fields={Adminfields} onSubmit={handleSubmit}
                 studentSignup={studentSignup}
                 currentStage={1}
-                 isAdminSignUp= {true}
-                />
+                isAdminSignUp={true}
+            />
         </>
     );
 }

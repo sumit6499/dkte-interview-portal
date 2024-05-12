@@ -20,6 +20,11 @@ import InterviewerLogin from './pages/Login/InterviewerLogin';
 import InterviewerIntervieweSchedules from './pages/InterviewerPages/InterviewSchedules';
 import Schedule from './components/ui/Schedules';
 import InterviwerPorfile from './pages/InterviewerPages/interviewerProfile';
+import ErrorPage from './components/ui/error';
+import StudentEvaluationForm from './pages/Screen/EvaluationForm';
+import Zoom from './pages/Screen/zoom';
+import ZoomComponent from './pages/Screen/zoom2';
+import FormBase64 from './components/ui/form64';
 function App() {
  
   return (
@@ -33,7 +38,9 @@ function App() {
           <Route path="/login/admin" element={<AdminLogin />} />
           <Route path="/signup/student" element={<StudentSignUp />} />
           <Route path="/signup/admin" element={<AdminSignUp />} />
+
           <Route path="/login/admin/students" element={<Students />} />
+          
           <Route path="/login/admin/adminschedules" element={<AdminSchedules />} />
           <Route path="/login/admin/interviewschedules" element={<AdminInterviewSchedule />} />
           <Route path="/StudentHome" element={<StudentHome />} />
@@ -44,6 +51,11 @@ function App() {
           <Route path="/login/interviewer" element={<InterviewerLogin />} />
           <Route path="/login/interviewer/schedules" element={<InterviewerIntervieweSchedules />} />
           <Route path="/login/interviewer/profile" element={<InterviwerPorfile />} />
+          <Route path="/eval" element={<StudentEvaluationForm />} />
+          <Route path="/zoom" element={<Zoom />} />
+          <Route path="/meeting" element={<ZoomComponent />} />
+          <Route path="/FormBase64" element={<FormBase64 />} />
+          <Route path="*" element={<ErrorPage />} />
         </Routes>
       </Router>
     </>

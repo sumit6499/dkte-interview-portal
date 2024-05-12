@@ -18,11 +18,21 @@ function StudentSignUp() {
     //     //  student sign up success 
     //     navigate('/StudentHome');
     // };
+    const showToast = (message) =>{
+        toast.error(message);
+    }
     const handleSubmit = async  (formData) => {
         // Perform validation and processing for each stage
+        // formData.preventDefault()
         if (stage === 1) {
             // Validation for stage 1
+            // formData.preventDefault()
             // Proceed to stage 2
+            if(Object.values(formData).every(value => value !== ''))
+                {
+                    showToast("Please fill all the fields");
+                    return ;
+                }
             setStage(2);
         } else if (stage === 2) {
             // Validation for stage 2
@@ -32,7 +42,10 @@ function StudentSignUp() {
             const formDataToSend = new FormData();
             fields.forEach((field) => {
                 formDataToSend.append(field.name, formData[field.name]);
+            
             });
+
+
 
             try {
                 // Axios POST

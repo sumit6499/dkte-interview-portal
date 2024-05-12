@@ -6,7 +6,7 @@ import Schedule from '@/components/ui/Schedules';
 import { AdminSchedulesNavlinks } from '@/components/variables/formVariables';
 
 const AdminSchedules = () => {
-    
+   
     const drop = true;
 
     return (

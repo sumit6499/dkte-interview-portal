@@ -101,7 +101,7 @@ const InterviewerSignUp = () => {
                     </div>
                     <div>
                         <label htmlFor="days" className="block mb-2 text-white">Days Of Week You're Available:</label>
-                        <select id="days" className="w-full p-2 bg-zinc-700 rounded text-white" multiple onChange={(e) => setSelectedDays(Array.from(e.target.selectedOptions, option => option.value))} defaultValue={['Monday']}>
+                        <select id="days" className="w-full p-2 bg-zinc-700 rounded text-white"  onChange={(e) => setSelectedDays(Array.from(e.target.selectedOptions, option => option.value))} defaultValue={['Monday']}>
                             <option>Monday</option>
                             <option>Tuesday</option>
                             <option>Wednesday</option>

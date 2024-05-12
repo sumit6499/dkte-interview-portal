@@ -18,14 +18,17 @@ export const stdFieldsStage1 = [
         type: "select",
         options: departmentOptions,
     },
-    { name: "class", label: "Class", type: "text" },
+    { name: "class", label: "Class", type: "select",options:["FY","SY","TY","Final Year"] },
     { name: "PRN", label: "PRN", type: "text" },
     { name: "password", label: "Password", type: "text" },
     { name: "idcard", label: "ID Card", type: "file" },
     { name: "resume", label: "Resume", type: "file" },
 ];
 
-export const stdFieldsStage2 = [];
+export const stdFieldsStage2 = [
+    { name: "UPI", label: "UPI Transaction ID", type: "text" },
+    { name: "paymentImage", label: "Upload Payment Proof", type: "file" }
+];
 
 export  const Adminfields = [
         { name: "name", label: "Full Name", type: "text" },
@@ -121,3 +124,13 @@ export const socialMediaLinks = [
 ];
 
 
+export const criteria = [
+    {
+        label: "Technical Knowledge - Poor to Excellent",
+        options: ["Poor", "Mediocre", "Satisfactory", "Good", "Excellent"]
+    },
+    {
+        label: "Non-Technical Knowledge - Poor to Excellent",
+        options: ["Poor", "Mediocre", "Satisfactory", "Good", "Excellent"]
+    }
+];

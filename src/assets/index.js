@@ -22,6 +22,7 @@ import CameraIcon from './CameraIcon.png';
 import SampleBarGraph from './SampleBarGraph.png';
 import Interviewer from './Interviewer.png'
 import SignUpLoginHome from './signup_login_home_pic.png';
+import paymentQR from './paymentQR.jpg';
 export {
     Chart,
     Gmail,
@@ -47,6 +48,7 @@ export {
     SampleBarGraph,
     Interviewer,
     SignUpLoginHome,
+    paymentQR,
 }
 
 
