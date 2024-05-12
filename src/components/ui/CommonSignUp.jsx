@@ -23,10 +23,7 @@ const CommonSignUp = ({ title, fields, onSubmit, currentStage, className, onPrev
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (!Object.values(formData).every(value => value !== '')) {
-            showToast("Please fill all the fields");
-            return;
-        }
+       
 
         try {
             const response = await axios.post(
