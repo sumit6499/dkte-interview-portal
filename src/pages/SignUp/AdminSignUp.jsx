@@ -17,10 +17,6 @@ function AdminSignUp() {
     const handleSubmit = async (data) => {
         //  admin sign up success 
         data.preventDefault();
-        if (Object.values(data).every(value => value !== '')) {
-            showToast("All fields are required");
-            return;
-        }
         const formDataToSend = new FormData();
         fields.forEach((field) => {
             formDataToSend.append(field.name,

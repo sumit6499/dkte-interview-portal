@@ -28,11 +28,6 @@ function StudentSignUp() {
             // Validation for stage 1
             // formData.preventDefault()
             // Proceed to stage 2
-            if(Object.values(formData).every(value => value !== ''))
-                {
-                    showToast("Please fill all the fields");
-                    return ;
-                }
             setStage(2);
         } else if (stage === 2) {
             // Validation for stage 2
