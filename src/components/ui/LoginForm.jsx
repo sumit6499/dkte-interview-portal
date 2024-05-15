@@ -58,10 +58,10 @@ function LoginForm({ title, fields, formData, onSubmit }) {
     return (
         <div>
             <ToastContainer position="top-center" autoClose={2000} />
-            <div className="flex justify-center items-center h-screen animate-slideFromBottom flex-col pt-40 space-y-10">
-                <div className="bg-zinc-800 p-8 rounded-lg w-96">
+            <div className="flex justify-center items-center h-screen animate-slideFromBottom flex-col pt-6 space-y-10">
+                <div className="bg-zinc-800 p-8 rounded-lg w-96 pt-6">
                     <h2 className="text-white text-2xl mb-6 border-b border-zinc-600 pb-2 flex justify-center" id="title">{title}</h2>
-                    <form onSubmit={handleSubmit}>
+                    <form onSubmit={handleSubmit} className="">
                         {fields.map(field => (
                             <div key={field.name} className="mb-4 text-center">
                                 <label htmlFor={field.name} className="block text-white mb-2">{field.label}:</label>
@@ -130,8 +130,9 @@ function LoginForm({ title, fields, formData, onSubmit }) {
                         </form>
                     )}
                 </div>
-                <img src={interviewComposition} alt="" />
+                
             </div>
+            <img src={interviewComposition} alt="" />
         </div>
     );
 }
