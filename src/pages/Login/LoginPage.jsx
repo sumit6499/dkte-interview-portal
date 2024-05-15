@@ -11,7 +11,7 @@ function LoginPage() {
 
     useEffect(() => {
         const checkScreenSize = () => {
-            setIsSmallerScreen(window.innerWidth <= 600); // Changed to 600px
+            setIsSmallerScreen(window.innerWidth <= 600); 
         };
         checkScreenSize();
         window.addEventListener('resize', checkScreenSize);

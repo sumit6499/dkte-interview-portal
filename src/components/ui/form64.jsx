@@ -30,7 +30,6 @@ function FormBase64 () {
         })
     }
 return(
-
     <>
     <div>
         <input type="file"className="w-1/2  file:h-10 file:rounded text-sm text-white file:border-0 file:text-sm file:font-semibold file:bg-yellow-500 file:text-black hover:file:bg-yellow-600 " onChange={(e)=>{

@@ -15,7 +15,7 @@ function LoginForm({ title, fields, formData, onSubmit }) {
     //  form input change
     const handleChange = (e) => {
         const { name, value } = e.target;
-        // Update formValues state to reflect the changes
+       
         setFormValues({ ...formValues, [name]: value });
     };
 
@@ -46,10 +46,10 @@ function LoginForm({ title, fields, formData, onSubmit }) {
         }
     };
 
-    // handle forgot password submission
+   
     const handleForgotPasswordSubmit = async (e) => {
         e.preventDefault();
-        // Implement forgot password logic here
+       
         console.log("Forgot Password email submitted:", forgotPasswordEmail);
         setShowForgotPassword(false);
         toast.success('Password reset instructions sent to your email');
