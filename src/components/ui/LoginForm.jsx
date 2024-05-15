@@ -3,9 +3,11 @@ import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { interviewComposition, NotVisibleEye, visibleEye } from '@/assets/';
-
+import { useNavigate } from 'react-router';
 function LoginForm({ title, fields, formData, onSubmit }) {
     // Use state to manage form data
+
+    const navigate = useNavigate();
     const [formValues, setFormValues] = useState(formData);
     const [showPassword, setShowPassword] = useState(false);
     const [userExists, setUserExists] = useState(true); // State variable to track user existence
@@ -15,7 +17,7 @@ function LoginForm({ title, fields, formData, onSubmit }) {
     //  form input change
     const handleChange = (e) => {
         const { name, value } = e.target;
-       
+
         setFormValues({ ...formValues, [name]: value });
     };
 
@@ -46,10 +48,10 @@ function LoginForm({ title, fields, formData, onSubmit }) {
         }
     };
 
-   
+
     const handleForgotPasswordSubmit = async (e) => {
         e.preventDefault();
-       
+
         console.log("Forgot Password email submitted:", forgotPasswordEmail);
         setShowForgotPassword(false);
         toast.success('Password reset instructions sent to your email');
@@ -106,6 +108,15 @@ function LoginForm({ title, fields, formData, onSubmit }) {
                                 Forgot Password?
                             </button>
                         </div>
+                        <div className='flex justify-center pt-6'>
+                            <button
+                                type="button"
+                                className="ml-2 text-lg text-yellow-500 hover:text-yellow-600 focus:outline-none"
+                                onClick={() => navigate('/signup')}
+                            >
+                                Register
+                            </button>
+                        </div>
                     </form>
                     {showForgotPassword && (
                         <form onSubmit={handleForgotPasswordSubmit}>
@@ -130,7 +141,7 @@ function LoginForm({ title, fields, formData, onSubmit }) {
                         </form>
                     )}
                 </div>
-                
+
             </div>
             <img src={interviewComposition} alt="" />
         </div>

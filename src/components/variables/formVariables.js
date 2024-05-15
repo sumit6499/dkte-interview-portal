@@ -126,11 +126,47 @@ export const socialMediaLinks = [
 
 export const criteria = [
     {
-        label: "Technical Knowledge - Poor to Excellent",
+        label: "Knowledge of specific skills & applications",
         options: ["Poor", "Mediocre", "Satisfactory", "Good", "Excellent"]
     },
     {
-        label: "Non-Technical Knowledge - Poor to Excellent",
+        label: "Knowledge related Training",
         options: ["Poor", "Mediocre", "Satisfactory", "Good", "Excellent"]
-    }
+    },
+     {
+        label: "Initiative",
+        options: ["Poor", "Mediocre", "Satisfactory", "Good", "Excellent"]
+    },
+     {
+        label: "Communication Skills",
+        options: ["Poor", "Mediocre", "Satisfactory", "Good", "Excellent"]
+    },
+     {
+        label: "Listening skills",
+        options: ["Poor", "Mediocre", "Satisfactory", "Good", "Excellent"]
+    },
+     {
+        label: "Attitude",
+        options: ["Poor", "Mediocre", "Satisfactory", "Good", "Excellent"]
+    },
+     {
+        label: "Confidence Level",
+        options: ["Poor", "Mediocre", "Satisfactory", "Good", "Excellent"]
+    },
+     {
+        label: "Presentation skills",
+        options: ["Poor", "Mediocre", "Satisfactory", "Good", "Excellent"]
+    },
+     {
+        label: "Appearance",
+        options: ["Poor", "Mediocre", "Satisfactory", "Good", "Excellent"]
+    },
+     {
+        label: "Problem Solving Skills",
+        options: ["Poor", "Mediocre", "Satisfactory", "Good", "Excellent"]
+    },
+     {
+        label: "Overall Technical Skills Ratings",
+        options: ["Poor", "Mediocre", "Satisfactory", "Good", "Excellent"]
+    },
 ];
