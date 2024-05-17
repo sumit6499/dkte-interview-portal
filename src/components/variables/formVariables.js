@@ -25,7 +25,7 @@ export const stdAllFields = [
   },
   { name: "PRN", label: "PRN", type: "text" },
   { name: "password", label: "Password", type: "text" },
-  { name: "idcard", label: "ID Card", type: "file" },
+  { name: "idCard", label: "ID Card", type: "file" },
   { name: "resume", label: "Resume", type: "file" },
   { name: "UPI", label: "UPI Transaction ID", type: "text" },
   { name: "paymentImage", label: "Upload Payment Proof", type: "file" },
@@ -48,7 +48,7 @@ export const stdFieldsStage1 = [
   },
   { name: "PRN", label: "PRN", type: "text" },
   { name: "password", label: "Password", type: "text" },
-  { name: "idcard", label: "ID Card", type: "file" },
+  { name: "idCard", label: "ID Card", type: "file" },
   { name: "resume", label: "Resume", type: "file" },
 ];
 
@@ -62,7 +62,14 @@ export const Adminfields = [
   { name: "email", label: "Email", type: "email" },
   { name: "phone", label: "Phone", type: "tel" },
   { name: "password", label: "Password", type: "text" },
-  { name: "idcard", label: "ID Card", type: "file" },
+  { name: "idCard", label: "ID Card", type: "file" },
+];
+export const AdminfieldsToServer = [
+  { name: "name", label: "Full Name", type: "text" },
+  { name: "email", label: "Email", type: "email" },
+  { name: "phone", label: "Phone", type: "tel" },
+  { name: "password", label: "Password", type: "text" },
+ 
 ];
 export const Navlink = [
   { label: "Home", url: "/" },

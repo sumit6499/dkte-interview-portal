@@ -83,7 +83,7 @@ const InterviewerSignUp = () => {
         })
         //append files 
         Object.values(fileData).forEach((file) => {
-            formDataToSend.append("fieldName", file, file.name)
+            formDataToSend.append("idCard", file, file.name)
         });
         console.log("formDataToSend is ",)
         for (let [key, value] of formDataToSend.entries()) {
@@ -99,7 +99,7 @@ const InterviewerSignUp = () => {
 
         try {
            
-            const response = await axios.post('http://localhost:3000/interviewer/signup', formDataToSend);
+            const response = await axios.post('http://localhost:3000/signup', formDataToSend);
             console.log(response.data);
             // toast.success('Signup Successful!', { position: toast.POSITION.TOP_CENTER });
         } catch (error) {

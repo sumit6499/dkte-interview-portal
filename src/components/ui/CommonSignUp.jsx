@@ -1,25 +1,18 @@
-
 import React from "react";
 import FormField from "./Formfield";
 import PaymentComponent from "./Payment";
 import SubmitButton from "./SubmitButton";
 import PrevButton from "./PrevButton";
-import { useState } from "react";
-const CommonSignUp = ({ title, fields, onSubmit, currentStage, className, onPrev, studentSignup, handleChange, handleFileChange, formData, fileData, handleNext, handlePrev, handleRemoveFile }) => {
-    const [Info,setInfo] = useState(
-       fields.reduce((acc,field)=>{
-        acc[field.name] = field.initialValue || "";
-        return acc;
-       },{})
-    )
+
+const CommonSignUp = ({ title, fields, onSubmit, currentStage, className, onPrev, studentSignup, handleChange, handleFileChange, formData, handleNext, handlePrev, handleRemoveFile }) => {
+
     const renderFormFields = () => {
         return fields.map((field) => (
+           
             <FormField
                 key={field.name}
                 field={field}
                 formData={formData}
-                fileData={fileData}
-                value={Info}
                 handleChange={handleChange}
                 handleFileChange={handleFileChange}
                 handleRemoveFile={handleRemoveFile}
