@@ -45,10 +45,10 @@ function AdminSignUp() {
                 [name]: files[0],
             }));
         } else {
-            // Handle the case when e is null, possibly by resetting the file data
+           
             setFileData((prevState) => ({
                 ...prevState,
-                [name]: null, // or any other appropriate action
+                [name]: null, 
             }));
         }
     };
