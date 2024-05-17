@@ -10,15 +10,38 @@ import '@/App.css';
 const InterviewerSignUp = () => {
     const [selectedDays, setSelectedDays] = useState([]);
     const [selectedTimes, setSelectedTimes] = useState({});
-
+    const [fileData, setFileData] = useState({});
     const [formData, setFormData] = useState({
         name: '',
         email: '',
         phone: '',
         password: '',
         profession: '',
-        idcard: '',
+       
     });
+
+    const handleRemoveFile = (fieldName) => {
+        setFileData((prevState) => {
+            const updatedFileData = { ...prevState };
+            delete updatedFileData[fieldName];
+            return updatedFileData;
+        });
+    };
+    const handleFileChange = (e) => {
+        if (e) {
+            const { name, files } = e.target;
+            setFileData((prevState) => ({
+                ...prevState,
+                [name]: files[0],
+            }));
+        } else {
+
+            setFileData((prevState) => ({
+                ...prevState,
+                [name]: null, 
+            }));
+        }
+    };
 
     const handleTimeRangeChange = (e, day, field) => {
         const newSelectedTimes = { ...selectedTimes };
@@ -41,21 +64,42 @@ const InterviewerSignUp = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+       
+        // if (!Object.values(formData).every(value => value !== '')) {
+        //     // toast.error('Please fill in all fields!', { position: toast.POSITION.TOP_CENTER });
+        //     showToast("Please fill all the fields");
 
-        
-        if (!Object.values(formData).every(value => value !== '')) {
-            // toast.error('Please fill in all fields!', { position: toast.POSITION.TOP_CENTER });
-            showToast("Please fill all the fields");
-
-            return;
+        //     return;
+        // }
+        const formDataToSend = new FormData();
+        //Day and time appended 
+        const selectedDay = selectedDays[0]; 
+        //time appended
+        formDataToSend.append(`${selectedDay}Start`, selectedTimes[selectedDay]?.start || '');
+        formDataToSend.append(`${selectedDay}End`, selectedTimes[selectedDay]?.end || '');
+        //append normal values
+        Object.keys(formData).forEach(key => {
+            formDataToSend.append(key, formData[key]);
+        })
+        //append files 
+        Object.values(fileData).forEach((file) => {
+            formDataToSend.append("fieldName", file, file.name)
+        });
+        console.log("formDataToSend is ",)
+        for (let [key, value] of formDataToSend.entries()) {
+            console.log(key, value);
+            if (key.startsWith('start')) {
+                const day = key.split('start')[0]; // Extract the day from the key
+                console.log(`Start time for ${day}:`, value);
+            } else if (key.startsWith('end')) {
+                const day = key.split('end')[0]; // Extract the day from the key
+                console.log(`End time for ${day}:`, value);
+            }
         }
 
         try {
-            const formDataToSend = new FormData();
-            Object.keys(formData).forEach(key =>{
-                formDataToSend.append(key,formData[key]);
-            })
-            const response = await axios.post('http://localhost:5000/submit-form', formDataToSend);
+           
+            const response = await axios.post('http://localhost:3000/interviewer/signup', formDataToSend);
             console.log(response.data);
             // toast.success('Signup Successful!', { position: toast.POSITION.TOP_CENTER });
         } catch (error) {
@@ -96,8 +140,25 @@ const InterviewerSignUp = () => {
                     </div>
                     <div>
 
-                        <label htmlFor="idcard" className="block mb-2 text-white">ID Card:</label>
-                        <input type="file" id="idcard" className="mt-1 block w-full text-sm  file:mr-4 file:py-2 file:px-4 file:border-0 file:text-sm file:font-semibold file:bg-yellow-500 file:text-black hover:file:bg-yellow-600 hover:pointer text-white" onChange={(e) => setFormData({ ...formData, idcard: e.target.files[0] })} />
+                        <div>
+                            <label htmlFor="idcard" className="block mb-2 text-white">ID Card:</label>
+                            {fileData["idcard"] ? (
+                                <div className=''>
+                                    <span></span>
+                                    <span className='text-white'>{fileData["idcard"].name}</span>
+                                    <button onClick={() => handleRemoveFile("idcard")} className="ml-2 p-1 mx-auto  bg-yellow-500 text-black font-bold rounded-md hover:bg-yellow-600">Remove</button>
+                                </div>
+                            ) : (
+                                <input
+                                    type="file"
+                                    id="idcard"
+                                    name="idcard"
+                                    onChange={handleFileChange}
+                                    required
+                                    className="  file:h-10 file:rounded text-sm text-white file:border-0 file:text-sm file:font-semibold file:bg-yellow-500 file:text-black hover:file:bg-yellow-600"
+                                />
+                            )}
+                        </div>
                     </div>
                     <div>
                         <label htmlFor="days" className="block mb-2 text-white">Days Of Week You're Available:</label>

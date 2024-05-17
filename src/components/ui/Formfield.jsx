@@ -1,6 +1,6 @@
 import React from "react";
 
-const FormField = ({ key, field, formData, fileData, value, handleChange, handleFileChange, handleRemoveFile }) => {
+const FormField = ({ key1, field, formData, fileData, value, handleChange, handleFileChange, handleRemoveFile }) => {
     let isChoose = false;
     return (
         <div>

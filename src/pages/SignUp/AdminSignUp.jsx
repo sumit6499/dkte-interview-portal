@@ -9,6 +9,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 function AdminSignUp() {
+   
     const studentSignup = false;
     const isAdminSignUp = true;
     const navigate = useNavigate();
@@ -18,22 +19,46 @@ function AdminSignUp() {
             return acc;
         }, {})
     );
+    const [fileData, setFileData] = useState({});
     const showToast = (message) => {
         toast.error(message)
     }
-    // const handleChange = (e) => {
-    //     const { name, value } = e.target;
-    //     setFormData((prevState) => ({
-    //         ...prevState,
-    //         [name]: value,
-    //     }));
-    // };
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData((prevState) => ({
+            ...prevState,
+            [name]: value,
+        }));
+    };
+    const handleRemoveFile = (fieldName) => {
+        setFileData((prevState) => {
+            const updatedFileData = { ...prevState };
+            delete updatedFileData[fieldName];
+            return updatedFileData;
+        });
+    };
+    const handleFileChange = (e) => {
+        if (e) {
+            const { name, files } = e.target;
+            setFileData((prevState) => ({
+                ...prevState,
+                [name]: files[0],
+            }));
+        } else {
+            // Handle the case when e is null, possibly by resetting the file data
+            setFileData((prevState) => ({
+                ...prevState,
+                [name]: null, // or any other appropriate action
+            }));
+        }
+    };
+
     const handleSubmit = async (formData) => {
         //  admin sign up success 
         let response;
         formData.preventDefault();
         const formDataToSend = new FormData();
-        console
+     
         Adminfields.forEach((field) => {
             formDataToSend.append(field.name,
                 formData[field.name]
@@ -41,7 +66,7 @@ function AdminSignUp() {
             console.log("inside");
         })
         try {
-             response = await axios.post("http://localhost:3000/signup",
+             response = await axios.post("http://localhost:3000/admin/signup",
                 formDataToSend,
                 {
                     headers: {
@@ -60,19 +85,22 @@ function AdminSignUp() {
         navigate("/login/admin");
     };
 
-
-
-
     return (
         <>
             <NavBar links={AdminNavLinks} />
             <ToastContainer />
-            <CommonSignUp title="Admin SignUp" fields={Adminfields} onSubmit={handleSubmit}
+            <CommonSignUp
+             title="Admin SignUp" 
+             fields={Adminfields}
+              onSubmit={handleSubmit}
                 studentSignup={studentSignup}
                 currentStage={1}
                 isAdminSignUp={true}
                 formData={formData}
-                // handleChange={handleChange}
+                fileData={fileData}
+                handleRemoveFile={handleRemoveFile}
+                handleChange={handleChange}
+                handleFileChange={handleFileChange}
             />
         </>
     );

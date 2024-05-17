@@ -42,7 +42,7 @@ function StudentSignUp() {
                 [name]: files[0],
             }));
         } else {
-            // Handle the case when e is null, possibly by resetting the file data
+           
             setFileData((prevState) => ({
                 ...prevState,
                 [name]: null, // or any other appropriate action
@@ -57,28 +57,23 @@ function StudentSignUp() {
         setStage(2);
     } else if (stage === 2) {
         const formDataToSend = new FormData();
-        // console.log("formData is 0", formData);
+      
         stdAllFields.forEach((field) => {
-            // console.log("Field name:", field.name);
-            // console.log("Field value from formData:", formData[field.name]);
+            
             formDataToSend.append(field.name, formData[field.name] || ''); 
         });
     
-        // Object.keys(fileData).forEach((key) => {
-        //     formDataToSend.append(key, fileData[key]);
-        // });
+       
         Object.values(fileData).forEach((file) => {
-            // formDataToSend.append("files", file);
+            
             formDataToSend.append("fieldName", file, file.name) 
         });
-        console.log("formDataToSend final is ", formDataToSend);
+        
 
-        for (let [key, value] of formDataToSend.entries()) {
-            console.log(key, value);
-        }
+      
         try {
             const response = await axios.post(
-                "http://localhost:3000/signup",
+                "http://localhost:3000/students/signUp",
                 formDataToSend,
                 {
                     headers: {

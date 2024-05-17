@@ -20,7 +20,9 @@ app.post("/signup", (req, res) => {
   // Check if formData is defined
   if (formData) {
     // Iterate over formData keys and log each field with its data
+    console.log(...formData);
     console.log("below is data")
+    // console.log(Object.fromEntries(formData));
     Object.keys(formData).forEach((field) => {
       console.log("hi i m in ")
       console.log(`${field}: ${formData[field]}`);
