@@ -141,52 +141,30 @@
 // }
 
 // export default CommonSignUp;
-import React, { useState } from "react";
-import axios from "axios";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import React from "react";
 import FormField from "./Formfield";
 import PaymentComponent from "./Payment";
 import SubmitButton from "./SubmitButton";
 import PrevButton from "./PrevButton";
-
-const CommonSignUp = ({ title, fields, onSubmit, currentStage, className, onPrev, studentSignup }) => {
-    const [formData, setFormData] = useState(
-        fields.reduce((acc, field) => {
-            acc[field.name] = field.initialValue || "";
-            return acc;
-        }, {})
-    );
-
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData((prevState) => ({
-            ...prevState,
-            [name]: value,
-        }));
-    };
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        try {
-            const response = await axios.post(
-                "http://localhost:5000/signup",
-                formData
-            );
-            console.log("Response from server:", response.data);
-            onSubmit(response.data);
-        } catch (error) {
-            console.error("Error submitting form:", error);
-        }
-    };
-
+import { useState } from "react";
+const CommonSignUp = ({ title, fields, onSubmit, currentStage, className, onPrev, studentSignup, handleChange, handleFileChange, formData, fileData, handleNext, handlePrev, handleRemoveFile }) => {
+    const [Info,setInfo] = useState(
+       fields.reduce((acc,field)=>{
+        acc[field.name] = field.initialValue || "";
+        return acc;
+       },{})
+    )
     const renderFormFields = () => {
         return fields.map((field) => (
             <FormField
                 key={field.name}
                 field={field}
                 formData={formData}
+                fileData={fileData}
+                value={Info}
                 handleChange={handleChange}
+                handleFileChange={handleFileChange}
+                handleRemoveFile={handleRemoveFile}
             />
         ));
     };
@@ -196,25 +174,27 @@ const CommonSignUp = ({ title, fields, onSubmit, currentStage, className, onPrev
             <div className="flex justify-center items-center min-h-screen">
                 <div className="w-full max-w-4xl p-8 bg-zinc-800 rounded-lg shadow-lg">
                     <h1 className="text-2xl font-bold mb-8 text-center">{title}</h1>
-                    <form onSubmit={handleSubmit} className="space-y-6">
+                    <form onSubmit={onSubmit} className="space-y-6">
                         {currentStage === 2 && studentSignup && (
                             <PaymentComponent />
                         )}
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             {renderFormFields()}
                         </div>
-                        {currentStage === 1 && studentSignup && (
-                            <SubmitButton onSubmit={() => onSubmit(formData)} label="Next" />
-                        )}
-                        {currentStage === 1 && !studentSignup && (
-                            <SubmitButton onSubmit={handleSubmit} label="SignUp" />
-                        )}
-                        {currentStage === 2 && studentSignup && (
-                            <div className="flex">
-                                <PrevButton onClick={onPrev} />
-                                <SubmitButton onSubmit={handleSubmit} label="SignUp" />
-                            </div>
-                        )}
+                        <div className="flex justify-between">
+                            {currentStage === 1 && studentSignup && (
+                                <SubmitButton label="Next" onClick={handleNext} />
+                            )}
+                            {currentStage === 1 && !studentSignup && (
+                                <SubmitButton label="SignUp" />
+                            )}
+                            {currentStage === 2 && studentSignup && (
+                                <>
+                                    <PrevButton onClick={handlePrev} />
+                                    <SubmitButton label="SignUp" />
+                                </>
+                            )}
+                        </div>
                     </form>
                 </div>
             </div>

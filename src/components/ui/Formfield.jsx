@@ -1,6 +1,7 @@
 import React from "react";
-import FormBase64 from "./form64";
-const FormField = ({ field, formData, handleChange }) => {
+
+const FormField = ({ key, field, formData, fileData, value, handleChange, handleFileChange, handleRemoveFile }) => {
+    let isChoose = false;
     return (
         <div>
             <label htmlFor={field.name} className="block text-sm font-medium">
@@ -23,7 +24,26 @@ const FormField = ({ field, formData, handleChange }) => {
                     ))}
                 </select>
             ) : field.type === "file" ? (
-                <FormBase64 onChange={handleChange} fieldName={field.name} />
+                
+                    <div>
+                        {fileData[field.name] ? (
+                            <div>
+                                <span>{fileData[field.name].name}</span>
+                                <button onClick={() => handleRemoveFile(field.name)} className="ml-2 p-1 mx-auto  bg-yellow-500 text-black font-bold rounded-md hover:bg-yellow-600">Remove</button>
+                            </div>
+                        ) : (
+                            <input
+                                type="file"
+                                id={field.name}
+                                name={field.name}
+                                onChange={handleFileChange}
+                                required
+                                    className="w-1/2  file:h-10 file:rounded text-sm text-white file:border-0 file:text-sm file:font-semibold file:bg-yellow-500 file:text-black hover:file:bg-yellow-600"
+                            />
+                        )}
+                    </div>
+
+                
             ) : (
                 <input
                     type={field.type}
