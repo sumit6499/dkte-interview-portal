@@ -7,24 +7,52 @@ import { ToastContainer, toast } from 'react-toastify';
 import { InterviewerNavLinks, InterviewerLoginfields } from '@/components/variables/formVariables';
 function InterviewerLogin() {
     const navigate = useNavigate();
-    
+    const [userExists, setUserExists] = useState(true); 
     const [formData, setFormData] = useState({
         username: "",
         password: ""
     });
+    const [formValues, setFormValues] = useState(formData);
+    const handleChange = (e) => {
+        const { name, value } = e.target;
 
-    const handleSubmit = (data) => {
-        //  admin login success 
-        toast.success('Login successful');
-        navigate("/login/interviewer/interviewerhome")
+        setFormValues({ ...formValues, [name]: value });
+    };
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            //  Axios POST    
+            const response = await axios.post("http://localhost:5000/login", formValues);
+            console.log("Response from server:", response.data);
+            if (response.data.userExists) {
+                setUserExists(true);
+                //  success
+                console.log("Form values:", formValues);
+                // toast.success('Login successful');
+                // onSubmit(response.data);
+            } else {
+                setUserExists(false);
+            }
+        } catch (error) {
+            console.error("Error submitting form:", error);
+            //  error
+        }
     };
 
-    
+
 
     return (
         <>
             <NavBar links={InterviewerNavLinks} />
-            <LoginForm title="Interviewer Login" fields={InterviewerLoginfields} formData={formData} onSubmit={handleSubmit} />
+            <LoginForm
+                title="Interviewer Login"
+                fields={InterviewerLoginfields}
+                formData={formData}
+                formValues={formValues}
+                onSubmit={handleSubmit}
+                handleChange={handleChange}
+                userExists={userExists}
+            />
         </>
     );
 }

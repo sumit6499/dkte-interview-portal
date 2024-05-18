@@ -6,8 +6,11 @@ import { InterviewerNavLinks } from '@/components/variables/formVariables';
 import { ToastContainer, toast } from 'react-toastify'; // Make sure to import toast from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 import '@/App.css';
+import { capitalize } from 'lodash'; // Import lodash capitalize function
+import { useNavigate } from 'react-router';
 
 const InterviewerSignUp = () => {
+    const navigate = useNavigate();
     const [selectedDays, setSelectedDays] = useState([]);
     const [selectedTimes, setSelectedTimes] = useState({});
     const [fileData, setFileData] = useState({});
@@ -17,7 +20,11 @@ const InterviewerSignUp = () => {
         phone: '',
         password: '',
         profession: '',
+        freeday:'',
+        startTime:'',
+        endTime:'',
        
+
     });
 
     const handleRemoveFile = (fieldName) => {
@@ -30,15 +37,15 @@ const InterviewerSignUp = () => {
     const handleFileChange = (e) => {
         if (e) {
             const { name, files } = e.target;
-            setFileData((prevState) => ({
+            setFormData((prevState) => ({
                 ...prevState,
-                [name]: files[0],
+                idCard: files[0],
             }));
         } else {
 
-            setFileData((prevState) => ({
+            setFormData((prevState) => ({
                 ...prevState,
-                [name]: null, 
+                idCard: null,
             }));
         }
     };
@@ -46,8 +53,12 @@ const InterviewerSignUp = () => {
     const handleTimeRangeChange = (e, day, field) => {
         const newSelectedTimes = { ...selectedTimes };
         newSelectedTimes[day][field] = e.target.value;
+        // const capitalizedDay = capitalize(day);
         setSelectedTimes(newSelectedTimes);
-        setFormData(prevState => ({ ...prevState, selectedTimes: newSelectedTimes }));
+        setFormData(prevState => ({ ...prevState, freeday: day }));
+        setFormData(prevState => ({ ...prevState, startTime: newSelectedTimes[day]['start'] }));
+        setFormData(prevState => ({ ...prevState, endTime: newSelectedTimes[day]['end'] }));
+        // setFormData((prev) => ({ ...prev, 'field': e.target.value }));
     };
 
     //to display time in time boxes
@@ -64,44 +75,32 @@ const InterviewerSignUp = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-       
+
         // if (!Object.values(formData).every(value => value !== '')) {
         //     // toast.error('Please fill in all fields!', { position: toast.POSITION.TOP_CENTER });
         //     showToast("Please fill all the fields");
 
+       
         //     return;
-        // }
+        // Create a new FormData object
         const formDataToSend = new FormData();
-        //Day and time appended 
-        const selectedDay = selectedDays[0]; 
-        //time appended
-        formDataToSend.append(`${selectedDay}Start`, selectedTimes[selectedDay]?.start || '');
-        formDataToSend.append(`${selectedDay}End`, selectedTimes[selectedDay]?.end || '');
-        //append normal values
-        Object.keys(formData).forEach(key => {
-            formDataToSend.append(key, formData[key]);
-        })
-        //append files 
-        Object.values(fileData).forEach((file) => {
-            formDataToSend.append("idCard", file, file.name)
-        });
-        console.log("formDataToSend is ",)
-        for (let [key, value] of formDataToSend.entries()) {
-            console.log(key, value);
-            if (key.startsWith('start')) {
-                const day = key.split('start')[0]; // Extract the day from the key
-                console.log(`Start time for ${day}:`, value);
-            } else if (key.startsWith('end')) {
-                const day = key.split('end')[0]; // Extract the day from the key
-                console.log(`End time for ${day}:`, value);
-            }
-        }
 
+        Object.keys(formData).forEach((key) => {
+            formDataToSend.append(key, formData[key]);
+        });
+
+        // Append the ID card file to the FormData object
+        // formDataToSend.append('idCard', formData.idCard);
+        // }
+        console.log("settime", selectedTimes)
+        console.log("fomrdata is ", formDataToSend)
+        console.log("fomrdata is ", formData)
         try {
-           
-            const response = await axios.post('http://localhost:3000/signup', formDataToSend);
+
+            const response = await axios.post('http://localhost:3000/interviewer/signup', formDataToSend);
             console.log(response.data);
-            // toast.success('Signup Successful!', { position: toast.POSITION.TOP_CENTER });
+            toast.success('Signup Successful!', { position: toast.POSITION.TOP_CENTER });
+            navigate('/login/interviewer')
         } catch (error) {
             console.error('Error submitting form:', error);
             // toast.error('An error occurred while submitting the form!', { position: toast.POSITION.TOP_CENTER });
@@ -110,7 +109,24 @@ const InterviewerSignUp = () => {
     const showToast = (message) => {
         toast.error(message);
     };
-
+    const handleCombinedChange = (event) => {
+        handleFileChange(event);
+        // handleChange(event);
+    };
+    const handleDaysChange = (event) => {
+        const options = event.target.selectedOptions;
+        const values = Array.from(options, (option) => option.value);
+        setSelectedDays(values);
+        setFormData({ ...formData, idCard: event.target.value });
+    };
+    // const handleCombinedStartTimeChange = (event, day, type) => {
+    //     handleTimeRangeChange(event, day, 'start');
+    //     setFormData((prev) => ({ ...prev, "startTime": event.target.value }));
+    // };
+    // const handleCombinedEndTimeChange = (event, day, type) => {
+    //     handleTimeRangeChange(event, day, type);
+    //     setFormData((prev) => ({ ...prev, "endTime": event.target.value }));
+    // };
     return (
         <>
             <NavBar links={InterviewerNavLinks} />
@@ -153,7 +169,7 @@ const InterviewerSignUp = () => {
                                     type="file"
                                     id="idcard"
                                     name="idcard"
-                                    onChange={handleFileChange}
+                                        onChange={handleCombinedChange}
                                     required
                                     className="  file:h-10 file:rounded text-sm text-white file:border-0 file:text-sm file:font-semibold file:bg-yellow-500 file:text-black hover:file:bg-yellow-600"
                                 />
@@ -162,14 +178,14 @@ const InterviewerSignUp = () => {
                     </div>
                     <div>
                         <label htmlFor="days" className="block mb-2 text-white">Days Of Week You're Available:</label>
-                        <select id="days" className="w-full p-2 bg-zinc-700 rounded text-white"  onChange={(e) => setSelectedDays(Array.from(e.target.selectedOptions, option => option.value))} defaultValue={['Monday']}>
-                            <option>Monday</option>
-                            <option>Tuesday</option>
-                            <option>Wednesday</option>
-                            <option>Thursday</option>
-                            <option>Friday</option>
-                            <option>Saturday</option>
-                            <option>Sunday</option>
+                        <select id="days" className="w-full p-2 bg-zinc-700 rounded text-white" onChange={(e) => setSelectedDays(Array.from(e.target.selectedOptions, option => option.value))} defaultValue={['MON']}>
+                            <option>MON</option>
+                            <option>TUE</option>
+                            <option>WED</option>
+                            <option>THU</option>
+                            <option>FRI</option>
+                            <option>SAT</option>
+                            <option>SUN</option>
                         </select>
                     </div>
 

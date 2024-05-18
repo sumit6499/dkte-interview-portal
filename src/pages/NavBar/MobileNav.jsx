@@ -30,8 +30,8 @@ function MobileNav({ drop }) {
                                 {!drop && (
                                     <>
                                         <a href="/" className="text-primary font-">Home</a>
-                                        <a href="/loginPage" className="hover:text-primary">Login</a>
-                                        <a href="/SignUpPage" className="hover:text-primary">Register</a>
+                                        <a href="/login" className="hover:text-primary">Login</a>
+                                        <a href="/signup" className="hover:text-primary">Register</a>
                                         <a href="/" className="hover:text-primary">Contact</a>
                                     </>
                                 )}

@@ -5,9 +5,11 @@ import axios from "axios";
 import { Adminfields, AdminNavLinks } from "@/components/variables/formVariables";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useNavigate } from "react-router";
 
 function AdminSignUp() {
     const studentSignup = false;
+    const navigate = useNavigate()
     const isAdminSignUp = true;
     const [progress,setProgress] = useState({started:false,pc:0});
     const [formData, setFormData] = useState({
@@ -15,6 +17,7 @@ function AdminSignUp() {
         email: '',
         phone: '',
         password: '',
+        dept:'',
         idCard: null  // Initialize idCard as null
     });
 
@@ -23,13 +26,13 @@ function AdminSignUp() {
     };
 
     const handleChange = (e) => {
-        const { name, value } = e.target;
+        console.log("hi i  min change")
+        const { name, value, files } = e.target;
         setFormData((prevState) => ({
             ...prevState,
-            [name]: value,
+            [name]: files ? files[0] : value,
         }));
     };
-
     const handleRemoveFile = () => {
         setFormData((prevState) => ({
             ...prevState,
@@ -37,40 +40,41 @@ function AdminSignUp() {
         }));
     };
 
-    const handleFileChange = (e) => {
-        if (e) {
-            const { files } = e.target;
-            setFormData((prevState) => ({
-                ...prevState,
-                idCard: files[0],  // Store the file directly in formData
-            }));
-        } else {
-            console.error("Event object is undefined");
-        }
-    };
+    // const handleFileChange = (e) => {
+    //     if (e) {
+    //         const { files } = e.target;
+    //         setFormData((prevState) => {
+    //             console.log("idCard is ", prevState.idCard); // Log the previous value
+    //             const updatedState = {
+    //                 ...prevState,
+    //                 idCard: files[0],
+    //             };
+    //             console.log("idCard is after", updatedState.idCard); // Log the updated value
+    //             return updatedState;
+    //         });
+    //     } else {
+    //         console.error("Event object is undefined");
+    //     }
+    // };
+
 
     const handleSubmit = async (event) => {
-        event.preventDefault(); 
-
-        const formDataToSend = new FormData();
-        formDataToSend.append('name', formData.name);
-        formDataToSend.append('email', formData.email);
-        formDataToSend.append('password', formData.password);
-        formDataToSend.append('idCard', formData.idCard);
-        formDataToSend.append('phone', formData.phone);
         
+        event.preventDefault();
+       
+        console.log("formData",formData)
         try {
             const response = await axios.post(
                 "http://localhost:3000/admin/signup",
-                formDataToSend,
+                formData,
                 {
-                    onUploadProgress: (progressEvent) => {
-                        console.log(progressEvent.loaded / progressEvent.total * 100);
+                    headers: {
+                        "Content-Type": "multipart/form-data",
                     },
                 }
             );
             console.log("Success: " + response.data);
-            // navigate("/login/admin");
+            navigate("/login/admin");
         } 
         
         catch (error) {
@@ -89,11 +93,11 @@ function AdminSignUp() {
                 onSubmit={handleSubmit}
                 studentSignup={studentSignup}
                 currentStage={1}
-                isAdminSignUp={true}
+                handleSubmit={handleSubmit}
                 formData={formData}
                 handleRemoveFile={handleRemoveFile}
                 handleChange={handleChange}
-                handleFileChange={handleFileChange}
+                handleFileChange={handleChange}
             />
         </>
     );

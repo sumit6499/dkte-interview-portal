@@ -3,10 +3,10 @@ import CommonSignUp from "@/components/ui/CommonSignUp";
 import NavBar from "../NavBar/NavBar";
 import { useNavigate } from "react-router";
 import axios from "axios";
-import {stdAllFields, stdFieldsStage1, stdFieldsStage2, StudentNavlinks } from '@/components/variables/formVariables.js';
+import { stdAllFields, stdFieldsStage1, stdFieldsStage2, StudentNavlinks } from '@/components/variables/formVariables.js';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import {studentSignUp} from '@/api/index'
+import { studentSignUp } from '@/api/index'
 
 function StudentSignUp() {
     const [stage, setStage] = useState(1);
@@ -47,7 +47,7 @@ function StudentSignUp() {
             // Proceed to stage 3
 
 
-            
+
             event.preventDefault();
             const formDataToSend = new FormData();
 
@@ -76,7 +76,7 @@ function StudentSignUp() {
                     }
                 );
                 console.log("Response from server:", response.data);
-                toast.success('Signup Successful!', { position: toast.POSITION.TOP_CENTER });
+                // toast.success('Signup Successful!', { position: toast.POSITION.TOP_CENTER });
                 navigate("/login/student");
             } catch (error) {
                 console.error("Error submitting form:", error);

@@ -63,6 +63,12 @@ export const Adminfields = [
   { name: "phone", label: "Phone", type: "tel" },
   { name: "password", label: "Password", type: "text" },
   { name: "idCard", label: "ID Card", type: "file" },
+  {
+    name: "dept",
+    label: "Department",
+    type: "select",
+    options: departmentOptions,
+  },
 ];
 export const AdminfieldsToServer = [
   { name: "name", label: "Full Name", type: "text" },
@@ -94,7 +100,7 @@ export const StudentNavlinks = [
   { label: "Contact", url: "/" },
 ];
 export const StduentLoginfields = [
-  { name: "username", label: "Username", type: "text" },
+  { name: "email", label: "Email", type: "text" },
   { name: "password", label: "Password", type: "password" },
 ];
 export const InterviewerNavLinks = [

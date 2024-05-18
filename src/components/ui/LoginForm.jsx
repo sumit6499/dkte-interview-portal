@@ -4,51 +4,15 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { interviewComposition, NotVisibleEye, visibleEye } from '@/assets/';
 import { useNavigate } from 'react-router';
-function LoginForm({ title, fields, formData, onSubmit }) {
-    // Use state to manage form data
-
+function LoginForm({ title, fields, formData, formValues, onSubmit, handleChange, userExists }) {
     const navigate = useNavigate();
-    const [formValues, setFormValues] = useState(formData);
     const [showPassword, setShowPassword] = useState(false);
-    const [userExists, setUserExists] = useState(true); // State variable to track user existence
-    const [forgotPasswordEmail, setForgotPasswordEmail] = useState('');
     const [showForgotPassword, setShowForgotPassword] = useState(false);
+    const [forgotPasswordEmail, setForgotPasswordEmail] = useState('');
 
-    //  form input change
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-
-        setFormValues({ ...formValues, [name]: value });
-    };
-
-    // toggle password visibility
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
     };
-
-    //  form submission
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        try {
-            //  Axios POST    
-            const response = await axios.post("http://localhost:5000/login", formValues);
-            console.log("Response from server:", response.data);
-            if (response.data.userExists) {
-                setUserExists(true);
-                //  success
-                console.log("Form values:", formValues);
-                toast.success('Login successful');
-                onSubmit(response.data);
-            } else {
-                setUserExists(false);
-            }
-        } catch (error) {
-            console.error("Error submitting form:", error);
-            //  error
-        }
-    };
-
-
     const handleForgotPasswordSubmit = async (e) => {
         e.preventDefault();
 
@@ -63,7 +27,7 @@ function LoginForm({ title, fields, formData, onSubmit }) {
             <div className="flex justify-center items-center h-screen animate-slideFromBottom flex-col pt-6 space-y-10">
                 <div className="bg-zinc-800 p-8 rounded-lg w-96 pt-6">
                     <h2 className="text-white text-2xl mb-6 border-b border-zinc-600 pb-2 flex justify-center" id="title">{title}</h2>
-                    <form onSubmit={handleSubmit} className="">
+                    <form onSubmit={onSubmit} className="">
                         {fields.map(field => (
                             <div key={field.name} className="mb-4 text-center">
                                 <label htmlFor={field.name} className="block text-white mb-2">{field.label}:</label>

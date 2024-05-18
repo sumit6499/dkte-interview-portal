@@ -5,7 +5,7 @@ import SubmitButton from "./SubmitButton";
 import PrevButton from "./PrevButton";
 import { Button } from "@/components/ui/button"
 
-const CommonSignUp = ({ title, fields, onSubmit, currentStage, className, onPrev, studentSignup, handleChange, handleFileChange, formData, handleNext, handlePrev, handleRemoveFile }) => {
+const CommonSignUp = ({ title, fields, onSubmit, currentStage, className, onPrev, studentSignup, handleChange, handleFileChange, formData, handleNext, handlePrev, handleRemoveFile, }) => {
 
     const renderFormFields = () => {
         return fields.map((field) => (
@@ -43,7 +43,7 @@ const CommonSignUp = ({ title, fields, onSubmit, currentStage, className, onPrev
                                 </button>
                             )}
                             {currentStage === 1 && !studentSignup && (
-                                <SubmitButton label="SignUp" />
+                                <SubmitButton label="SignUp"  onSubmit={onSubmit} />
                             )}
                             {currentStage === 2 && studentSignup && (
                                 <>
