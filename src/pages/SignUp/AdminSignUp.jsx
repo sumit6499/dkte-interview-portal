@@ -6,19 +6,19 @@ import { Adminfields, AdminNavLinks } from "@/components/variables/formVariables
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from "react-router";
-
+import { adminSignUp }from '@/api/index';
 function AdminSignUp() {
     const studentSignup = false;
     const navigate = useNavigate()
     const isAdminSignUp = true;
-    const [progress,setProgress] = useState({started:false,pc:0});
+    
     const [formData, setFormData] = useState({
         name: '',
         email: '',
         phone: '',
         password: '',
         dept:'',
-        idCard: null  // Initialize idCard as null
+        idCard: null  
     });
 
     const showToast = (message) => {
@@ -26,7 +26,7 @@ function AdminSignUp() {
     };
 
     const handleChange = (e) => {
-        console.log("hi i  min change")
+       
         const { name, value, files } = e.target;
         setFormData((prevState) => ({
             ...prevState,
@@ -36,27 +36,9 @@ function AdminSignUp() {
     const handleRemoveFile = () => {
         setFormData((prevState) => ({
             ...prevState,
-            idCard: null  // Set idCard to null to remove the file
+            idCard: null  
         }));
     };
-
-    // const handleFileChange = (e) => {
-    //     if (e) {
-    //         const { files } = e.target;
-    //         setFormData((prevState) => {
-    //             console.log("idCard is ", prevState.idCard); // Log the previous value
-    //             const updatedState = {
-    //                 ...prevState,
-    //                 idCard: files[0],
-    //             };
-    //             console.log("idCard is after", updatedState.idCard); // Log the updated value
-    //             return updatedState;
-    //         });
-    //     } else {
-    //         console.error("Event object is undefined");
-    //     }
-    // };
-
 
     const handleSubmit = async (event) => {
         
@@ -64,15 +46,14 @@ function AdminSignUp() {
        
         console.log("formData",formData)
         try {
-            const response = await axios.post(
-                "http://localhost:3000/admin/signup",
-                formData,
-                {
-                    headers: {
-                        "Content-Type": "multipart/form-data",
-                    },
-                }
-            );
+            const response = await adminSignUp(formData);
+            const { data, token } = response.data;
+            const { id: adminId } = data;
+            const adminAuthToken = token;
+
+
+            localStorage.setItem("adminId", adminId);
+            localStorage.setItem("adminAuthToken", adminAuthToken);
             console.log("Success: " + response.data);
             navigate("/login/admin");
         } 
@@ -82,7 +63,7 @@ function AdminSignUp() {
             // Handle error
         }
     };
-
+   
     return (
         <>
             <NavBar links={AdminNavLinks} />
@@ -98,6 +79,7 @@ function AdminSignUp() {
                 handleRemoveFile={handleRemoveFile}
                 handleChange={handleChange}
                 handleFileChange={handleChange}
+                
             />
         </>
     );

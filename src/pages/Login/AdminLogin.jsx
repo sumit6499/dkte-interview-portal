@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import { AdminNavLinks, AdminLoginfields } from '@/components/variables/formVariables';
+import { adminLogin } from '@/api/index';
 function AdminLogin() {
     const navigate = useNavigate();
     const [userExists, setUserExists] = useState(true); // State variable to track user existence
@@ -19,17 +20,23 @@ function AdminLogin() {
         e.preventDefault();
         try {
             //  Axios POST    
-            const response = await axios.post("http://localhost:5000/login", formValues);
-            console.log("Response from server:", response.data);
-            if (response.data.userExists) {
-                setUserExists(true);
-                //  success
-                console.log("Form values:", formValues);
-                // toast.success('Login successful');
-                // onSubmit(response.data);
-            } else {
-                setUserExists(false);
-            }
+            const response = await adminLogin(formData); 
+            const { data, token } = response.data;
+            const { id: adminId } = data;
+            const adminAuthToken = token;
+
+            
+            localStorage.setItem("adminId", adminId);
+            localStorage.setItem("adminAuthToken", adminAuthToken);
+            // if (response.data.userExists) {
+            //     setUserExists(true);
+            //     //  success
+            //     console.log("Form values:", formValues);
+            //     // toast.success('Login successful');
+            //     // onSubmit(response.data);
+            // } else {
+            //     setUserExists(false);
+            // }
         } catch (error) {
             console.error("Error submitting form:", error);
             //  error

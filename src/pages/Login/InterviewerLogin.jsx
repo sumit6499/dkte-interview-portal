@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import { InterviewerNavLinks, InterviewerLoginfields } from '@/components/variables/formVariables';
+import { interviewerLogin } from '@/api/index';
 function InterviewerLogin() {
     const navigate = useNavigate();
     const [userExists, setUserExists] = useState(true); 
@@ -22,17 +23,23 @@ function InterviewerLogin() {
         e.preventDefault();
         try {
             //  Axios POST    
-            const response = await axios.post("http://localhost:5000/login", formValues);
-            console.log("Response from server:", response.data);
-            if (response.data.userExists) {
-                setUserExists(true);
-                //  success
-                console.log("Form values:", formValues);
-                // toast.success('Login successful');
-                // onSubmit(response.data);
-            } else {
-                setUserExists(false);
-            }
+            const response = await interviewerLogin(formData); 
+            const { data, token } = response.data;
+            const { id: interviewerId } = data;
+            const interviewerAuthToken = token;
+
+           
+            localStorage.setItem("interviewerId", interviewerId);
+            localStorage.setItem("interviewerAuthToken", interviewerAuthToken);
+            // if (response.data.userExists) {
+            //     setUserExists(true);
+            //     //  success
+            //     console.log("Form values:", formValues);
+            //     // toast.success('Login successful');
+            //     // onSubmit(response.data);
+            // } else {
+            //     setUserExists(false);
+            // }
         } catch (error) {
             console.error("Error submitting form:", error);
             //  error

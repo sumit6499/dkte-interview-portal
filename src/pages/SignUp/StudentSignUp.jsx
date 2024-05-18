@@ -24,14 +24,8 @@ function StudentSignUp() {
         paymentImage: null
     });
     const navigate = useNavigate();
-
     const studentSignup = true;
     const IsInterviwerSignUp = false;
-
-
-
-
-
     const showToast = (message) => {
         toast.error(message);
     };
@@ -45,36 +39,20 @@ function StudentSignUp() {
         } else if (stage === 2) {
             // Validation for stage 2
             // Proceed to stage 3
-
-
-
             event.preventDefault();
-            const formDataToSend = new FormData();
-
-            // stdAllFields.forEach((field) => {
-            //     formDataToSend.append(field.name, formData[field.name] || '');
-            // });
-
-            // Append file data to formDataToSend
-            // formDataToSend.append("idCard", formData.idCard);
-            // formDataToSend.append("resume", formData.resume);
-            // formDataToSend.append("paymentImage", formData.paymentImage);
-
-            // console.log(formDataToSend)
-
             console.log(formData)
-
-
             try {
-                const response = await axios.post(
-                    "http://localhost:3000/students/signUp",
-                    formData,
-                    {
-                        headers: {
-                            "Content-Type": "multipart/form-data",
-                        },
-                    }
-                );
+                const response = await studentSignUp(formData);
+                const { data, token } = response.data;
+                const { id: studentId } = data;
+                const stdAuthToken = token;
+
+                console.log("The std id is ", studentId);
+                console.log("The std stdAuthToken is ", stdAuthToken);
+                 
+                localStorage.setItem("studentId", studentId);
+                localStorage.setItem("stdAuthToken", stdAuthToken);
+
                 console.log("Response from server:", response.data);
                 // toast.success('Signup Successful!', { position: toast.POSITION.TOP_CENTER });
                 navigate("/login/student");
@@ -100,12 +78,20 @@ function StudentSignUp() {
     const handlePrev = () => {
         setStage(1);
     };
+    const handleRemoveFile = (fieldName) => {
+       
+        setFormData((prevFormData) => {
+            const updatedFormData = { ...prevFormData };
+            delete updatedFormData[fieldName];
+            return updatedFormData;
+        });
+    };
 
     return (
         <>
             <NavBar links={StudentNavlinks} />
             <ToastContainer />
-            {/* <form action="students/signUp" method="post" encType="multipart/form-data"> */}
+            
             <CommonSignUp
                 title={"Student SignUp"}
                 fields={stage === 1 ? stdFieldsStage1 : stdFieldsStage2}
@@ -120,8 +106,9 @@ function StudentSignUp() {
                 formData={formData}
                 handleNext={handleNext}
                 handlePrev={handlePrev}
+                handleRemoveFile={handleRemoveFile}
             />
-            {/* </form> */}
+          
         </>
     );
 }

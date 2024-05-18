@@ -8,6 +8,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import '@/App.css';
 import { capitalize } from 'lodash'; // Import lodash capitalize function
 import { useNavigate } from 'react-router';
+import { interviewerSignUp } from '@/api/index'; // Import interviewerSignUp function from the API file
 
 const InterviewerSignUp = () => {
     const navigate = useNavigate();
@@ -58,7 +59,7 @@ const InterviewerSignUp = () => {
         setFormData(prevState => ({ ...prevState, freeday: day }));
         setFormData(prevState => ({ ...prevState, startTime: newSelectedTimes[day]['start'] }));
         setFormData(prevState => ({ ...prevState, endTime: newSelectedTimes[day]['end'] }));
-        // setFormData((prev) => ({ ...prev, 'field': e.target.value }));
+       
     };
 
     //to display time in time boxes
@@ -76,29 +77,21 @@ const InterviewerSignUp = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // if (!Object.values(formData).every(value => value !== '')) {
-        //     // toast.error('Please fill in all fields!', { position: toast.POSITION.TOP_CENTER });
-        //     showToast("Please fill all the fields");
-
-       
-        //     return;
-        // Create a new FormData object
         const formDataToSend = new FormData();
 
         Object.keys(formData).forEach((key) => {
             formDataToSend.append(key, formData[key]);
         });
-
-        // Append the ID card file to the FormData object
-        // formDataToSend.append('idCard', formData.idCard);
-        // }
-        console.log("settime", selectedTimes)
-        console.log("fomrdata is ", formDataToSend)
         console.log("fomrdata is ", formData)
         try {
 
-            const response = await axios.post('http://localhost:3000/interviewer/signup', formDataToSend);
-            console.log(response.data);
+            const response = await interviewerSignUp(formDataToSend); 
+            const { data, token } = response.data;
+            const { id: interviewerId } = data;
+            const interviewerAuthToken = token;
+
+            localStorage.setItem("interviewerId", interviewerId);
+            localStorage.setItem("interviewerAuthToken", interviewerAuthToken);
             toast.success('Signup Successful!', { position: toast.POSITION.TOP_CENTER });
             navigate('/login/interviewer')
         } catch (error) {
@@ -119,14 +112,7 @@ const InterviewerSignUp = () => {
         setSelectedDays(values);
         setFormData({ ...formData, idCard: event.target.value });
     };
-    // const handleCombinedStartTimeChange = (event, day, type) => {
-    //     handleTimeRangeChange(event, day, 'start');
-    //     setFormData((prev) => ({ ...prev, "startTime": event.target.value }));
-    // };
-    // const handleCombinedEndTimeChange = (event, day, type) => {
-    //     handleTimeRangeChange(event, day, type);
-    //     setFormData((prev) => ({ ...prev, "endTime": event.target.value }));
-    // };
+   
     return (
         <>
             <NavBar links={InterviewerNavLinks} />

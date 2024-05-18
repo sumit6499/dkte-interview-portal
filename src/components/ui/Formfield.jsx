@@ -1,6 +1,8 @@
 import React from "react";
 
-const FormField = ({ field, formData, handleChange, handleFileChange, handleRemoveFile }) => {
+const FormField = ({ field, formData, handleChange, handleFileChange ,handleRemoveFile }) => {
+
+    
     return (
         <div>
             <label htmlFor={field.name} className="block text-sm font-medium">
