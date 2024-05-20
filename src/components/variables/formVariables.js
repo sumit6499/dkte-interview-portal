@@ -90,7 +90,7 @@ export const AdminNavLinks = [
   { label: "Contact", url: "/" },
 ];
 export const AdminLoginfields = [
-  { name: "name", label: "Username", type: "text" },
+  { name: "email", label: "Email", type: "email" },
   { name: "password", label: "Password", type: "password" },
 ];
 export const StudentNavlinks = [
@@ -100,7 +100,7 @@ export const StudentNavlinks = [
   { label: "Contact", url: "/" },
 ];
 export const StduentLoginfields = [
-  { name: "email", label: "Email", type: "text" },
+  { name: "email", label: "Email", type: "email" },
   { name: "password", label: "Password", type: "password" },
 ];
 export const InterviewerNavLinks = [
@@ -110,7 +110,7 @@ export const InterviewerNavLinks = [
   { label: "Contact", url: "/" },
 ];
 export const InterviewerLoginfields = [
-  { name: "username", label: "Username", type: "text" },
+  { name: "email", label: "Email", type: "email" },
   { name: "password", label: "Password", type: "password" },
 ];
 export const AdminSchedulesNavlinks = [
@@ -122,7 +122,7 @@ export const AdminSchedulesNavlinks = [
 export const AdminStudentsNavlinks = [
   { label: "Home", url: "/" },
   { label: "Students", url: "/login/admin/students" },
-  { label: "Schedules", url: "/login/admin/interviewschedules" },
+  { label: "Schedules", url: "/login/admin/adminschedules" },
   { label: "Contact", url: "/" },
 ];
 
@@ -135,8 +135,8 @@ export const InterviewerProfileNavLinks = [
 
 export const StudentDashboardNavlinks = [
   { label: "Home", url: "/" },
-  { label: "Schedules", url: "/StudentHome" },
-  { label: "Dashboard", url: "/StudentDashboard" },
+  { label: "Schedules", url: "/login/student/studenthome" },
+  { label: "Dashboard", url: "/login/student/dashboard" },
   { label: "Contact", url: "/" },
 ];
 
@@ -149,8 +149,8 @@ export const StudentHomeNavlinks = [
 
 export const StudentProfileNavlinks = [
   { label: "Home", url: "/" },
-  { label: "Schedules", url: "/" },
-  { label: "DashBoard", url: "/" },
+  { label: "Schedules", url: "/login/student/studenthome" },
+  { label: "DashBoard", url: "/login/student/dashboard" },
   { label: "Contact", url: "/" },
 ];
 
@@ -208,3 +208,6 @@ export const criteria = [
     options: ["Poor", "Mediocre", "Satisfactory", "Good", "Excellent"],
   },
 ];
+
+//interview Schedule
+export  const days = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];

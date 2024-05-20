@@ -7,6 +7,8 @@ import InterviewItem from '@/components/ui/InterviewItem';
 import { StudentDashboardNavlinks } from '@/components/variables/formVariables';
 import { SampleBarGraph } from '@/assets/index.js';
 import {  registerables } from 'chart.js';
+import { useSelector } from 'react-redux';
+import { selectAllUsers, selectCurrentToken, selectCurrentUser } from '@/redux/authSlice';
 Chart.register(...registerables);
 Chart.register(ArcElement);
 
@@ -72,7 +74,41 @@ const BarGraph = ({ interviews }) => {
 
 const CircleChart = (props) => {
     const { interview } = props;
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const token = useSelector(selectCurrentToken);
+    const users = useSelector(selectAllUsers)
+    let studentId;
+    const [interviews, setInterviews] = useState(null);
 
+    users.map((user,index)=>{
+        if(user.token ===token)
+            {
+                studentId = user.Uid;
+            }
+    })
+
+    const fetchStudentInterviews = async (studentId)=>{
+        setLoading(true);
+        setError(null);
+
+        try{
+             const response = await fetch(`${studentId}/info`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            const data  = await response.data;
+            setInterviews(data);
+        }catch(error)
+        {
+            console.log("Error loading the data ",error);
+            setError("Error loading the interviews")
+        }
+        finally {
+            setLoading(false);
+        }
+    }
     if (interview === null) {
         return (
             <div className="w-full md:w-1/2 bg-white p-4 shadow-lg" style={{ height: '50%' }}>

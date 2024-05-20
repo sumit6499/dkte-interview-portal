@@ -6,9 +6,13 @@ import axios from "axios";
 import { stdAllFields, stdFieldsStage1, stdFieldsStage2, StudentNavlinks } from '@/components/variables/formVariables.js';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { studentSignUp } from '@/api/index'
+import { useDispatch, useSelector } from "react-redux";
+import { authenticate, setUserInfo } from "@/redux/authSlice";
 
 function StudentSignUp() {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
     const [stage, setStage] = useState(1);
     const [formData, setFormData] = useState({
         name: '',
@@ -23,9 +27,7 @@ function StudentSignUp() {
         resume: null,
         paymentImage: null
     });
-    const navigate = useNavigate();
-    const studentSignup = true;
-    const IsInterviwerSignUp = false;
+
     const showToast = (message) => {
         toast.error(message);
     };
@@ -34,28 +36,27 @@ function StudentSignUp() {
         event.preventDefault();
 
         if (stage === 1) {
-            console.log(formData)
             setStage(2);
         } else if (stage === 2) {
-            // Validation for stage 2
-            // Proceed to stage 3
-            event.preventDefault();
-            console.log(formData)
             try {
-                const response = await studentSignUp(formData);
+                const response = await axios.post('http://localhost:3000/students/signup', formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                });
                 const { data, token } = response.data;
-                const { id: studentId } = data;
+                const { id: studentId, name ,role} = data;
                 const stdAuthToken = token;
 
-                console.log("The std id is ", studentId);
-                console.log("The std stdAuthToken is ", stdAuthToken);
-                 
                 localStorage.setItem("studentId", studentId);
                 localStorage.setItem("stdAuthToken", stdAuthToken);
 
-                console.log("Response from server:", response.data);
-                // toast.success('Signup Successful!', { position: toast.POSITION.TOP_CENTER });
-                navigate("/login/student");
+                if (response.data) {
+                    const userData = { user: data, token: stdAuthToken, Uid: studentId, Name:name,Role:role};
+                    dispatch(authenticate(true));
+                    dispatch(setUserInfo(userData));
+                    navigate("/login/student");
+                }
             } catch (error) {
                 console.error("Error submitting form:", error);
                 showToast("Error submitting form. Please try again.");
@@ -78,8 +79,8 @@ function StudentSignUp() {
     const handlePrev = () => {
         setStage(1);
     };
+
     const handleRemoveFile = (fieldName) => {
-       
         setFormData((prevFormData) => {
             const updatedFormData = { ...prevFormData };
             delete updatedFormData[fieldName];
@@ -91,16 +92,15 @@ function StudentSignUp() {
         <>
             <NavBar links={StudentNavlinks} />
             <ToastContainer />
-            
             <CommonSignUp
-                title={"Student SignUp"}
+                title="Student SignUp"
                 fields={stage === 1 ? stdFieldsStage1 : stdFieldsStage2}
                 onSubmit={handleSubmit}
                 className="pt-20"
                 currentStage={stage}
                 onPrev={() => setStage(stage - 1)}
-                studentSignup={studentSignup}
-                IsInterviwerSignUp={IsInterviwerSignUp}
+                studentSignup={true}
+                IsInterviwerSignUp={false}
                 handleChange={handleChange}
                 handleFileChange={handleChange}
                 formData={formData}
@@ -108,7 +108,6 @@ function StudentSignUp() {
                 handlePrev={handlePrev}
                 handleRemoveFile={handleRemoveFile}
             />
-          
         </>
     );
 }

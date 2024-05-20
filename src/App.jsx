@@ -1,16 +1,15 @@
 import './App.css';
-import { BrowserRouter as Router, Routes, Route  } from 'react-router-dom';
-
+import { BrowserRouter as Router, Routes, Route, Link,  } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import LoginPage from "./pages/Login/LoginPage.jsx";
-import Home from './pages/Home/Home'
+import Home from './pages/Home/Home';
 import SignUpPage from './pages/SignUp/SignUpPage.jsx';
 import StudentLogin from './pages/Login/StudentLogin.jsx';
 import AdminLogin from './pages/Login/AdminLogin';
 import AdminSchedules from './pages/AdminPages/AdminSchedules';
 import StudentSignUp from './pages/SignUp/StudentSignUp.jsx';
 import AdminSignUp from './pages/SignUp/AdminSignUp.jsx';
-import Students from './pages/AdminPages/Students';
-
+import StudentsList from './pages/AdminPages/StudentsList';
 import AdminInterviewSchedule from './pages/AdminPages/InterviewSchedule';
 import StudentHome from './pages/StudentPages/StudentHome';
 import UserProfile from './pages/StudentPages/UserProfile';
@@ -22,45 +21,50 @@ import Schedule from './components/ui/Schedules';
 import InterviwerPorfile from './pages/InterviewerPages/interviewerProfile';
 import ErrorPage from './components/ui/error';
 import StudentEvaluationForm from './pages/Screen/EvaluationForm';
-
 import FormBase64 from './components/ui/form64';
+import AllUsers from './components/Allusers';
 
+// const navigate = useNavigate()
+const PrivateRoute = ({ element, ...rest }) => {
+  const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
+  if(!isAuthenticated)
+    {
+      console.log("login karo")
+    }
+  return isAuthenticated ? element : <Link to="/login" />;
+};
 
 function App() {
- 
   return (
-    <>
-      <Router>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/signup" element={<SignUpPage />} />
-          <Route path="/login/student" element={<StudentLogin />} />
-          <Route path="/login/admin" element={<AdminLogin />} />
-          <Route path="/signup/student" element={<StudentSignUp />} />
-          <Route path="/signup/admin" element={<AdminSignUp />} />
+    <Router>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/signup" element={<SignUpPage />} />
+        <Route path="/login/student" element={<StudentLogin />} />
+        <Route path="/login/admin" element={<AdminLogin />} />
+        <Route path="/signup/student" element={<StudentSignUp />} />
+        <Route path="/signup/admin" element={<AdminSignUp />} />
 
-          <Route path="/login/admin/students" element={<Students />} />
-          
-          <Route path="/login/admin/adminschedules" element={<AdminSchedules />} />
-          <Route path="/login/admin/interviewschedules" element={<AdminInterviewSchedule />} />
-          <Route path="/StudentHome" element={<StudentHome />} />
-          <Route path="/login/student/profile" element={<UserProfile />} />
-          <Route path="/login/student/dashboard" element={<StudentDashboard />} />
-          <Route path="/signup/interviewer" element={<InterviewerSignUp />} />
-          <Route path="/Schedule" element={<Schedule />} />
-          <Route path="/login/interviewer" element={<InterviewerLogin />} />
-          <Route path="/login/interviewer/schedules" element={<InterviewerIntervieweSchedules />} />
-          <Route path="/login/interviewer/profile" element={<InterviwerPorfile />} />
-          <Route path="/eval" element={<StudentEvaluationForm />} />
+        <Route path="/login/admin/students" element={<StudentsList />}  />
+        <Route path="/login/admin/adminschedules" element={<PrivateRoute element={<AdminSchedules />} />} />
+        <Route path="/login/admin/interviewschedules" element={<PrivateRoute element={<AdminInterviewSchedule />} />} />
+        <Route path="/login/student/studenthome" element={<PrivateRoute element={<StudentHome />} />} />
+        <Route path="/login/student/profile" element={<PrivateRoute element={<UserProfile />} />} />
+        <Route path="/login/student/dashboard" element={<PrivateRoute element={<StudentDashboard />} />} />
         
-          <Route path="/FormBase64" element={<FormBase64 />} />
-        
-         
-          <Route path="*" element={<ErrorPage />} />
-        </Routes>
-      </Router>
-    </>
+        <Route path="/signup/interviewer" element={<InterviewerSignUp />} />
+        <Route path="/Schedule" element={<PrivateRoute element={<Schedule />} />} />
+        <Route path="/login/interviewer" element={<InterviewerLogin />} />
+        <Route path="/login/interviewer/schedules" element={<PrivateRoute element={<InterviewerIntervieweSchedules />} />} />
+        <Route path="/login/interviewer/profile" element={<PrivateRoute element={<InterviwerPorfile />} />} />
+        <Route path="/eval" element={<PrivateRoute element={<StudentEvaluationForm />} />} />
+        <Route path="/FormBase64" element={<PrivateRoute element={<FormBase64 />} />} />
+        <Route path="/all-users" element={<AllUsers />} />
+
+        <Route path="*" element={<ErrorPage />} />
+      </Routes>
+    </Router>
   );
 }
 

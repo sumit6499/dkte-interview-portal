@@ -4,24 +4,52 @@ import '@/App.css'
 import { StudentHomeNavlinks } from '@/components/variables/formVariables';
 import Schedule from '@/components/ui/Schedules';
 import axios from 'axios';
-
+import { useSelector } from 'react-redux';
+import { selectAllUsers, selectCurrentToken } from '@/redux/authSlice';
 const StudentHome = () => {
+    const token = useSelector(selectCurrentToken);
     const drop = true;
     const [interviews, setInterviews] = useState([]);
-
+    const [studentsInterviews, seTStudentsInterviews] = useState([]);
+    const [stdLoading, setLoading] = useState(true);
+    const [stdError, setError] = useState(null);
+    const [isStudentSchedules, setIsStudentSchedules] = useState(true);
+    const users = useSelector(selectAllUsers)
+    let studentId;
+    users.map((user,index)=>{
+        if(user.token==token)
+            {
+                studentId = user.Uid;
+            }
+    })
     useEffect(() => {
-        fetchInterviews();
+        fetchInterviews('today');
     }, []);
 
     const fetchInterviews = async (filterOption) => {
+        setLoading(true);
+        setError(null);
         try {
-            const response = await axios.get(`/api/interview/all?filter=${filterOption}`);
-            setInterviews(response.data.interviews);
+            const response = await axios.get(`http://localhost:3000/api/v1/auth/interview/${studentId}/all?filter=${filterOption}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+           console.log("the response data is "+response.data);
+            setInterviews(response.data);
+            seTStudentsInterviews(interviews.data)
         } catch (error) {
-            console.error('Error fetching interviews:', error);
+            console.error('Error fetching students data:', error);
+            setError('Error fetching data from server. Please check your network connection or the server URL.');
+        } finally {
+            setLoading(false);
         }
     };
-
+    // if (!interviews.data[0].date)
+    //     {
+    //     // console.log('student interviewer', interviews.data[0].date);
+    //     }
+    console.log('student interviewer', interviews.data);
     const handleFilterChange = async (option) => {
         try {
             await fetchInterviews(option);
@@ -35,7 +63,15 @@ const StudentHome = () => {
             <NavBar links={StudentHomeNavlinks} drop={drop} />
             <div className="bg-zinc-100 h-screen">
                 <div className="flex h-screen">
-                    {interviews !== null && <Schedule interviews={interviews} onFilterChange={handleFilterChange} />}
+                    {interviews !== null && 
+                    <Schedule
+                     interviews={interviews} 
+                     onFilterChange={handleFilterChange}
+                        isStudentSchedules={isStudentSchedules} 
+                        studentsInterviews={studentsInterviews }
+                        stdLoading={stdLoading}
+                        stdError={stdError}/>
+                    }
                 </div>
             </div>
         </>

@@ -7,11 +7,14 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from "react-router";
 import { adminSignUp }from '@/api/index';
+import { useDispatch } from "react-redux";
+import { authenticate, setUserInfo } from "@/redux/authSlice";
 function AdminSignUp() {
     const studentSignup = false;
     const navigate = useNavigate()
     const isAdminSignUp = true;
-    
+    const dispatch = useDispatch();
+    const [userExists, setUserExists] = useState(false);
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -46,14 +49,27 @@ function AdminSignUp() {
        
         console.log("formData",formData)
         try {
-            const response = await adminSignUp(formData);
+            const response = await axios.post('http://localhost:3000/admin/signup', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            });
             const { data, token } = response.data;
-            const { id: adminId } = data;
+            const { id: adminId,name ,role} = data;
             const adminAuthToken = token;
 
 
             localStorage.setItem("adminId", adminId);
             localStorage.setItem("adminAuthToken", adminAuthToken);
+            
+            if (response.data) {
+                dispatch(authenticate(true));
+                dispatch(setUserInfo({ user: data, token, Uid: adminId, Name: name, Role: role }));
+                navigate('/login/student/profile');
+            } else {
+                setUserExists(false);
+            }
+
             console.log("Success: " + response.data);
             navigate("/login/admin");
         } 

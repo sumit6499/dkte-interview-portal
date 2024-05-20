@@ -9,9 +9,13 @@ import '@/App.css';
 import { capitalize } from 'lodash'; // Import lodash capitalize function
 import { useNavigate } from 'react-router';
 import { interviewerSignUp } from '@/api/index'; // Import interviewerSignUp function from the API file
-
+import { useDispatch } from 'react-redux';
+import { authenticate, setUserInfo } from '@/redux/authSlice'
 const InterviewerSignUp = () => {
+    const dispatch = useDispatch();
     const navigate = useNavigate();
+    const [userExists, setUserExists] = useState(false); 
+
     const [selectedDays, setSelectedDays] = useState([]);
     const [selectedTimes, setSelectedTimes] = useState({});
     const [fileData, setFileData] = useState({});
@@ -21,10 +25,10 @@ const InterviewerSignUp = () => {
         phone: '',
         password: '',
         profession: '',
-        freeday:'',
-        startTime:'',
-        endTime:'',
-       
+        freeday: '',
+        startTime: '',
+        endTime: '',
+
 
     });
 
@@ -59,7 +63,7 @@ const InterviewerSignUp = () => {
         setFormData(prevState => ({ ...prevState, freeday: day }));
         setFormData(prevState => ({ ...prevState, startTime: newSelectedTimes[day]['start'] }));
         setFormData(prevState => ({ ...prevState, endTime: newSelectedTimes[day]['end'] }));
-       
+
     };
 
     //to display time in time boxes
@@ -85,14 +89,21 @@ const InterviewerSignUp = () => {
         console.log("fomrdata is ", formData)
         try {
 
-            const response = await interviewerSignUp(formDataToSend); 
+            const response = await interviewerSignUp(formDataToSend);
             const { data, token } = response.data;
-            const { id: interviewerId } = data;
+            const { id: interviewerId, name, role, day, startTime, endTime } = data;
             const interviewerAuthToken = token;
 
             localStorage.setItem("interviewerId", interviewerId);
             localStorage.setItem("interviewerAuthToken", interviewerAuthToken);
-            toast.success('Signup Successful!', { position: toast.POSITION.TOP_CENTER });
+            if (response.data) {
+                dispatch(authenticate(true));
+                dispatch(setUserInfo({ user: data, token, Uid: interviewerId, Name: name, Role: role, Day: day, StartTime: startTime, EndTime: endTime }));
+                navigate('/login/student/profile');
+            } else {
+                setUserExists(false);
+            }
+            // toast.success('Signup Successful!', { position: toast.POSITION.TOP_CENTER });
             navigate('/login/interviewer')
         } catch (error) {
             console.error('Error submitting form:', error);
@@ -112,7 +123,7 @@ const InterviewerSignUp = () => {
         setSelectedDays(values);
         setFormData({ ...formData, idCard: event.target.value });
     };
-   
+
     return (
         <>
             <NavBar links={InterviewerNavLinks} />
@@ -155,7 +166,7 @@ const InterviewerSignUp = () => {
                                     type="file"
                                     id="idcard"
                                     name="idcard"
-                                        onChange={handleCombinedChange}
+                                    onChange={handleCombinedChange}
                                     required
                                     className="  file:h-10 file:rounded text-sm text-white file:border-0 file:text-sm file:font-semibold file:bg-yellow-500 file:text-black hover:file:bg-yellow-600"
                                 />
@@ -164,16 +175,16 @@ const InterviewerSignUp = () => {
                     </div>
                     <div>
                         <label htmlFor="days" className="block mb-2 text-white">Days Of Week You're Available:</label>
-                        <select id="days" className="w-full p-2 bg-zinc-700 rounded text-white" onChange={(e) => setSelectedDays(Array.from(e.target.selectedOptions, option => option.value))} defaultValue={['MON']}>
-                            <option>MON</option>
-                            <option>TUE</option>
-                            <option>WED</option>
-                            <option>THU</option>
-                            <option>FRI</option>
-                            <option>SAT</option>
-                            <option>SUN</option>
-                        </select>
-                    </div>
+<select id="days" className="w-full p-2 bg-zinc-700 rounded text-white" onChange={(e) => setSelectedDays(Array.from(e.target.selectedOptions, option => option.value))} defaultValue={['MON']}>
+    <option>MON</option>
+    <option>TUE</option>
+    <option>WED</option>
+    <option>THU</option>
+    <option>FRI</option>
+    <option>SAT</option>
+    <option>SUN</option>
+</select>
+</div>
 
                     {selectedDays.map((day) => (
                         <div key={day}>
