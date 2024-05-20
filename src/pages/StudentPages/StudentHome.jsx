@@ -38,6 +38,7 @@ const StudentHome = () => {
            console.log("the response data is "+response.data);
             setInterviews(response.data);
             seTStudentsInterviews(interviews.data)
+            setLoading(false);
         } catch (error) {
             console.error('Error fetching students data:', error);
             setError('Error fetching data from server. Please check your network connection or the server URL.');

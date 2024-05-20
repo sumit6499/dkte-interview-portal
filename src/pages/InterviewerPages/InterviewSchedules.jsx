@@ -5,26 +5,18 @@ import '@/App.css'
 import Schedule from '@/components/ui/Schedules';
 import { InterviewerProfileNavLinks } from '@/components/variables/formVariables';
 import { useSelector } from 'react-redux';
-import { selectAllUsers, selectCurrentToken, selectCurrentUser } from '@/redux/authSlice';
-// import tokens from 'razorpay/dist/types/tokens';
+import {  selectCurrentToken, selectCurrentUid } from '@/redux/authSlice';
 import axios from 'axios';
 const InterviewerIntervieweSchedules = () => {
     const token = useSelector(selectCurrentToken)
-    const users = useSelector(selectAllUsers)
-    // const [interviewerId,setInterviewerId] = useState('')
+   
+    
     const [interviewerLoading,setInterviewerLoading] = useState(true)
     const [interviewerError,setInterviewerError] = useState('');
     const [interviewersInterviews,setInterviewersInterviews] = useState([])
     const [isInterviewerInterviews,setIsInterviewerInterviews] = useState(true)
-    console.log("token is ",token)
-    let interviewerId;
-    users.map((user,index)=>{
-        if(user.token === token)
-            {
-            interviewerId=user.Uid;
-            }
-    })
-    console.log("THe interviewer id is ", interviewerId)
+    const  interviewerId = useSelector(selectCurrentUid);
+    
     useEffect(()=>{
         fetchInterviews('today');
     },[])
@@ -70,7 +62,7 @@ console.log("the interivew sare ",interviewersInterviews)
     
                         stdLoading={interviewerLoading}
                         studentsInterviews={interviewersInterviews}
-                        isStudentSchedules={isInterviewerInterviews}
+                        isStudentSchedules={false}
                         />
                     }
                 </div>
