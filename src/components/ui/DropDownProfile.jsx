@@ -3,17 +3,27 @@ import React, { useState } from "react";
 import { MaleUser } from '@/assets/index'
 import { useNavigate } from "react-router";
 
-const DropDownProfile = () => {
+const DropDownProfile = ({ profileLink, isAdmin }) => {
     const [isOpen, setIsOpen] = useState(false);
     const navigate = useNavigate(false);
     const toggleMenu = () => {
         setIsOpen(!isOpen);
     };
 
-    const logout = () =>{
+    const logout = () => {
         navigate("/")
     }
-    
+
+    const Profile = () => {
+        if (profileLink === 1) {
+            navigate('/login/student/profile')
+        }
+        else if (profileLink === 2) {
+            navigate('/login/interviewer/profile')
+        }
+
+    }
+
     return (
         <div className="relative">
             <button className="flex items-center text-white focus:outline-none" onClick={toggleMenu}>
@@ -25,8 +35,9 @@ const DropDownProfile = () => {
             </button>
             {isOpen && (
                 <div className="absolute right-0 mt-2 py-2 w-48 bg-white rounded shadow-lg z-10">
-                    {/* <a href="#" className="block px-4 py-2 text-gray-800 hover:bg-gray-200">Profile</a>
-                    <a href="#" className="block px-4 py-2 text-gray-800 hover:bg-gray-200">Settings</a> */}
+                    {!isAdmin ? <a href="#" className="block px-4 py-2 text-gray-800 hover:bg-gray-200" onClick={Profile}>Profile</a>: <span></span>}
+                   
+                    {/* <a href="#" className="block px-4 py-2 text-gray-800 hover:bg-gray-200">Settings</a> */}
                     <a href="#" className="block px-4 py-2 text-gray-800 hover:bg-gray-200" onClick={logout}>Logout</a>
                 </div>
             )}

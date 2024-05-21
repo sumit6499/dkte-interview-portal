@@ -6,8 +6,8 @@ import '@/App.css'
 import DropDownProfile from "@/components/ui/DropDownProfile";
 
 function NavBar(props) {
-    const { links, drop } = props;
-
+    const { links, drop, profileLink, isAdmin } = props;
+    console.log("Prilelink "+profileLink)
     const navRef = useRef();
     const navLinksRef = useRef();
     const [isSmallScreen, setIsSmallScreen] = useState(false);
@@ -46,9 +46,9 @@ function NavBar(props) {
 
                 </div>
 
-                {drop && <DropDownProfile />}
+                {drop && <DropDownProfile profileLink={profileLink} isAdmin={isAdmin}/>}
                 <div className="menu block lg:hidden">
-                    <MobileNav drops={drop} />
+                    <MobileNav drops={drop} links={links}  />
                 </div>
             </nav>
         </section>

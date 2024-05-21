@@ -128,8 +128,8 @@ export const AdminStudentsNavlinks = [
 
 export const InterviewerProfileNavLinks = [
   { label: "Home", url: "/" },
-  { label: "DashBoard", url: "/" },
-  { label: "Schedules", url: "/" },
+  // { label: "DashBoard", url: "/" },
+  { label: "Schedules", url: "/login/interviewer/schedules" },
   { label: "Contact", url: "/" },
 ];
 
@@ -152,6 +152,7 @@ export const StudentProfileNavlinks = [
   { label: "Schedules", url: "/login/student/studenthome" },
   { label: "DashBoard", url: "/login/student/dashboard" },
   { label: "Contact", url: "/" },
+ 
 ];
 
 //fotter

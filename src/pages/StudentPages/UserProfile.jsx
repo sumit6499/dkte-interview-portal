@@ -6,6 +6,8 @@ import { ProfileImage, CameraIcon } from '@/assets/index.js';
 import StudentLogin from '../Login/StudentLogin';
 import { fileInputClasses } from '@/components/styles/sharedStyles';
 import { StudentProfileNavlinks } from '@/components/variables/formVariables';
+import { useSelector } from 'react-redux';
+import { selectCurrentName, selectCurrentUid } from '@/redux/authSlice';
 
 
 const Login = () => {
@@ -33,6 +35,7 @@ const Login = () => {
 };
 
 const ProfileDetailsForm = () => {
+    const stdId = useSelector(selectCurrentUid)
     // State to store form data
     const [formData, setFormData] = useState({
         name: '',
@@ -55,7 +58,7 @@ const ProfileDetailsForm = () => {
         e.preventDefault();
         try {
             // Send form data  
-            const response = await fetch('/api/v1/auth/students', {
+            const response = await fetch(`http://localhost:3000/api/v1/auth/students${stdId}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -81,11 +84,13 @@ const ProfileDetailsForm = () => {
             <h3 className="text-lg font-semibold mb-6">Update Profile Details</h3>
             <form>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
-                    <input type="text" placeholder="Full Name" className="border p-2 rounded w-full" />
-                    <input type="text" placeholder="Phone" className="border p-2 rounded w-full" />
-                    <input type="email" placeholder="Email" className="border p-2 rounded w-full" />
-                    <input type="text" placeholder="Department" className="border p-2 rounded w-full" />
-                    <input type="text" placeholder="Class" className="border p-2 rounded w-full" />
+                    <input type="text" name="name" placeholder="Full Name" className="border p-2 rounded w-full" onChange={handleInputChange} />
+                    <input type="text" name="phone" placeholder="Phone" className="border p-2 rounded w-full" onChange={handleInputChange} />
+                    <input type="email" name="email" placeholder="Email" className="border p-2 rounded w-full" onChange={handleInputChange} />
+                    <input type="text" name="dept" placeholder="Department" className="border p-2 rounded w-full" onChange={handleInputChange} />
+                    <input type="text" name="class" placeholder="Class" className="border p-2 rounded w-full" onChange={handleInputChange} />
+                    <input type="text" name="password" placeholder="Password" className="border p-2 rounded w-full" onChange={handleInputChange} value/>
+                    
                 </div>
                 <button type="submit" className="bg-yellow-400 hover:bg-yellow-500 text-white font-bold py-2 px-4 rounded"onSubmit={handleSubmit}>
                     Save Changes
@@ -201,7 +206,7 @@ const ProfilePicture = () => {
 
 const UpdateResume = () => {
     const [resumeFile, setResumeFile] = useState(null);
-
+    const stdId = useSelector(selectCurrentUid)
     
     const handleFileChange = (e) => {
         const file = e.target.files[0];
@@ -215,7 +220,7 @@ const UpdateResume = () => {
             const formData = new FormData();
             formData.append('resume', resumeFile);
             //send formdata to backend API
-            const response = await axios.post('', formData, {
+            const response = await axios.post(`http://localhost:3000/api/v1/auth/student/${stdId}`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
@@ -251,17 +256,16 @@ const UpdateResume = () => {
 };
 
 const UserProfile = () => {
-   
-    
+    const profileLink =1
+    const drop = true;
+    const stdName  = useSelector(selectCurrentName)
     return (
         <>
-
-
-            <NavBar links={StudentProfileNavlinks} />
+            <NavBar links={StudentProfileNavlinks} drop={drop} profileLink={profileLink}/>
             <div className="max-w-4xl mx-auto p-5">
                 <div className="flex items-center bg-yellow-400 p-4 rounded-lg mb-6">
                     <img src={ProfileImage} alt="User Profile" className="rounded-full w-10 h-10" />
-                    <span className="ml-3 font-semibold text-lg">Pramod  Mahajan</span>
+                    <span className="ml-3 font-semibold text-lg">{stdName}</span>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                     <ProfilePicture />
@@ -269,8 +273,6 @@ const UserProfile = () => {
                 </div>
                 <ProfileDetailsForm />
             </div>
-
-
         </>
     );
 };

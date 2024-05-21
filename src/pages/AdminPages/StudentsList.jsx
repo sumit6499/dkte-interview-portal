@@ -62,7 +62,7 @@ function StudentsList() {
 
     return (
         <>
-            <NavBar links={AdminStudentsNavlinks} />
+            <NavBar links={AdminStudentsNavlinks} drop={true} isAdmin={true} />
 
             <div className="container mx-auto px-4 bg-zinc-100">
                 <header className="py-5">

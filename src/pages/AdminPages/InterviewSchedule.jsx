@@ -153,7 +153,7 @@ function AdminInterviewSchedule() {
 
     return (
         <>
-            <NavBar links={AdminSchedulesNavlinks} />
+            <NavBar links={AdminSchedulesNavlinks} drop={true} isAdmin={true} />
             <div className="text-white mb-10">
                 <div className="max-w-lg mx-auto mt-10 p-6 bg-zinc-800 rounded-lg">
                     <h1 className="text-xl font-bold mb-4 border-b border-zinc-600 pb-2">Schedule Interview</h1>

@@ -7,6 +7,7 @@ import { InterviewerProfileNavLinks } from '@/components/variables/formVariables
 
 const ProfileDetailsForm = () => {
     // State to store form data
+    const profileLink = 2;
     const [selectedDays, setSelectedDays] = useState([]);
     const [selectedTimes, setSelectedTimes] = useState({});
 
@@ -164,9 +165,11 @@ const ProfilePicture = () => {
 };
 
 const InterviwerPorfile = () => {
+    const profileLink = 2;
+    const drop = true
     return (
         <>
-            <NavBar links={InterviewerProfileNavLinks} />
+            <NavBar links={InterviewerProfileNavLinks} profileLink={profileLink} drop={drop} />
             <div className="max-w-4xl mx-auto p-5">
                 <div className="flex items-center bg-yellow-400 p-4 rounded-lg mb-6">
                     <img src={ProfileImage} alt="User Profile" className="rounded-full w-10 h-10" />

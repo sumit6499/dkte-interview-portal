@@ -10,7 +10,7 @@ import {
 import { Menu, logo } from '@/assets'
 import DropDownProfile from "@/components/ui/DropDownProfile"
 import Dropdown from "@/components/ui/MobileDropDown"
-function MobileNav({ drop }) {
+function MobileNav({ drop,links }) {
     return (
         <div>
             <Sheet  >
@@ -29,18 +29,20 @@ function MobileNav({ drop }) {
                             <div className="navlinks flex flex-col gap-5 text-lg ">
                                 {!drop && (
                                     <>
-                                        <a href="/" className="text-primary font-">Home</a>
-                                        <a href="/login" className="hover:text-primary">Login</a>
-                                        <a href="/signup" className="hover:text-primary">Register</a>
-                                        <a href="/" className="hover:text-primary">Contact</a>
+                                        {links.map((link, index) => (
+                                            <a href={link.url} key={index} className="hover:text-primary">
+                                                {link.label}
+                                            </a>
+                                        ))}
                                     </>
                                 )}
 
                                 {drop && (<>
-                                    <a href="/" className="text-primary font-">Home</a>
-                                    <a href="/loginPage" className="hover:text-primary">Schedules</a>
-                                    <a href="/SignUpPage" className="hover:text-primary">DashBoard</a>
-                                    <a href="/" className="hover:text-primary">Contact</a>
+                                    {links.map((link, index) => (
+                                        <a href={link.url} key={index} className="hover:text-primary">
+                                            {link.label}
+                                        </a>
+                                    ))}
                                     <Dropdown />
                                     </>)}
                             </div>

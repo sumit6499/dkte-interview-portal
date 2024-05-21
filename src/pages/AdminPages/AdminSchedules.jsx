@@ -8,6 +8,7 @@ import { selectCurrentToken } from '@/redux/authSlice';
 import { useSelector } from 'react-redux';
 const AdminSchedules = () => {
     const drop = true;
+    const isAdmin = true;
     const token = useSelector(selectCurrentToken)
     const [interviews, setInterviews] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -52,7 +53,7 @@ const AdminSchedules = () => {
     console.log("interviews",interviews)
     return (
         <>
-            <NavBar links={AdminSchedulesNavlinks} drop={drop} />
+            <NavBar links={AdminSchedulesNavlinks} drop={drop} isAdmin={isAdmin} />
             <div className="bg-zinc-100 h-screen">
                 <div className="flex h-screen">
                     {interviews !== null &&

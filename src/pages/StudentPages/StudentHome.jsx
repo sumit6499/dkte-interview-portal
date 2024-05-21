@@ -7,6 +7,7 @@ import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { selectAllUsers, selectCurrentToken } from '@/redux/authSlice';
 const StudentHome = () => {
+    const profileLink = 1
     const token = useSelector(selectCurrentToken);
     const drop = true;
     const [interviews, setInterviews] = useState([]);
@@ -58,7 +59,7 @@ const StudentHome = () => {
 
     return (
         <>
-            <NavBar links={StudentHomeNavlinks} drop={drop} />
+            <NavBar links={StudentHomeNavlinks} drop={drop} profileLink={profileLink} />
             <div className="bg-zinc-100 h-screen">
                 <div className="flex h-screen">
                     {interviews !== null && 

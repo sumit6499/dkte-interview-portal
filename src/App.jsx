@@ -49,6 +49,7 @@ function App() {
         <Route path="/login/admin/students" element={<StudentsList />}  />
         <Route path="/login/admin/adminschedules" element={<PrivateRoute element={<AdminSchedules />} />} />
         <Route path="/login/admin/interviewschedules" element={<PrivateRoute element={<AdminInterviewSchedule />} />} />
+        
         <Route path="/login/student/studenthome" element={<PrivateRoute element={<StudentHome />} />} />
         <Route path="/login/student/profile" element={<PrivateRoute element={<UserProfile />} />} />
         <Route path="/login/student/dashboard" element={<PrivateRoute element={<StudentDashboard />} />} />

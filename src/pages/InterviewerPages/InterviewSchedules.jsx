@@ -10,7 +10,8 @@ import axios from 'axios';
 const InterviewerIntervieweSchedules = () => {
     const token = useSelector(selectCurrentToken)
    
-    
+    const drop = true;
+    const profileLink = 2;
     const [interviewerLoading,setInterviewerLoading] = useState(true)
     const [interviewerError,setInterviewerError] = useState('');
     const [interviewersInterviews,setInterviewersInterviews] = useState([])
@@ -48,11 +49,10 @@ const InterviewerIntervieweSchedules = () => {
             setInterviewerError('Error fetching data from server. Please check your network connection or the server URL.');
         }
     }
-    const drop = true;
-console.log("the interivew sare ",interviewersInterviews)
+   
     return (
         <>
-            <NavBar links={InterviewerProfileNavLinks} drop={drop} />
+            <NavBar links={InterviewerProfileNavLinks} drop={drop} profileLink={profileLink} />
             <div className="bg-zinc-100 h-screen">
                 <div className="flex h-screen">
                     {interviewersInterviews !== null &&

@@ -220,6 +220,8 @@ const InterviewsList = ({ interviews,onPerformanceClick,feedbackData }) => {
 };
 
 const StudentDashboard = () => {
+    const profileLink = 1
+    const drop = true;
     const [interviews, setInterviews] = useState([]);
     const [feedbackData,setFeedbackData] = useState([]);
     const [selectedInterview, setSelectedInterview] = useState(null);
@@ -280,7 +282,7 @@ const fetchFeedBack = async (interviewerId) =>{
 
     return (
         <>
-            <NavBar links={StudentDashboardNavlinks} />
+            <NavBar links={StudentDashboardNavlinks} profileLink={profileLink} drop={drop }/>
             <div className="bg-zinc-100">
                 <div className="container mx-auto px-4">
                     <WelcomeMessage />
