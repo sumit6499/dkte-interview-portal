@@ -29,7 +29,7 @@ export const stdAllFields = [
   { name: "resume", label: "Resume", type: "file" },
   { name: "UPI", label: "UPI Transaction ID", type: "text" },
   { name: "paymentImage", label: "Upload Payment Proof", type: "file" },
-];
+];``
 export const stdFieldsStage1 = [
   { name: "name", label: "Full Name", type: "text" },
   { name: "email", label: "Email", type: "email" },

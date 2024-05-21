@@ -7,7 +7,7 @@ import StudentLogin from '../Login/StudentLogin';
 import { fileInputClasses } from '@/components/styles/sharedStyles';
 import { StudentProfileNavlinks } from '@/components/variables/formVariables';
 import { useSelector } from 'react-redux';
-import { selectCurrentName, selectCurrentUid } from '@/redux/authSlice';
+import { selectCurrentName, selectCurrentToken, selectCurrentUid } from '@/redux/authSlice';
 
 
 const Login = () => {
@@ -35,64 +35,93 @@ const Login = () => {
 };
 
 const ProfileDetailsForm = () => {
-    const stdId = useSelector(selectCurrentUid)
-    // State to store form data
+    const token = useSelector(selectCurrentToken);
+    const stdId = useSelector(selectCurrentUid);
     const [formData, setFormData] = useState({
         name: '',
-        prn:'',
-        password:'',
+        PRN: '',
+        password: '',
         phone: '',
         email: '',
         dept: '',
-        class: ''
     });
 
-    //   form input changes
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
     };
 
-    //  form submission
     const handleSubmit = async (e) => {
-        e.preventDefault();
+        e.preventDefault();  // Corrected this line
         try {
-            // Send form data  
-            const response = await fetch(`http://localhost:3000/api/v1/auth/students${stdId}`, {
-                method: 'POST',
+            const response = await fetch(`http://localhost:3000/api/v1/auth/students/${stdId}`, {
+                method: 'PATCH',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${token}`  // Corrected this line
                 },
-                body: JSON.stringify(formData)
+                body: JSON.stringify(formData)  // Corrected this line
             });
             if (response.ok) {
-                //  success
                 alert('Profile details updated successfully!');
             } else {
-                //  error  from backend
                 alert('Failed to update profile details. Please try again.');
             }
         } catch (error) {
-            //  network errors
             console.error('Error updating profile:', error);
             alert('An error occurred while updating profile details. Please try again later.');
         }
     };
 
+    const stdProfileDeptOptions = [
+        "CSE",
+        "AI",
+        "AIDS",
+        "ENTC",
+        "MECH",
+        "ELECTRIC",
+        "CIVIL",
+    ];
+
     return (
         <div className="bg-white p-6 rounded-lg shadow">
             <h3 className="text-lg font-semibold mb-6">Update Profile Details</h3>
-            <form>
+            <form onSubmit={handleSubmit}>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
-                    <input type="text" name="name" placeholder="Full Name" className="border p-2 rounded w-full" onChange={handleInputChange} />
-                    <input type="text" name="phone" placeholder="Phone" className="border p-2 rounded w-full" onChange={handleInputChange} />
-                    <input type="email" name="email" placeholder="Email" className="border p-2 rounded w-full" onChange={handleInputChange} />
-                    <input type="text" name="dept" placeholder="Department" className="border p-2 rounded w-full" onChange={handleInputChange} />
-                    <input type="text" name="class" placeholder="Class" className="border p-2 rounded w-full" onChange={handleInputChange} />
-                    <input type="text" name="password" placeholder="Password" className="border p-2 rounded w-full" onChange={handleInputChange} value/>
-                    
+                    {/* Form fields */}
+                    <div>
+                        <label htmlFor="name" className='ml-1'>Enter New Full Name</label>
+                        <input type="text" name="name" placeholder="Full Name" className="border mt-2 p-2 rounded w-full" onChange={handleInputChange} />
+                    </div>
+                    <div>
+                        <label htmlFor="PRN" className='ml-1'>Enter Updated PRN Number</label>
+                        <input type="text" name="PRN" placeholder="PRN Number" className="border p-2 rounded w-full" onChange={handleInputChange} />
+                    </div>
+                    <div>
+                        <label htmlFor="phone" className='ml-1'>Enter the new Phone Number</label>
+                        <input type="text" name="phone" placeholder="Phone" className="border p-2 rounded w-full" onChange={handleInputChange} />
+                    </div>
+                    <div>
+                        <label htmlFor="email" className='ml-1'>Enter new Email</label>
+                        <input type="email" name="email" placeholder="Email" className="border p-2 rounded w-full" onChange={handleInputChange} />
+                    </div>
+<div>
+    <label htmlFor="dept">Select Department</label>
+    <select name="dept" className="border p-2 rounded w-full" onChange={handleInputChange}>
+        <option value="">Select Department</option>
+        {stdProfileDeptOptions.map((option) => (
+            <option key={option} value={option}>
+                {option}
+            </option>
+        ))}
+    </select>
+</div>
+                    <div>
+                        <label htmlFor="password">Enter new Password</label>
+                        <input type="text" name="password" placeholder="Password" className="border p-2 rounded w-full" onChange={handleInputChange} />
+                    </div>
                 </div>
-                <button type="submit" className="bg-yellow-400 hover:bg-yellow-500 text-white font-bold py-2 px-4 rounded"onSubmit={handleSubmit}>
+                <button type="submit" className="bg-yellow-400 hover:bg-yellow-500 text-white font-bold py-2 px-4 rounded">
                     Save Changes
                 </button>
             </form>
@@ -103,32 +132,6 @@ const ProfileDetailsForm = () => {
 
 const ProfilePicture = () => {
     const [selectedPicture, setSelectedPicture] = useState(null);
-
-
-    //To send the updated picture to backend
-    // const handlePictureChange = async (e) => {
-    //     const file = e.target.files[0];
-    //     if (file) {
-    //         const formData = new FormData();
-    //         formData.append('image', file);
-
-    //         try {
-    //             // Send the image to the server
-    //             const response = await axios.post('/api/upload', formData, {
-    //                 headers: {
-    //                     'Content-Type': 'multipart/form-data'
-    //                 }
-    //             });
-
-    //             // Update profile picture URL 
-    //             if (response.result) {
-    //                 setSelectedPicture(response.result);
-    //             }
-    //         } catch (error) {
-    //             console.error('Error uploading image:', error);
-    //         }
-    //     }
-    // };
 
     const handlePictureChange = async (e) => {
         const file = e.target.files[0];
@@ -163,33 +166,13 @@ const ProfilePicture = () => {
     };
 
 
-    // //to change the user picture on page 
-    // const handlePictureChange = (e) => {
-    //     const file = e.target.files[0];
-    //     // Validate if file is selected
-    //     if (file) {
-    //         const reader = new FileReader();
-    //         reader.onload = () => {
-    //             // Update the selected picture in state
-    //             setSelectedPicture(reader.result);
-    //         };
-    //         reader.readAsDataURL(file);
-    //     }
-    // };
-
-    
+   
     return (
         <div className="bg-white p-4 rounded-lg shadow">
             <h3 className="text-lg font-semibold mb-3">Profile Picture</h3>
             <div className="relative">
 
                 <img src={selectedPicture || ProfileImage} alt="Profile Picture" className="rounded-full mx-auto" />
-                {/* <input 
-                type="file"
-                accept='image/*'
-                className='absolute inset-0 w-full opacity-0 cursor-pointer'
-                onChange={handlePictureChange}
-                /> */}
                 <label htmlFor='profilePicture' className="absolute bottom-0 right-0 bg-zinc-700 text-white p-2 rounded-full cursor-pointer">
                     <img src={CameraIcon} alt="Camera Icon" className="w-6 h-6 hover::pointer" />
                     <input
@@ -206,42 +189,38 @@ const ProfilePicture = () => {
 
 const UpdateResume = () => {
     const [resumeFile, setResumeFile] = useState(null);
-    const stdId = useSelector(selectCurrentUid)
-    
+    const stdId = useSelector(selectCurrentUid);
+    const token = useSelector(selectCurrentToken);  // Include token
+
     const handleFileChange = (e) => {
         const file = e.target.files[0];
         setResumeFile(file);
     };
-   
+
     const handleSubmit = async (e) => {
-        e.preventdefault();
+        e.preventDefault(); 
         try {
-            //formdata object
             const formData = new FormData();
             formData.append('resume', resumeFile);
-            //send formdata to backend API
-            const response = await axios.post(`http://localhost:3000/api/v1/auth/student/${stdId}`, formData, {
+            console.log("The foprmdata os ", resumeFile)
+            const response = await fetch(`http://localhost:3000/api/v1/auth/student/${stdId}/upload`, resumeFile, {
+                method:'PATCH',
                 headers: {
-                    'Content-Type': 'multipart/form-data'
+                    'Content-Type': 'multipart/form-data',
+                    Authorization: `Bearer ${token}` 
                 }
-
             });
             if (response.status === 200) {
-                //success
                 alert('Resume upload successful');
+            } else {
+                alert('Failed to upload resume');
             }
-            else {
-                //error from backend
-                alert('Failed to upload resume')
-            }
-        }
-        catch (error) {
-            //network error 
+        } catch (error) {
             console.error('Error uploading resume: ', error);
-            alert('An error occurred while uploading')
+            alert('An error occurred while uploading');
         }
+    };
 
-    }
     return (
         <div className="bg-white p-4 rounded-lg shadow">
             <h3 className="text-lg font-semibold mb-3">Update Resume</h3>

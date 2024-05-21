@@ -1,5 +1,5 @@
 import './App.css';
-import { BrowserRouter as Router, Routes, Route, Link,  } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Link, useNavigate,  } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import LoginPage from "./pages/Login/LoginPage.jsx";
 import Home from './pages/Home/Home';
@@ -23,17 +23,21 @@ import ErrorPage from './components/ui/error';
 import StudentEvaluationForm from './pages/Screen/EvaluationForm';
 import FormBase64 from './components/ui/form64';
 import AllUsers from './components/Allusers';
+import { useEffect } from 'react';
 
-// const navigate = useNavigate()
-const PrivateRoute = ({ element, ...rest }) => {
+const PrivateRoute = ({ element }) => {
   const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
-  if(!isAuthenticated)
-    {
-      console.log("login karo")
-    }
-  return isAuthenticated ? element : <Link to="/login" />;
-};
+  const navigate = useNavigate();
 
+  useEffect(() => {
+    if (!isAuthenticated) {
+      console.log("login karo");
+      navigate('/login');
+    }
+  }, [isAuthenticated, navigate]);
+
+  return isAuthenticated ? element : null;
+};
 function App() {
   return (
     <Router>
@@ -49,7 +53,7 @@ function App() {
         <Route path="/login/admin/students" element={<StudentsList />}  />
         <Route path="/login/admin/adminschedules" element={<PrivateRoute element={<AdminSchedules />} />} />
         <Route path="/login/admin/interviewschedules" element={<PrivateRoute element={<AdminInterviewSchedule />} />} />
-        
+
         <Route path="/login/student/studenthome" element={<PrivateRoute element={<StudentHome />} />} />
         <Route path="/login/student/profile" element={<PrivateRoute element={<UserProfile />} />} />
         <Route path="/login/student/dashboard" element={<PrivateRoute element={<StudentDashboard />} />} />
