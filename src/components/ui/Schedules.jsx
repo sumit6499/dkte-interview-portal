@@ -3,6 +3,7 @@ import { MaleUser } from "@/assets";
 import { useNavigate } from "react-router";
 import { useSelector } from "react-redux";
 import { selectAllUsers, selectCurrentToken } from "@/redux/authSlice";
+import axios from "axios";
 
 const Schedule = ({ interviews = [], onFilterChange, isStudentSchedules, studentsInterviews = [], loading, error1, stdLoading, stdError }) => {
     const users = useSelector(selectAllUsers)
@@ -74,21 +75,9 @@ const Schedule = ({ interviews = [], onFilterChange, isStudentSchedules, student
         }));
     }, [studentsInterviews]);
 
-    // const fetchStudentData = async (studentId) => {
-    //     try {
-    //         const response = await fetch(`http://localhost:3000/api/v1/auth/students/${studentId}/info`, {
-    //             headers: {
-    //                 Authorization: `Bearer ${token}`
-    //             }
-    //         });
-    //         const data = await response.json();
-    //         return data;
-    //     } catch (error) {
-    //         console.error('Error fetching student data:', error);
-    //         setError('Error fetching data from server. Please check your network connection or the server URL.');
-    //     }
-    // };
+   
 
+   
 
     console.log("the interviews in here ", interviews)
     return (
@@ -122,7 +111,6 @@ const Schedule = ({ interviews = [], onFilterChange, isStudentSchedules, student
                     {!loading && !error && interviews.length === 0  && <p>No interviews available.</p>}
                     {interviews.length > 0 && interviews.map((interview, index) => {
                         const student = interviews[index];
-                        console.log("THe std i s", student.date)
                         return (
                             <div key={interview.id} className="bg-white p-4 rounded-lg shadow-md mb-1">
                                 <div className="flex items-center justify-between space-x-4 py-2 border-b border-zinc-200 h-6">
@@ -139,14 +127,24 @@ const Schedule = ({ interviews = [], onFilterChange, isStudentSchedules, student
                                     <div className="flex items-center space-x-10">
                                        
                                     </div>
-                                    <button onClick={() => {
+                                    
+                                    <button onClick={async () => {
                                         const linkToJoin = student.link;
+                                        const studentIdForResume = interview.studentId;
+                                        const ResumeLink = await getResumeLink(studentIdForResume);
+                                        console.log("The resume link is", ResumeLink);
+                                        // window.open(ResumeLink, '_blank');
                                         window.open(linkToJoin, '_blank');
-                                        navigate('/eval', {
-                                            state: {
-                                                interview: interview
-                                            }
-                                        });
+                                        
+                                        // window.open(ResumeLink, '_blank');
+                                        setTimeout(() => {
+                                            
+                                            navigate('/eval', {
+                                                state: {
+                                                    interview: interview
+                                                }
+                                            });
+                                        }, 500); // Delay for 500 milliseconds
                                     }} className="bg-blue-500 text-white pb-1 mb-3 px-2 py-0.6 rounded">
                                         Join Link
                                     </button>
@@ -171,11 +169,20 @@ const Schedule = ({ interviews = [], onFilterChange, isStudentSchedules, student
                                             <div className='flex space-x-6'>
                                                 
                                                 <p className="text-sm text-zinc-600">{handleDate(student.date)}</p>
-                                                <p className="text-sm text-zinc-600">Starts At      {handleTime(student.startedAt)}</p>
+                                                {selectedOption === "previous" ? <p className="text-sm text-zinc-600">Started At      {handleTime(student.startedAt)}</p> : <p className="text-sm text-zinc-600">Starts At      {handleTime(student.startedAt)}</p>}
+                                               
                                             </div>
                                         </div>
-                                        
-                                        <button onClick={() => {
+                                        {selectedOption === "previous" ? <button onClick={() => {
+                                            navigate('/login/student/dashboard', {
+                                                state: {
+                                                    interview: interview
+                                                }
+                                            });
+                                            
+                                        }} className="bg-blue-500 text-white pb-1 mb-3 px-2 py-0.6 rounded">
+                                           Performance
+                                        </button> : <button onClick={() => {
                                             const linkToJoin = student.link;
                                             window.open(linkToJoin, '_blank');
                                             // navigate('/eval', {
@@ -185,7 +192,8 @@ const Schedule = ({ interviews = [], onFilterChange, isStudentSchedules, student
                                             // });
                                         }} className="bg-blue-500 text-white pb-1 mb-3 px-2 py-0.6 rounded">
                                             Join Link
-                                        </button>
+                                        </button>}
+                                       
                                     </div>
                                 </div>
                             );
