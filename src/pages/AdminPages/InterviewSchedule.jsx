@@ -12,6 +12,7 @@ function AdminInterviewSchedule() {
     const location = useLocation();
     const users = useSelector(selectAllUsers);
     let student = location.state && location.state.student;
+    
     if (!student) {
         student = {};
     }
@@ -42,7 +43,6 @@ function AdminInterviewSchedule() {
         const dayOfWeekIndex = parsedDate.getDay();
         const dayName = days[dayOfWeekIndex];
         setDay(dayName);
-        console.log('Selected day:', dayName);
         handleDayChange(dayName);
     };
 
@@ -51,17 +51,11 @@ function AdminInterviewSchedule() {
         setStartTime(selectedStartTime);
         console.log("Start time set as ", selectedStartTime);
         setIsStartTimeSet(true);
-        // setInterviewersToDisplay([])
-        // const data = interviewers.filter((interviewer)=>{
-        //     return  interviewer.startedAt <= startedAt
-        // })
-        // setInterviewersToDisplay(data)
     };
 
     const handleEndTimeChange = (e) => {
         const selectedEndTime = e.target.value;
         setEndTime(selectedEndTime);
-        console.log("End time set as ", selectedEndTime);
         setIsEndTimeSet(true);
     };
 
@@ -71,19 +65,16 @@ function AdminInterviewSchedule() {
             setInterviewersToDisplay([]);
 
             const data = interviewers.filter((interview) => {
-                console.log("started times" + interview.startTime)
-                console.log("started times" + interview.startTime)
                 return interview.startTime <= startedAt && interview.endTime >= endsAt;
             });
 
             setInterviewersToDisplay(data);
-            console.log("The interviewers to display", data);
         }
     }, [isStartTimeSet, isEndTimeSet, startedAt, endsAt, interviewers]);
 
 
     useEffect(() => {
-        console.log("Updated interviewers:", interviewers);
+        // console.log("Updated interviewers:", interviewers);
     }, [interviewers]);
 
     const handleSelectedInterviewer = (e) => {
@@ -144,7 +135,6 @@ function AdminInterviewSchedule() {
 
     const handleDayChange = async (day) => {
         setInterviewers([]);
-        console.log("Selected day is ", day);
         const data = await fetchInterviewers(day);
         
         setInterviewers(data);

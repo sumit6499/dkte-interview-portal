@@ -130,9 +130,7 @@ const Schedule = ({ interviews = [], onFilterChange, isStudentSchedules, student
                                     
                                     <button onClick={async () => {
                                         const linkToJoin = student.link;
-                                        const studentIdForResume = interview.studentId;
-                                        const ResumeLink = await getResumeLink(studentIdForResume);
-                                        console.log("The resume link is", ResumeLink);
+                                       
                                         // window.open(ResumeLink, '_blank');
                                         window.open(linkToJoin, '_blank');
                                         
@@ -173,14 +171,14 @@ const Schedule = ({ interviews = [], onFilterChange, isStudentSchedules, student
                                                
                                             </div>
                                         </div>
-                                        {selectedOption === "previous" ? <button onClick={() => {
-                                            navigate('/login/student/dashboard', {
-                                                state: {
-                                                    interview: interview
-                                                }
-                                            });
-                                            
-                                        }} className="bg-blue-500 text-white pb-1 mb-3 px-2 py-0.6 rounded">
+                {selectedOption === "previous" ? <button onClick={() => {
+                    navigate('/login/student/dashboard', {
+                        state: {
+                            interview: interview
+                        }
+                    });
+                    
+                }} className="bg-blue-500 text-white pb-1 mb-3 px-2 py-0.6 rounded">
                                            Performance
                                         </button> : <button onClick={() => {
                                             const linkToJoin = student.link;
