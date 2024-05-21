@@ -11,7 +11,7 @@ import { authenticate, setUserInfo } from "@/redux/authSlice";
 function InterviewerLogin() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const [userExists, setUserExists] = useState(false); 
+    const [userExists, setUserExists] = useState(true); 
     const [formData, setFormData] = useState({
         email: "",
         password: ""
@@ -37,17 +37,23 @@ function InterviewerLogin() {
            
             localStorage.setItem("interviewerId", interviewerId);
             localStorage.setItem("interviewerAuthToken", interviewerAuthToken);
-           
+           console.log("The response message",response.data)
             if (response.data) {
                 dispatch(authenticate(true));
                 dispatch(setUserInfo({ user: data, token, Uid: interviewerId, Name: name, Role: role, Day: freeday, StartTime: startTime, EndTime: endTime }));
+                setUserExists(true);
+
                 navigate('/login/interviewer/schedules');
             } else {
                 setUserExists(false);
             }
            
         } catch (error) {
-            console.error("Error submitting form:", error);
+            if (error.response.data.msg === "User does not exist")
+                {
+                setUserExists(false)
+                }
+            console.error("Error submitting form:", error.response.data.msg);
             //  error
         }
     };

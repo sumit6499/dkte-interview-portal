@@ -35,10 +35,12 @@ const Login = () => {
 const ProfileDetailsForm = () => {
     // State to store form data
     const [formData, setFormData] = useState({
-        fullName: '',
+        name: '',
+        prn:'',
+        password:'',
         phone: '',
         email: '',
-        department: '',
+        dept: '',
         class: ''
     });
 
@@ -53,7 +55,7 @@ const ProfileDetailsForm = () => {
         e.preventDefault();
         try {
             // Send form data  
-            const response = await fetch('/api/update-profile', {
+            const response = await fetch('/api/v1/auth/students', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -85,7 +87,7 @@ const ProfileDetailsForm = () => {
                     <input type="text" placeholder="Department" className="border p-2 rounded w-full" />
                     <input type="text" placeholder="Class" className="border p-2 rounded w-full" />
                 </div>
-                <button type="submit" className="bg-yellow-400 hover:bg-yellow-500 text-white font-bold py-2 px-4 rounded">
+                <button type="submit" className="bg-yellow-400 hover:bg-yellow-500 text-white font-bold py-2 px-4 rounded"onSubmit={handleSubmit}>
                     Save Changes
                 </button>
             </form>

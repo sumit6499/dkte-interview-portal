@@ -47,6 +47,9 @@ function StudentLogin() {
                 setUserExists(false);
             }
         } catch (error) {
+            if (error.response.data.msg === "User does not exist") {
+                setUserExists(false)
+            }
             console.error("Error submitting form:", error);
         }
     };
