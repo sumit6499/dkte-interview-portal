@@ -32,6 +32,7 @@ function AdminInterviewSchedule() {
     const [isTimeSet, setIsTimeSet] = useState(false);
     const [interviewers, setInterviewers] = useState([]);
     const [interviewID, setInterviewId] = useState('');
+    const [interviewersToDisplay,setInterviewersToDisplay] = useState([])
     let _id = student.id;
 
     const handleDateChange = (e) => {
@@ -50,6 +51,11 @@ function AdminInterviewSchedule() {
         setStartTime(selectedStartTime);
         console.log("Start time set as ", selectedStartTime);
         setIsStartTimeSet(true);
+        // setInterviewersToDisplay([])
+        // const data = interviewers.filter((interviewer)=>{
+        //     return  interviewer.startedAt <= startedAt
+        // })
+        // setInterviewersToDisplay(data)
     };
 
     const handleEndTimeChange = (e) => {
@@ -62,8 +68,19 @@ function AdminInterviewSchedule() {
     useEffect(() => {
         if (isStartTimeSet && isEndTimeSet) {
             setIsTimeSet(true);
+            setInterviewersToDisplay([]);
+
+            const data = interviewers.filter((interview) => {
+                console.log("started times" + interview.startTime)
+                console.log("started times" + interview.startTime)
+                return interview.startTime <= startedAt && interview.endTime >= endsAt;
+            });
+
+            setInterviewersToDisplay(data);
+            console.log("The interviewers to display", data);
         }
-    }, [isStartTimeSet, isEndTimeSet]);
+    }, [isStartTimeSet, isEndTimeSet, startedAt, endsAt, interviewers]);
+
 
     useEffect(() => {
         console.log("Updated interviewers:", interviewers);
@@ -117,7 +134,8 @@ function AdminInterviewSchedule() {
             });
             const data = response.data.data;
             console.log("Fetched interviewers data:", data);
-            setInterviewers(data);
+            return data;
+           
         } catch (error) {
             console.error('Error fetching interviewers:', error);
             alert('Failed to fetch interviewers. Please try again later.');
@@ -127,7 +145,10 @@ function AdminInterviewSchedule() {
     const handleDayChange = async (day) => {
         setInterviewers([]);
         console.log("Selected day is ", day);
-        await fetchInterviewers(day);
+        const data = await fetchInterviewers(day);
+        
+        setInterviewers(data);
+
     };
 
     return (
@@ -180,7 +201,7 @@ function AdminInterviewSchedule() {
                                     className="mt-1 block w-full px-3 py-2 bg-zinc-700 border border-zinc-600 rounded-md shadow-sm focus:outline-none focus:ring-yellow-500 focus:border-yellow-500"
                                 >
                                     <option value="">Select Interviewers</option>
-                                    {interviewers.map((interviewer) => (
+                                    {interviewersToDisplay.map((interviewer) => (
                                         <option key={interviewer.id} value={interviewer.name}>
                                             {interviewer.name}
                                         </option>
