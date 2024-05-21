@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { MaleUser } from '@/assets/index';
 import { useNavigate } from "react-router";
 import { useSelector, useDispatch } from "react-redux";
@@ -9,6 +9,7 @@ const DropDownProfile = ({ profileLink, isAdmin }) => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const UserName = useSelector(selectCurrentName);
+    const timeoutRef = useRef(null);
 
     const logout = () => {
         dispatch(logOut());
@@ -23,8 +24,19 @@ const DropDownProfile = ({ profileLink, isAdmin }) => {
         }
     };
 
+    const handleMouseEnter = () => {
+        clearTimeout(timeoutRef.current);
+        setIsOpen(true);
+    };
+
+    const handleMouseLeave = () => {
+        timeoutRef.current = setTimeout(() => {
+            setIsOpen(false);
+        }, 3000);
+    };
+
     return (
-        <div className="relative" onMouseEnter={() => setIsOpen(true)} onMouseLeave={() => setIsOpen(false)}>
+        <div className="relative" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
             <button className="flex items-center text-white focus:outline-none">
                 <img src={MaleUser} alt="Profile" className="h-8 w-8 rounded-full" />
                 <span className="ml-2">{UserName}</span>

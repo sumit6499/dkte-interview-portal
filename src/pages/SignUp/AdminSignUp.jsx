@@ -71,6 +71,7 @@ function AdminSignUp() {
             }
 
             console.log("Success: " + response.data);
+            toast.success('Signup Successful!', { position: toast.POSITION.TOP_CENTER });
             navigate("/login/admin");
         } 
         

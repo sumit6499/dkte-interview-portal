@@ -102,26 +102,13 @@ const BarGraph = ({ interviews }) => {
 };
 
 
-
-
-// const BarGraph = () => {
-//     return (
-//         <div className="w-full md:w-1/2 bg-white p-4 shadow-lg">
-//             <h2 className="font-semibold text-zinc-800">Bar Graph overall</h2>
-//             <img src={SampleBarGraph} alt="Bar Graph" />
-//         </div>
-//     );
-// };
-
 const CircleChart = (props) => {
     const { interview, feedbackData } = props;
-    // console.log("Tjhe feedback in circle is ", feedbackData.apperance)
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const token = useSelector(selectCurrentToken);
     const users = useSelector(selectAllUsers)
     let studentId;
-    // const [isDate,setIsDate] = useState(false);
     let gotdate = false;
     let dataTime ;
 
@@ -129,10 +116,8 @@ const CircleChart = (props) => {
     {
         dataTime = interview.startedAt;
         gotdate = true;
-        // setIsDate(true)
     }
     
-    // console.log("The interview in chart",interview)
 
     users.map((user,index)=>{
         if(user.token ===token)
@@ -278,8 +263,6 @@ const fetchFeedBack = async (interviewerId) =>{
         console.log(error);
     }
 }
-   
-
     return (
         <>
             <NavBar links={StudentDashboardNavlinks} profileLink={profileLink} drop={drop }/>
@@ -297,5 +280,4 @@ const fetchFeedBack = async (interviewerId) =>{
         </>
     );
 };
-
 export default StudentDashboard;

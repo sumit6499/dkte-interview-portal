@@ -55,6 +55,7 @@ function StudentSignUp() {
                     const userData = { user: data, token: stdAuthToken, Uid: studentId, Name:name,Role:role,Dept:dept,PRN:PRN};
                     dispatch(authenticate(true));
                     dispatch(setUserInfo(userData));
+                    toast.success('Signup Successful!', { position: toast.POSITION.TOP_CENTER });
                     navigate("/login/student");
                 }
             } catch (error) {

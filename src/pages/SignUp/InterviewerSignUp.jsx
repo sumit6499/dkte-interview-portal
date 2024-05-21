@@ -99,6 +99,7 @@ const InterviewerSignUp = () => {
             if (response.data) {
                 dispatch(authenticate(true));
                 dispatch(setUserInfo({ user: data, token, Uid: interviewerId, Name: name, Role: role, Day: day, StartTime: startTime, EndTime: endTime }));
+                toast.success('Signup Successful!', { position: toast.POSITION.TOP_CENTER });
                 navigate('/login/student/profile');
             } else {
                 setUserExists(false);
@@ -107,7 +108,7 @@ const InterviewerSignUp = () => {
             navigate('/login/interviewer')
         } catch (error) {
             console.error('Error submitting form:', error);
-            // toast.error('An error occurred while submitting the form!', { position: toast.POSITION.TOP_CENTER });
+            toast.error('An error occurred while submitting the form!', { position: toast.POSITION.TOP_CENTER });
         }
     };
     const showToast = (message) => {
