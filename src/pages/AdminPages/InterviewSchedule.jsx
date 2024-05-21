@@ -4,12 +4,11 @@ import { useLocation, useNavigate } from 'react-router';
 import axios from 'axios';
 import { AdminSchedulesNavlinks, days } from '@/components/variables/formVariables';
 import { useSelector } from 'react-redux';
-import { selectAllUsers,selectCurrentToken } from '@/redux/authSlice';
+import { selectAllUsers, selectCurrentToken } from '@/redux/authSlice';
 
 function AdminInterviewSchedule() {
-    
     const token = useSelector(selectCurrentToken);
-    const navigate = useNavigate()
+    const navigate = useNavigate();
     const location = useLocation();
     const users = useSelector(selectAllUsers);
     let student = location.state && location.state.student;
@@ -34,11 +33,6 @@ function AdminInterviewSchedule() {
     const [interviewers, setInterviewers] = useState([]);
     const [interviewID, setInterviewId] = useState('');
     let _id = student.id;
-    // users.forEach((userObj) => {
-    //     if (userObj.Name === student.name) {
-    //         _id = userObj.Uid;
-    //     }
-    // });
 
     const handleDateChange = (e) => {
         const selectedDate = e.target.value;
@@ -48,62 +42,41 @@ function AdminInterviewSchedule() {
         const dayName = days[dayOfWeekIndex];
         setDay(dayName);
         console.log('Selected day:', dayName);
+        handleDayChange(dayName);
     };
 
     const handleStartTimeChange = (e) => {
         const selectedStartTime = e.target.value;
         setStartTime(selectedStartTime);
-        console.log("starttime set as ", selectedStartTime);
+        console.log("Start time set as ", selectedStartTime);
         setIsStartTimeSet(true);
     };
 
     const handleEndTimeChange = (e) => {
         const selectedEndTime = e.target.value;
         setEndTime(selectedEndTime);
-        console.log("endTime set as ", selectedEndTime);
+        console.log("End time set as ", selectedEndTime);
         setIsEndTimeSet(true);
     };
 
     useEffect(() => {
         if (isStartTimeSet && isEndTimeSet) {
             setIsTimeSet(true);
-            handleInterviewersOptions();
         }
     }, [isStartTimeSet, isEndTimeSet]);
 
-    const handleInterviewersOptions = () => {
-        if (!isStartTimeSet || !isEndTimeSet) {
-            alert('Enter Start Time and End Time');
-            return;
-        }
-        const availableInterviewersNames = users.filter(
-            (obj) =>
+    useEffect(() => {
+        console.log("Updated interviewers:", interviewers);
+    }, [interviewers]);
 
-                // obj.Role == "Interviewer"
-                obj.StartTime <= startedAt && obj.EndTime >= endsAt 
-
-        ).map(obj => obj.Name);
-        console.log("the available is " + availableInterviewersNames)
-        const availableInterviewers = users.filter(
-            (obj) =>
-                obj.StartTime <= startedAt &&
-                obj.EndTime >= endsAt &&
-                obj.Role === "Interviewer" &&
-                obj.Day === Day
-        ).map(obj => obj.Name);
-
-        setInterviewers(availableInterviewers);
-        console.log("Available interviewers:", availableInterviewers);
-    };
-    const handleSelectedInterviewer = (e) =>{
+    const handleSelectedInterviewer = (e) => {
         const selectedInterviewer = e.target.value;
         setSelectedInterviewer(selectedInterviewer);
-        users.map((user,index)=>{
-            if (user.Name === selectedInterviewer){
-                setInterviewId(user.Uid)
-            }
-        })
-    }
+        const interviewer = interviewers.find(user => user.name === selectedInterviewer);
+        if (interviewer) {
+            setInterviewId(interviewer.id);
+        }
+    };
 
     const getLink = () => {
         window.open('https://meet.google.com/', '_blank');
@@ -122,17 +95,39 @@ function AdminInterviewSchedule() {
                 endsAt,
                 link,
                 _id, interviewID
-            },{
-                headers:{
+            }, {
+                headers: {
                     Authorization: `Bearer ${token}`
                 }
             });
             alert('Interview scheduled successfully!');
-            navigate('/login/admin/students')
+            navigate('/login/admin/students');
         } catch (error) {
             console.error('Error scheduling interview:', error);
             alert('Failed to schedule interview. Please try again later.');
         }
+    };
+
+    const fetchInterviewers = async (day) => {
+        try {
+            const response = await axios.get(`http://localhost:3000/api/v1/auth/interviewer/${day}/all`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            const data = response.data.data;
+            console.log("Fetched interviewers data:", data);
+            setInterviewers(data);
+        } catch (error) {
+            console.error('Error fetching interviewers:', error);
+            alert('Failed to fetch interviewers. Please try again later.');
+        }
+    };
+
+    const handleDayChange = async (day) => {
+        setInterviewers([]);
+        console.log("Selected day is ", day);
+        await fetchInterviewers(day);
     };
 
     return (
@@ -145,7 +140,7 @@ function AdminInterviewSchedule() {
                         <p>Student Name: <span className="font-semibold text-white">{name}</span></p>
                         <p>PRN: <span className="font-semibold">{prn}</span></p>
                         <p>Department: <span className="font-semibold">{branch}</span></p>
-                        <p>Class: <span className="font-semibold">TY</span></p>
+                        <p>Class: <span className="font-semibold">{Year}</span></p>
 
                         <label htmlFor="date" className="block mt-4">Date:</label>
                         <input
@@ -185,9 +180,9 @@ function AdminInterviewSchedule() {
                                     className="mt-1 block w-full px-3 py-2 bg-zinc-700 border border-zinc-600 rounded-md shadow-sm focus:outline-none focus:ring-yellow-500 focus:border-yellow-500"
                                 >
                                     <option value="">Select Interviewers</option>
-                                    {interviewers.map((option) => (
-                                        <option key={option} value={option}>
-                                            {option}
+                                    {interviewers.map((interviewer) => (
+                                        <option key={interviewer.id} value={interviewer.name}>
+                                            {interviewer.name}
                                         </option>
                                     ))}
                                 </select>

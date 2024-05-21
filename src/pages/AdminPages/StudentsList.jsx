@@ -58,7 +58,7 @@ function StudentsList() {
         });
     };
 
-    // console.log("student data is ", studentsData);
+    console.log("student data is ", studentsData);
 
     return (
         <>

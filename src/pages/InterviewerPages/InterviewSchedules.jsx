@@ -59,7 +59,7 @@ console.log("the interivew sare ",interviewersInterviews)
                     <Schedule 
                         onFilterChange={handleFilterChange }
                         stdError={interviewerError}
-    
+                        interviews={interviewersInterviews}
                         stdLoading={interviewerLoading}
                         studentsInterviews={interviewersInterviews}
                         isStudentSchedules={false}

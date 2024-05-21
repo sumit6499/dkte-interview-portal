@@ -45,14 +45,14 @@ function StudentSignUp() {
                     }
                 });
                 const { data, token } = response.data;
-                const { id: studentId, name ,role} = data;
+                const { id: studentId, name ,role,PRN,dept} = data;
                 const stdAuthToken = token;
 
                 localStorage.setItem("studentId", studentId);
                 localStorage.setItem("stdAuthToken", stdAuthToken);
 
                 if (response.data) {
-                    const userData = { user: data, token: stdAuthToken, Uid: studentId, Name:name,Role:role};
+                    const userData = { user: data, token: stdAuthToken, Uid: studentId, Name:name,Role:role,Dept:dept,PRN:PRN};
                     dispatch(authenticate(true));
                     dispatch(setUserInfo(userData));
                     navigate("/login/student");

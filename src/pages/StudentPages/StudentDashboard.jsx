@@ -8,7 +8,7 @@ import { StudentDashboardNavlinks } from '@/components/variables/formVariables';
 import { SampleBarGraph } from '@/assets/index.js';
 import {  registerables } from 'chart.js';
 import { useSelector } from 'react-redux';
-import { selectAllUsers, selectCurrentToken, selectCurrentUser } from '@/redux/authSlice';
+import { selectAllUsers, selectCurrentToken, selectCurrentUid, selectCurrentUser } from '@/redux/authSlice';
 Chart.register(...registerables);
 Chart.register(ArcElement);
 
@@ -174,14 +174,19 @@ const StudentDashboard = () => {
     const [interviews, setInterviews] = useState([]);
     const [selectedInterview, setSelectedInterview] = useState(null);
     const [interviewSelected, setInterviewSelected] = useState(false);
-
+    const stdcurretId = useSelector(selectCurrentUid)
+    const token = useSelector(selectCurrentToken);
     useEffect(() => {
         fetchInterviews();
     }, []);
 
     const fetchInterviews = async () => {
         try {
-            const response = await axios.get('http://localhost:5000/api/interviews');
+            const response = await axios.get(`http://localhost:3000/api/v1/auth/interview/${stdcurretId}/all?filter=previous`,{
+                headers:{
+                    Authorization: `Bearer ${token}`
+                }
+            });
 
             if (Array.isArray(response.data)) {
                 setInterviews(response.data);
@@ -195,7 +200,7 @@ const StudentDashboard = () => {
             setInterviews([]);
         }
     };
-
+    console.log("Obtained interivews are ", interviews)
     const handlePerformanceClick = (interview) => {
         setInterviewSelected(true);
         setSelectedInterview(interview);

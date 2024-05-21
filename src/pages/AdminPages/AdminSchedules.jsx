@@ -49,7 +49,7 @@ const AdminSchedules = () => {
             console.error('Error fetching interviews:', error);
         }
     };
-
+    console.log("interviews",interviews)
     return (
         <>
             <NavBar links={AdminSchedulesNavlinks} drop={drop} />

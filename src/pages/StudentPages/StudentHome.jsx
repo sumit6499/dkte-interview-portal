@@ -46,10 +46,7 @@ const StudentHome = () => {
             setLoading(false);
         }
     };
-    // if (!interviews.data[0].date)
-    //     {
-    //     // console.log('student interviewer', interviews.data[0].date);
-    //     }
+   
     console.log('student interviewer', interviews.data);
     const handleFilterChange = async (option) => {
         try {
@@ -66,10 +63,10 @@ const StudentHome = () => {
                 <div className="flex h-screen">
                     {interviews !== null && 
                     <Schedule
-                     interviews={interviews} 
+                     interviews={interviews.data} 
                      onFilterChange={handleFilterChange}
-                        isStudentSchedules={isStudentSchedules} 
-                        studentsInterviews={studentsInterviews }
+                        isStudentSchedules={true} 
+                        // studentsInterviews={studentsInterviews }
                         stdLoading={stdLoading}
                         stdError={stdError}/>
                     }

@@ -128,8 +128,8 @@ export const AdminStudentsNavlinks = [
 
 export const InterviewerProfileNavLinks = [
   { label: "Home", url: "/" },
-  { label: "Schedules", url: "/" },
   { label: "DashBoard", url: "/" },
+  { label: "Schedules", url: "/" },
   { label: "Contact", url: "/" },
 ];
 
@@ -164,50 +164,76 @@ export const socialMediaLinks = [
 
 export const criteria = [
   {
-    label: "Knowledge of specific skills & applications",
-    options: ["Poor", "Mediocre", "Satisfactory", "Good", "Excellent"],
+    label: "technical",
+    options: [
+      { text: "Poor", value: 2 },
+      { text: "Mediocre", value: 4 },
+      { text: "Satisfactory", value: 6 },
+      { text: "Good", value: 8 },
+      { text: "Excellent", value: 10 },
+    ],
   },
   {
-    label: "Knowledge related Training",
-    options: ["Poor", "Mediocre", "Satisfactory", "Good", "Excellent"],
+    label: "communication",
+    options: [
+      { text: "Poor", value: 2 },
+      { text: "Mediocre", value: 4 },
+      { text: "Satisfactory", value: 6 },
+      { text: "Good", value: 8 },
+      { text: "Excellent", value: 10 },
+    ],
   },
   {
-    label: "Initiative",
-    options: ["Poor", "Mediocre", "Satisfactory", "Good", "Excellent"],
+    label: "behaviour",
+    options: [
+      { text: "Poor", value: 2 },
+      { text: "Mediocre", value: 4 },
+      { text: "Satisfactory", value: 6 },
+      { text: "Good", value: 8 },
+      { text: "Excellent", value: 10 },
+    ],
   },
   {
-    label: "Communication Skills",
-    options: ["Poor", "Mediocre", "Satisfactory", "Good", "Excellent"],
-  },
-  {
-    label: "Listening skills",
-    options: ["Poor", "Mediocre", "Satisfactory", "Good", "Excellent"],
-  },
-  {
-    label: "Attitude",
-    options: ["Poor", "Mediocre", "Satisfactory", "Good", "Excellent"],
-  },
-  {
-    label: "Confidence Level",
-    options: ["Poor", "Mediocre", "Satisfactory", "Good", "Excellent"],
-  },
-  {
-    label: "Presentation skills",
-    options: ["Poor", "Mediocre", "Satisfactory", "Good", "Excellent"],
-  },
-  {
-    label: "Appearance",
-    options: ["Poor", "Mediocre", "Satisfactory", "Good", "Excellent"],
-  },
-  {
-    label: "Problem Solving Skills",
-    options: ["Poor", "Mediocre", "Satisfactory", "Good", "Excellent"],
-  },
-  {
-    label: "Overall Technical Skills Ratings",
-    options: ["Poor", "Mediocre", "Satisfactory", "Good", "Excellent"],
+    label: "apperance",
+    options: [
+      { text: "Poor", value: 2 },
+      { text: "Mediocre", value: 4 },
+      { text: "Satisfactory", value: 6 },
+      { text: "Good", value: 8 },
+      { text: "Excellent", value: 10 },
+    ],
   },
 ];
+
+  // {
+  //   label: "Listening skills",
+  //   options: ["Poor", "Mediocre", "Satisfactory", "Good", "Excellent"],
+  // },
+  // {
+  //   label: "Attitude",
+  //   options: ["Poor", "Mediocre", "Satisfactory", "Good", "Excellent"],
+  // },
+  // {
+  //   label: "Confidence Level",
+  //   options: ["Poor", "Mediocre", "Satisfactory", "Good", "Excellent"],
+  // },
+  // {
+  //   label: "Presentation skills",
+  //   options: ["Poor", "Mediocre", "Satisfactory", "Good", "Excellent"],
+  // },
+  // {
+  //   label: "Appearance",
+  //   options: ["Poor", "Mediocre", "Satisfactory", "Good", "Excellent"],
+  // },
+  // {
+  //   label: "Problem Solving Skills",
+  //   options: ["Poor", "Mediocre", "Satisfactory", "Good", "Excellent"],
+  // },
+  // {
+  //   label: "Overall Technical Skills Ratings",
+  //   options: ["Poor", "Mediocre", "Satisfactory", "Good", "Excellent"],
+  // },
+// ];
 
 //interview Schedule
 export  const days = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
