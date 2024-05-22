@@ -17,7 +17,6 @@ const ProfileDetailsForm = () => {
         name: '',
         phone: '',
         email: '',
-        profession: '',
         password: '',
         startTime: '',
         endTime: '',
@@ -31,13 +30,13 @@ const ProfileDetailsForm = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        console.log("The formdata is ",formData)
         try {
             const response = await fetch(`http://localhost:3000/api/v1/auth/interviewer/${interviewerId}`, {
-                method: 'PATCH',
                 headers: {
-                    'Content-Type': 'application/json',
                     Authorization: `Bearer ${token}`
                 },
+                method: 'PUT',
                 body: JSON.stringify(formData)
             });
             if (response.ok) {
@@ -56,7 +55,7 @@ const ProfileDetailsForm = () => {
             <h3 className="text-lg font-semibold mb-6">Update Profile Details</h3>
             <form onSubmit={handleSubmit}>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
-                    {['name', 'phone', 'email', 'password', 'profession'].map((field) => (
+                    {['name', 'phone', 'email', 'password'].map((field) => (
                         <div key={field}>
                             <label htmlFor={field} className='col-span-2 mb-2 text-zinc-500'>
                                 Enter {field.charAt(0).toUpperCase() + field.slice(1)}:

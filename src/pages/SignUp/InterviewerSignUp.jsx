@@ -28,8 +28,6 @@ const InterviewerSignUp = () => {
         freeday: '',
         startTime: '',
         endTime: '',
-
-
     });
 
     const handleRemoveFile = (fieldName) => {
@@ -89,7 +87,12 @@ const InterviewerSignUp = () => {
         console.log("fomrdata is ", formData)
         try {
 
-            const response = await interviewerSignUp(formDataToSend);
+            // const response = await interviewerSignUp(formDataToSend);
+            const response = await axios.post('http://localhost:3000/interviewer/signup',formData,{
+                headers:{
+                    'Content-Type':'multipart/form-data'
+                }
+            })
             const { data, token } = response.data;
             const { id: interviewerId, name, role, day, startTime, endTime } = data;
             const interviewerAuthToken = token;
@@ -99,7 +102,7 @@ const InterviewerSignUp = () => {
             if (response.data) {
                 dispatch(authenticate(true));
                 dispatch(setUserInfo({ user: data, token, Uid: interviewerId, Name: name, Role: role, Day: day, StartTime: startTime, EndTime: endTime }));
-                toast.success('Signup Successful!', { position: toast.POSITION.TOP_CENTER });
+                // toast.success('Signup Successful!', { position: toast.POSITION.TOP_CENTER });
                 navigate('/login/student/profile');
             } else {
                 setUserExists(false);
@@ -108,7 +111,7 @@ const InterviewerSignUp = () => {
             navigate('/login/interviewer')
         } catch (error) {
             console.error('Error submitting form:', error);
-            toast.error('An error occurred while submitting the form!', { position: toast.POSITION.TOP_CENTER });
+            // toast.error('An error occurred while submitting the form!', { position: toast.POSITION.TOP_CENTER });
         }
     };
     const showToast = (message) => {

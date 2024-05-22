@@ -202,13 +202,14 @@ const UpdateResume = () => {
         try {
             const formData = new FormData();
             formData.append('resume', resumeFile);
+            console.log("The resumeFile os ", resumeFile)
             console.log("The foprmdata os ", formData)
-            const response = await axios.post(`http://localhost:3000/api/v1/auth/students/${stdId}/upload`, formData, {
-                method:'PATCH',
+            const response = await fetch(`http://localhost:3000/api/v1/auth/students/${stdId}/upload`, {
+                method: 'PATCH',
                 headers: {
-                    'Content-Type': 'multipart/form-data',
-                    Authorization: `Bearer ${token}` 
-                }
+                    Authorization: `Bearer ${token}`
+                },
+                body: formData
             });
             if (response.status === 200) {
                 alert('Resume upload successful');
