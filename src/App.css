@@ -116,4 +116,10 @@
        justify-content: start;
        padding: 40px;
     }
+    #student-card {
+        margin-bottom: 1rem; /* Increase space between cards */
+    }
+    #schedule-button {
+        padding: 0.5rem 1rem; /* Larger button padding for easier click */
+    }
 }

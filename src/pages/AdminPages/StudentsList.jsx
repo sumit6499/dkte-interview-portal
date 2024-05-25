@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { AdminStudentsNavlinks } from '@/components/variables/formVariables';
 import { selectCurrentToken } from '@/redux/authSlice';
 import { useSelector } from 'react-redux';
-
+import '@/App.css'
 function StudentsList() {
     const navigate = useNavigate();
     const token = useSelector(selectCurrentToken);
@@ -16,7 +16,17 @@ function StudentsList() {
     const [studentsData, setStudentsData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [isSmallScreen,setIsSmallerScreen] = useState(false);
 
+    useEffect(() => {
+        const checkScreenSize = () => {
+            setIsSmallerScreen(window.innerWidth <= 640);
+        };
+        checkScreenSize();
+        window.addEventListener("resize",
+            checkScreenSize);
+        return () => window.removeEventListener("resize", checkScreenSize);
+    }, []);
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true);
@@ -117,8 +127,31 @@ function StudentsList() {
                         <p>No students found.</p>
                     ) : (
                         filteredStudents.map(student => (
+                            
                             <div key={student.id} className="bg-white p-4 rounded-lg shadow-md mb-4">
-                                <div className="flex items-center justify-between space-x-4 py-2 border-b border-zinc-200 h-6">
+                                {isSmallScreen ? <> <div className="flex items-center justify-between space-x-4 py-2 border-b border-zinc-200 h-6" id="student-card">
+                                    <div className="flex items-center space-x-2">
+                                        <img src={MaleUser} alt="Profile" className="rounded-full h-6" />
+                                        <div className='flex '>
+                                            <p className="font-semibold pr-2 mx-2">{student.name}</p>
+                                            <p className="text-sm text-zinc-600 mx-2">{student.PRN}</p>
+                                            <p className="text-sm mx-2">{student.dept}</p>
+                                        </div>
+                                    </div>
+                                    <div className="flex items-center space-x-2">
+                                        <p className="text-sm">{student.class}</p>
+                                    </div>
+                                </div> 
+                                <div className='flex justify-center'>
+                                        <button
+                                            onClick={() => gotoSchedule(student)}
+                                            className="bg-blue-500 text-white pb-1 mb-3 px-2 py-0.6 rounded h-auto w-auto " id="schedule-button"
+                                        >
+                                            Schedule meeting
+                                        </button>
+                                </div>
+                                
+                                    </>: <div className="flex items-center justify-between space-x-4 py-2 border-b border-zinc-200 h-6" id="student-card">
                                     <div className="flex items-center space-x-2">
                                         <img src={MaleUser} alt="Profile" className="rounded-full h-6" />
                                         <div className='flex '>
@@ -132,11 +165,12 @@ function StudentsList() {
                                     </div>
                                     <button
                                         onClick={() => gotoSchedule(student)}
-                                        className="bg-blue-500 text-white pb-1 mb-3 px-2 py-0.6 rounded"
+                                        className="bg-blue-500 text-white pb-1 mb-3 px-2 py-0.6 rounded h-auto w-auto" id="schedule-button"
                                     >
                                         Schedule meeting
                                     </button>
-                                </div>
+                                </div> }
+                               
                             </div>
                         ))
                     )}

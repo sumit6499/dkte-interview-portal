@@ -133,21 +133,22 @@ const UpdateIDCard = () => {
         try {
             const formData = new FormData();
             formData.append('resume', resumeFile);
-            console.log("The foprmdata os ", resumeFile)
-            const response = await fetch(`http://localhost:3000/api/v1/auth/interviewer/${interviewerId}/upload`, resumeFile, {
+            console.log("The foprmdata os ", formData)
+         
+            const response = await fetch(`http://localhost:3000/api/v1/auth/interviewer/${interviewerId}/upload`, {
                 method: 'PATCH',
                 headers: {
-                    'Content-Type': 'multipart/form-data',
                     Authorization: `Bearer ${token}`
-                }
+                },
+                body: formData
             });
             if (response.status === 200) {
-                alert('Resume upload successful');
+                alert('IDCard upload successful');
             } else {
-                alert('Failed to upload resume');
+                alert('Failed to upload IDCard');
             }
         } catch (error) {
-            console.error('Error uploading resume: ', error);
+            console.error('Error uploading IDCard: ', error);
             alert('An error occurred while uploading');
         }
     };
