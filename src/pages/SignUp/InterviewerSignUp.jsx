@@ -84,7 +84,7 @@ const InterviewerSignUp = () => {
         Object.keys(formData).forEach((key) => {
             formDataToSend.append(key, formData[key]);
         });
-        console.log("fomrdata is ", formData)
+        // console.log("fomrdata is ", formData)
         try {
 
             // const response = await interviewerSignUp(formDataToSend);
