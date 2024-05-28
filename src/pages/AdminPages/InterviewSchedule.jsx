@@ -12,7 +12,7 @@ function AdminInterviewSchedule() {
     const location = useLocation();
     const users = useSelector(selectAllUsers);
     let student = location.state && location.state.student;
-    
+
     if (!student) {
         student = {};
     }
@@ -33,7 +33,7 @@ function AdminInterviewSchedule() {
     const [isTimeSet, setIsTimeSet] = useState(false);
     const [interviewers, setInterviewers] = useState([]);
     const [interviewID, setInterviewId] = useState('');
-    const [interviewersToDisplay,setInterviewersToDisplay] = useState([])
+    const [interviewersToDisplay, setInterviewersToDisplay] = useState([])
     let _id = student.id;
 
     const handleDateChange = (e) => {
@@ -97,7 +97,7 @@ function AdminInterviewSchedule() {
         }
 
         try {
-            await axios.post(`http://localhost:3000/api/v1/auth/interview/${_id}/schedule`, {
+            await axios.post(`https://dkte-interview-portal-api.vercel.app/api/v1/auth/interview/${_id}/schedule`, {
                 dateString,
                 startedAt,
                 endsAt,
@@ -118,7 +118,7 @@ function AdminInterviewSchedule() {
 
     const fetchInterviewers = async (day) => {
         try {
-            const response = await axios.get(`http://localhost:3000/api/v1/auth/interviewer/${day}/all`, {
+            const response = await axios.get(`https://dkte-interview-portal-api.vercel.app/api/v1/auth/interviewer/${day}/all`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -126,7 +126,7 @@ function AdminInterviewSchedule() {
             const data = response.data.data;
             console.log("Fetched interviewers data:", data);
             return data;
-           
+
         } catch (error) {
             console.error('Error fetching interviewers:', error);
             alert('Failed to fetch interviewers. Please try again later.');
@@ -136,7 +136,7 @@ function AdminInterviewSchedule() {
     const handleDayChange = async (day) => {
         setInterviewers([]);
         const data = await fetchInterviewers(day);
-        
+
         setInterviewers(data);
 
     };

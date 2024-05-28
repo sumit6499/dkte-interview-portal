@@ -28,20 +28,20 @@ function StudentLogin() {
         e.preventDefault();
 
         try {
-            const response = await axios.post('http://localhost:3000/students/login', formValues, {
+            const response = await axios.post('https://dkte-interview-portal-api.vercel.app/students/login', formValues, {
                 headers: {
                     'Content-Type': 'application/json'
                 }
             }); (formValues);
             const { data, token } = response.data;
-            const { id: studentId ,name,role} = data;
+            const { id: studentId, name, role } = data;
 
             localStorage.setItem("studentId", studentId);
             localStorage.setItem("stdAuthToken", token);
 
             if (response.data) {
                 dispatch(authenticate(true));
-                dispatch(setUserInfo({ user: data, token, Uid: studentId,Name:name,Role:role }));
+                dispatch(setUserInfo({ user: data, token, Uid: studentId, Name: name, Role: role }));
                 navigate('/login/student/profile');
             } else {
                 setUserExists(false);

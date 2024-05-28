@@ -52,15 +52,15 @@ const ProfileDetailsForm = () => {
     };
 
     const handleSubmit = async (e) => {
-        e.preventDefault();  
+        e.preventDefault();
         try {
-            const response = await fetch(`http://localhost:3000/api/v1/auth/students/${stdId}`, {
+            const response = await fetch(`https://dkte-interview-portal-api.vercel.app/api/v1/auth/students/${stdId}`, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
-                    Authorization: `Bearer ${token}` 
+                    Authorization: `Bearer ${token}`
                 },
-                body: JSON.stringify(formData) 
+                body: JSON.stringify(formData)
             });
             if (response.ok) {
                 alert('Profile details updated successfully!');
@@ -105,17 +105,17 @@ const ProfileDetailsForm = () => {
                         <label htmlFor="email" className='ml-1'>Enter new Email</label>
                         <input type="email" name="email" placeholder="Email" className="border p-2 rounded w-full" onChange={handleInputChange} />
                     </div>
-<div>
-    <label htmlFor="dept">Select Department</label>
-    <select name="dept" className="border p-2 rounded w-full" onChange={handleInputChange}>
-        <option value="">Select Department</option>
-        {stdProfileDeptOptions.map((option) => (
-            <option key={option} value={option}>
-                {option}
-            </option>
-        ))}
-    </select>
-</div>
+                    <div>
+                        <label htmlFor="dept">Select Department</label>
+                        <select name="dept" className="border p-2 rounded w-full" onChange={handleInputChange}>
+                            <option value="">Select Department</option>
+                            {stdProfileDeptOptions.map((option) => (
+                                <option key={option} value={option}>
+                                    {option}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
                     <div>
                         <label htmlFor="password">Enter new Password</label>
                         <input type="text" name="password" placeholder="Password" className="border p-2 rounded w-full" onChange={handleInputChange} />
@@ -147,7 +147,7 @@ const ProfilePicture = () => {
                     }
                 });
 
-               
+
                 if (response.data.result) {
                     setSelectedPicture(response.data.result);
                 }
@@ -155,10 +155,10 @@ const ProfilePicture = () => {
                 console.error('Error uploading image:', error);
             }
 
-           
+
             const reader = new FileReader();
             reader.onload = () => {
-               
+
                 setSelectedPicture(reader.result);
             };
             reader.readAsDataURL(file);
@@ -166,7 +166,7 @@ const ProfilePicture = () => {
     };
 
 
-   
+
     return (
         <div className="bg-white p-4 rounded-lg shadow">
             <h3 className="text-lg font-semibold mb-3">Profile Picture</h3>
@@ -198,13 +198,13 @@ const UpdateResume = () => {
     };
 
     const handleSubmit = async (e) => {
-        e.preventDefault(); 
+        e.preventDefault();
         try {
             const formData = new FormData();
             formData.append('resume', resumeFile);
             console.log("The resumeFile os ", resumeFile)
             console.log("The foprmdata os ", formData)
-            const response = await fetch(`http://localhost:3000/api/v1/auth/students/${stdId}/upload`, {
+            const response = await fetch(`https://dkte-interview-portal-api.vercel.app/api/v1/auth/students/${stdId}/upload`, {
                 method: 'PATCH',
                 headers: {
                     Authorization: `Bearer ${token}`
@@ -236,12 +236,12 @@ const UpdateResume = () => {
 };
 
 const UserProfile = () => {
-    const profileLink =1
+    const profileLink = 1
     const drop = true;
-    const stdName  = useSelector(selectCurrentName)
+    const stdName = useSelector(selectCurrentName)
     return (
         <>
-            <NavBar links={StudentProfileNavlinks} drop={drop} profileLink={profileLink}/>
+            <NavBar links={StudentProfileNavlinks} drop={drop} profileLink={profileLink} />
             <div className="max-w-4xl mx-auto p-5">
                 <div className="flex items-center bg-yellow-400 p-4 rounded-lg mb-6">
                     <img src={ProfileImage} alt="User Profile" className="rounded-full w-10 h-10" />

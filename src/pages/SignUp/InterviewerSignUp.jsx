@@ -14,7 +14,7 @@ import { authenticate, setUserInfo } from '@/redux/authSlice'
 const InterviewerSignUp = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const [userExists, setUserExists] = useState(false); 
+    const [userExists, setUserExists] = useState(false);
 
     const [selectedDays, setSelectedDays] = useState([]);
     const [selectedTimes, setSelectedTimes] = useState({});
@@ -88,9 +88,9 @@ const InterviewerSignUp = () => {
         try {
 
             // const response = await interviewerSignUp(formDataToSend);
-            const response = await axios.post('http://localhost:3000/interviewer/signup',formData,{
-                headers:{
-                    'Content-Type':'multipart/form-data'
+            const response = await axios.post('https://dkte-interview-portal-api.vercel.app/interviewer/signup', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
                 }
             })
             const { data, token } = response.data;
@@ -179,16 +179,16 @@ const InterviewerSignUp = () => {
                     </div>
                     <div>
                         <label htmlFor="days" className="block mb-2 text-white">Days Of Week You're Available:</label>
-<select id="days" className="w-full p-2 bg-zinc-700 rounded text-white" onChange={(e) => setSelectedDays(Array.from(e.target.selectedOptions, option => option.value))} defaultValue={['MON']}>
-    <option>MON</option>
-    <option>TUE</option>
-    <option>WED</option>
-    <option>THU</option>
-    <option>FRI</option>
-    <option>SAT</option>
-    <option>SUN</option>
-</select>
-</div>
+                        <select id="days" className="w-full p-2 bg-zinc-700 rounded text-white" onChange={(e) => setSelectedDays(Array.from(e.target.selectedOptions, option => option.value))} defaultValue={['MON']}>
+                            <option>MON</option>
+                            <option>TUE</option>
+                            <option>WED</option>
+                            <option>THU</option>
+                            <option>FRI</option>
+                            <option>SAT</option>
+                            <option>SUN</option>
+                        </select>
+                    </div>
 
                     {selectedDays.map((day) => (
                         <div key={day}>

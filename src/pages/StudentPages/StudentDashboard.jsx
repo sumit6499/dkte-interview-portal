@@ -6,7 +6,7 @@ import { Chart, ArcElement } from 'chart.js';
 import InterviewItem from '@/components/ui/InterviewItem';
 import { StudentDashboardNavlinks } from '@/components/variables/formVariables';
 import { SampleBarGraph } from '@/assets/index.js';
-import {  registerables } from 'chart.js';
+import { registerables } from 'chart.js';
 import { useSelector } from 'react-redux';
 import { selectAllUsers, selectCurrentToken, selectCurrentUid, selectCurrentUser } from '@/redux/authSlice';
 Chart.register(...registerables);
@@ -31,7 +31,7 @@ const BarGraph = ({ interviews }) => {
 
     const fetchFeedBack = async (interviewerId) => {
         try {
-            const response = await axios.get(`http://localhost:3000/api/v1/auth/interview/${interviewerId}/feedback`, {
+            const response = await axios.get(`https://dkte-interview-portal-api.vercel.app/api/v1/auth/interview/${interviewerId}/feedback`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -110,20 +110,18 @@ const CircleChart = (props) => {
     const users = useSelector(selectAllUsers)
     let studentId;
     let gotdate = false;
-    let dataTime ;
+    let dataTime;
 
-    if (interview !=null)
-    {
+    if (interview != null) {
         dataTime = interview.startedAt;
         gotdate = true;
     }
-    
 
-    users.map((user,index)=>{
-        if(user.token ===token)
-            {
-                studentId = user.Uid;
-            }
+
+    users.map((user, index) => {
+        if (user.token === token) {
+            studentId = user.Uid;
+        }
     })
     const handleDate = (Fulldate) => {
         var today = new Date(Fulldate);
@@ -143,7 +141,7 @@ const CircleChart = (props) => {
         return today;
     };
     if (feedbackData === null) {
-        
+
         return (
             <div className="w-full md:w-1/2 bg-white p-4 shadow-lg" style={{ height: '50%' }}>
                 <h2 className="font-semibold text-zinc-800">Chart</h2>
@@ -156,7 +154,7 @@ const CircleChart = (props) => {
         labels: ['Appearance', 'Communication', 'Behavior', 'Technical'],
         datasets: [
             {
-                data: [feedbackData.apperance, feedbackData.communication, feedbackData.behaviour,feedbackData.technical],
+                data: [feedbackData.apperance, feedbackData.communication, feedbackData.behaviour, feedbackData.technical],
                 backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#00FF7F'],
                 hoverBackgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#00FF7F'],
             },
@@ -166,7 +164,7 @@ const CircleChart = (props) => {
     return (
         <div className="w-full md:w-1/2 bg-white p-4 shadow-lg md:mt-0 mt-4 " >
             {!gotdate ? <span>Select an Interview to see its Performance</span> : <h2 className="font-semibold text-zinc-800">Performance of Interview on     {handleDate(dataTime)}  at  {handleTime(dataTime)} </h2>}
-           
+
             <div className='h-48 sm:h-64 md:h-72 lg:h-80 xl:h-96 flex justify-center'>
                 <Pie data={data} />
             </div>
@@ -174,7 +172,7 @@ const CircleChart = (props) => {
     );
 };
 
-const InterviewsList = ({ interviews,onPerformanceClick,feedbackData }) => {
+const InterviewsList = ({ interviews, onPerformanceClick, feedbackData }) => {
     // const { interviews, onPerformanceClick } = props;
     const [selectedInterview, setSelectedInterview] = useState(null);
     // const [feedbackData,setFeedbackData] = useState([]);
@@ -197,7 +195,7 @@ const InterviewsList = ({ interviews,onPerformanceClick,feedbackData }) => {
             <h2 className="font-semibold text-zinc-800 mb-4">Interviews List</h2>
             <ul>
                 {interviews.map((interview, index) => (
-                    <InterviewItem key={index} interview={interview} onPerformanceClick={handlePerformanceClick} feedbackData={feedbackData}/>
+                    <InterviewItem key={index} interview={interview} onPerformanceClick={handlePerformanceClick} feedbackData={feedbackData} />
                 ))}
             </ul>
         </div>
@@ -208,7 +206,7 @@ const StudentDashboard = () => {
     const profileLink = 1
     const drop = true;
     const [interviews, setInterviews] = useState([]);
-    const [feedbackData,setFeedbackData] = useState([]);
+    const [feedbackData, setFeedbackData] = useState([]);
     const [selectedInterview, setSelectedInterview] = useState(null);
     const [interviewSelected, setInterviewSelected] = useState(false);
     const stdcurretId = useSelector(selectCurrentUid)
@@ -219,8 +217,8 @@ const StudentDashboard = () => {
 
     const fetchInterviews = async () => {
         try {
-            const response = await axios.get(`http://localhost:3000/api/v1/auth/interview/${stdcurretId}/all?filter=previous`,{
-                headers:{
+            const response = await axios.get(`https://dkte-interview-portal-api.vercel.app/api/v1/auth/interview/${stdcurretId}/all?filter=previous`, {
+                headers: {
                     Authorization: `Bearer ${token}`
                 }
             });
@@ -246,33 +244,32 @@ const StudentDashboard = () => {
     }
 
     console.log("Interviews:", interviews);
-    
-const fetchFeedBack = async (interviewerId) =>{
 
-    try{
-        const response = await axios.get(`http://localhost:3000/api/v1/auth/interview/${interviewerId}/feedback`,{
-            headers:{
-                Authorization: `Bearer ${token}`
-            }
-        });
-        const data = response.data;
-        console.log("feedback data is",data)
+    const fetchFeedBack = async (interviewerId) => {
+
+        try {
+            const response = await axios.get(`https://dkte-interview-portal-api.vercel.app/api/v1/auth/interview/${interviewerId}/feedback`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            const data = response.data;
+            console.log("feedback data is", data)
+        }
+        catch (error) {
+            console.log(error);
+        }
     }
-    catch(error)
-    {
-        console.log(error);
-    }
-}
     return (
         <>
-            <NavBar links={StudentDashboardNavlinks} profileLink={profileLink} drop={drop }/>
+            <NavBar links={StudentDashboardNavlinks} profileLink={profileLink} drop={drop} />
             <div className="bg-zinc-100">
                 <div className="container mx-auto px-4">
                     <WelcomeMessage />
                     <div className="m-10"></div>
                     <div className="flex flex-col md:flex-row gap-10">
-                        <BarGraph interviews={interviews} feedbackData={feedbackData }/>
-                        <CircleChart interview={selectedInterview} feedbackData={feedbackData}/>
+                        <BarGraph interviews={interviews} feedbackData={feedbackData} />
+                        <CircleChart interview={selectedInterview} feedbackData={feedbackData} />
                     </div>
                     <InterviewsList interviews={interviews} onPerformanceClick={handlePerformanceClick} feedbackData={setFeedbackData} />
                 </div>

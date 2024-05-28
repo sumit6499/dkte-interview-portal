@@ -39,20 +39,20 @@ function StudentSignUp() {
             setStage(2);
         } else if (stage === 2) {
             try {
-                const response = await axios.post('http://localhost:3000/students/signup', formData, {
+                const response = await axios.post('https://dkte-interview-portal-api.vercel.app/students/signup', formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
                     }
                 });
                 const { data, token } = response.data;
-                const { id: studentId, name ,role,PRN,dept} = data;
+                const { id: studentId, name, role, PRN, dept } = data;
                 const stdAuthToken = token;
 
                 localStorage.setItem("studentId", studentId);
                 localStorage.setItem("stdAuthToken", stdAuthToken);
 
                 if (response.data) {
-                    const userData = { user: data, token: stdAuthToken, Uid: studentId, Name:name,Role:role,Dept:dept,PRN:PRN};
+                    const userData = { user: data, token: stdAuthToken, Uid: studentId, Name: name, Role: role, Dept: dept, PRN: PRN };
                     dispatch(authenticate(true));
                     dispatch(setUserInfo(userData));
                     toast.success('Signup Successful!', { position: toast.POSITION.TOP_CENTER });

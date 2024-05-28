@@ -30,9 +30,9 @@ const ProfileDetailsForm = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log("The formdata is ",formData)
+        console.log("The formdata is ", formData)
         try {
-            const response = await fetch(`http://localhost:3000/api/v1/auth/interviewer/${interviewerId}`, {
+            const response = await fetch(`https://dkte-interview-portal-api.vercel.app/api/v1/auth/interviewer/${interviewerId}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 },
@@ -121,7 +121,7 @@ const ProfileDetailsForm = () => {
 const UpdateIDCard = () => {
     const [resumeFile, setResumeFile] = useState(null);
     const interviewerId = useSelector(selectCurrentUid);
-    const token = useSelector(selectCurrentToken); 
+    const token = useSelector(selectCurrentToken);
 
     const handleFileChange = (e) => {
         const file = e.target.files[0];
@@ -134,8 +134,8 @@ const UpdateIDCard = () => {
             const formData = new FormData();
             formData.append('resume', resumeFile);
             console.log("The foprmdata os ", formData)
-         
-            const response = await fetch(`http://localhost:3000/api/v1/auth/interviewer/${interviewerId}/upload`, {
+
+            const response = await fetch(`https://dkte-interview-portal-api.vercel.app/api/v1/auth/interviewer/${interviewerId}/upload`, {
                 method: 'PATCH',
                 headers: {
                     Authorization: `Bearer ${token}`
@@ -176,7 +176,7 @@ const ProfilePicture = () => {
             formData.append('image', file);
 
             try {
-               
+
                 const response = await axios.post('/api/upload', formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
@@ -226,7 +226,7 @@ const InterviwerPorfile = () => {
     const profileLink = 2;
     const drop = true
     const UserName = useSelector(selectCurrentName);
-    
+
     return (
         <>
             <NavBar links={InterviewerProfileNavLinks} profileLink={profileLink} drop={drop} />
@@ -237,7 +237,7 @@ const InterviwerPorfile = () => {
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                     <ProfilePicture />
-                    <UpdateIDCard/>
+                    <UpdateIDCard />
                 </div>
                 <ProfileDetailsForm />
             </div>

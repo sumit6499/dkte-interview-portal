@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import { selectCurrentToken } from '@/redux/authSlice';
 import { useState } from 'react';
 const InterviewItem = ({ interview, onPerformanceClick, feedbackData }) => {
-    
+
     const token = useSelector(selectCurrentToken)
     const handleDate = (Fulldate) => {
         var today = new Date(Fulldate);
@@ -28,7 +28,7 @@ const InterviewItem = ({ interview, onPerformanceClick, feedbackData }) => {
     const fetchFeedBack = async (interviewerId) => {
 
         try {
-            const response = await axios.get(`http://localhost:3000/api/v1/auth/interview/${interviewerId}/feedback`, {
+            const response = await axios.get(`https://dkte-interview-portal-api.vercel.app/api/v1/auth/interview/${interviewerId}/feedback`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -44,14 +44,14 @@ const InterviewItem = ({ interview, onPerformanceClick, feedbackData }) => {
             console.log(error);
         }
     }
-    const handleClick = async() => {
+    const handleClick = async () => {
         onPerformanceClick(interview);
         console.log("i m inside handleclick ")
-        console.log("THe interivew id is ",interview.id)
+        console.log("THe interivew id is ", interview.id)
         await fetchFeedBack(interview.id)
     };
-console.log("The interivew are ",interview)
-    
+    console.log("The interivew are ", interview)
+
     return (
         <li className={`${sharedClasses.flexItemsCenter} ${sharedClasses.justifyBetweenPy2} ${sharedClasses.borderB}`}>
             <div className={sharedClasses.flexItemsCenter}>
@@ -61,7 +61,7 @@ console.log("The interivew are ",interview)
                     <p >Start Time: {handleTime(interview.startedAt)}</p>
                 </div>
             </div>
-            <button onClick = {handleClick}className={`${sharedClasses.bgBlue500TextWhite} ${sharedClasses.px4} ${sharedClasses.py2} ${sharedClasses.roundedLg}`}>Performance</button>
+            <button onClick={handleClick} className={`${sharedClasses.bgBlue500TextWhite} ${sharedClasses.px4} ${sharedClasses.py2} ${sharedClasses.roundedLg}`}>Performance</button>
         </li>
     );
 };

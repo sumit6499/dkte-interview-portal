@@ -17,11 +17,10 @@ const StudentHome = () => {
     const [isStudentSchedules, setIsStudentSchedules] = useState(true);
     const users = useSelector(selectAllUsers)
     let studentId;
-    users.map((user,index)=>{
-        if(user.token==token)
-            {
-                studentId = user.Uid;
-            }
+    users.map((user, index) => {
+        if (user.token == token) {
+            studentId = user.Uid;
+        }
     })
     useEffect(() => {
         fetchInterviews('today');
@@ -31,12 +30,12 @@ const StudentHome = () => {
         setLoading(true);
         setError(null);
         try {
-            const response = await axios.get(`http://localhost:3000/api/v1/auth/interview/${studentId}/all?filter=${filterOption}`, {
+            const response = await axios.get(`https://dkte-interview-portal-api.vercel.app/api/v1/auth/interview/${studentId}/all?filter=${filterOption}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
             });
-           console.log("the response data is "+response.data);
+            console.log("the response data is " + response.data);
             setInterviews(response.data);
             seTStudentsInterviews(interviews.data)
             setLoading(false);
@@ -47,7 +46,7 @@ const StudentHome = () => {
             setLoading(false);
         }
     };
-   
+
     console.log('student interviewer', interviews.data);
     const handleFilterChange = async (option) => {
         try {
@@ -62,14 +61,14 @@ const StudentHome = () => {
             <NavBar links={StudentHomeNavlinks} drop={drop} profileLink={profileLink} />
             <div className="bg-zinc-100 h-screen">
                 <div className="flex h-screen">
-                    {interviews !== null && 
-                    <Schedule
-                     interviews={interviews.data} 
-                     onFilterChange={handleFilterChange}
-                        isStudentSchedules={true} 
-                        // studentsInterviews={studentsInterviews }
-                        stdLoading={stdLoading}
-                        stdError={stdError}/>
+                    {interviews !== null &&
+                        <Schedule
+                            interviews={interviews.data}
+                            onFilterChange={handleFilterChange}
+                            isStudentSchedules={true}
+                            // studentsInterviews={studentsInterviews }
+                            stdLoading={stdLoading}
+                            stdError={stdError} />
                     }
                 </div>
             </div>
