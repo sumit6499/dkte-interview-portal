@@ -26,7 +26,7 @@ const InterviewerIntervieweSchedules = () => {
         setInterviewerError(false);
 
         try {
-            const response = await axios.get(`https://dkte-interview-portal-api.vercel.app/api/v1/auth/interview/${interviewerId}/all?filter=${filterOption}`, {
+            const response = await axios.get(`http://dkte-interview-portal-api.vercel.app/api/v1/auth/interview/${interviewerId}/all?filter=${filterOption}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }

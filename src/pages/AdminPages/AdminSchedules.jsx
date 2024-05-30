@@ -15,7 +15,7 @@ const AdminSchedules = () => {
     const [error, setError] = useState(null);
     const [option, setOption] = useState('today')
     useEffect(() => {
-        fetchInterviews('today'); 
+        fetchInterviews('today');
     }, []);
 
     const fetchInterviews = async (filterOption) => {
@@ -23,18 +23,18 @@ const AdminSchedules = () => {
         setError(null);
 
         try {
-            const response = await axios.get(`http://localhost:3000/api/v1/auth/interview/:id/all?filter=${filterOption}`,{
-                headers:{
+            const response = await axios.get(`http://dkte-interview-portal-api.vercel.app/api/v1/auth/interview/:id/all?filter=${filterOption}`, {
+                headers: {
                     Authorization: `Bearer ${token}`
                 }
             });
             if (response.data.success && Array.isArray(response.data.data)) {
-                setInterviews(response.data.data||[]);
+                setInterviews(response.data.data || []);
             } else {
                 console.error('Fetched data is not an array:', response.data);
                 setError('Unexpected data format received from server.');
             }
-            
+
         } catch (error) {
             console.error('Error fetching students data:', error);
             setError('Error fetching data from server. Please check your network connection or the server URL.');
@@ -50,19 +50,19 @@ const AdminSchedules = () => {
             console.error('Error fetching interviews:', error);
         }
     };
-    console.log("interviews",interviews)
+    console.log("interviews", interviews)
     return (
         <>
             <NavBar links={AdminSchedulesNavlinks} drop={drop} isAdmin={isAdmin} />
             <div className="bg-zinc-100 h-screen">
                 <div className="flex h-screen">
                     {interviews !== null &&
-                     <Schedule 
-                     interviews={interviews} 
-                     onFilterChange={handleFilterChange} 
-                        loading1={loading}
-                        error={error}
-                     />}
+                        <Schedule
+                            interviews={interviews}
+                            onFilterChange={handleFilterChange}
+                            loading1={loading}
+                            error={error}
+                        />}
                 </div>
             </div>
         </>

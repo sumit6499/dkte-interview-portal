@@ -30,7 +30,7 @@ const StudentHome = () => {
         setLoading(true);
         setError(null);
         try {
-            const response = await axios.get(`https://dkte-interview-portal-api.vercel.app/api/v1/auth/interview/${studentId}/all?filter=${filterOption}`, {
+            const response = await axios.get(`http://dkte-interview-portal-api.vercel.app/api/v1/auth/interview/${studentId}/all?filter=${filterOption}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }

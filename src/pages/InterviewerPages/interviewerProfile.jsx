@@ -32,7 +32,7 @@ const ProfileDetailsForm = () => {
         e.preventDefault();
         console.log("The formdata is ", formData)
         try {
-            const response = await fetch(`https://dkte-interview-portal-api.vercel.app/api/v1/auth/interviewer/${interviewerId}`, {
+            const response = await fetch(`http://dkte-interview-portal-api.vercel.app/api/v1/auth/interviewer/${interviewerId}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 },
@@ -135,7 +135,7 @@ const UpdateIDCard = () => {
             formData.append('resume', resumeFile);
             console.log("The foprmdata os ", formData)
 
-            const response = await fetch(`https://dkte-interview-portal-api.vercel.app/api/v1/auth/interviewer/${interviewerId}/upload`, {
+            const response = await fetch(`http://dkte-interview-portal-api.vercel.app/api/v1/auth/interviewer/${interviewerId}/upload`, {
                 method: 'PATCH',
                 headers: {
                     Authorization: `Bearer ${token}`

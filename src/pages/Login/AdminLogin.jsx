@@ -27,13 +27,13 @@ function AdminLogin() {
         e.preventDefault();
         try {
             //  Axios POST    
-            const response = await axios.post('https://dkte-interview-portal-api.vercel.app/admin/login', formValues, {
+            const response = await axios.post('http://dkte-interview-portal-api.vercel.app/admin/login', formValues, {
                 headers: {
                     'Content-Type': 'application/json'
                 }
             });
-            const { data, token } = response.data;
-            const { id: adminId, name, role } = data;
+            const { id: adminId, name, role, token } = response.data;
+            // const { id: adminId, name, role } = data;
             const adminAuthToken = token;
 
 
@@ -52,9 +52,9 @@ function AdminLogin() {
             }
 
         } catch (error) {
-            if (error.response.data.msg === "User does not exist") {
-                setUserExists(false)
-            }
+            // if (error.response.data.msg === "User does not exist") {
+            //     setUserExists(false)
+            // }
             console.error("Error submitting form:", error);
             //  error
         }
