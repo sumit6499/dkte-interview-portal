@@ -31,7 +31,7 @@ const BarGraph = ({ interviews }) => {
 
     const fetchFeedBack = async (interviewerId) => {
         try {
-            const response = await axios.get(`http://dkte-interview-portal-api.vercel.app/api/v1/auth/interview/${interviewerId}/feedback`, {
+            const response = await axios.get(`https://dkte-interview-portal-api.vercel.app/api/v1/auth/interview/${interviewerId}/feedback`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -217,7 +217,7 @@ const StudentDashboard = () => {
 
     const fetchInterviews = async () => {
         try {
-            const response = await axios.get(`http://dkte-interview-portal-api.vercel.app/api/v1/auth/interview/${stdcurretId}/all?filter=previous`, {
+            const response = await axios.get(`https://dkte-interview-portal-api.vercel.app/api/v1/auth/interview/${stdcurretId}/all?filter=previous`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -248,7 +248,7 @@ const StudentDashboard = () => {
     const fetchFeedBack = async (interviewerId) => {
 
         try {
-            const response = await axios.get(`http://dkte-interview-portal-api.vercel.app/api/v1/auth/interview/${interviewerId}/feedback`, {
+            const response = await axios.get(`https://dkte-interview-portal-api.vercel.app/api/v1/auth/interview/${interviewerId}/feedback`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }

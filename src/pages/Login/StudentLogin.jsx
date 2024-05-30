@@ -28,7 +28,7 @@ function StudentLogin() {
         e.preventDefault();
 
         try {
-            const response = await axios.post('http://dkte-interview-portal-api.vercel.app/students/login', formValues, {
+            const response = await axios.post('https://dkte-interview-portal-api.vercel.app/students/login', formValues, {
                 headers: {
                     'Content-Type': 'application/json'
                 }

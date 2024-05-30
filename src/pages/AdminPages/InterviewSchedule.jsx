@@ -97,7 +97,7 @@ function AdminInterviewSchedule() {
         }
 
         try {
-            await axios.post(`http://dkte-interview-portal-api.vercel.app/api/v1/auth/interview/${_id}/schedule`, {
+            await axios.post(`https://dkte-interview-portal-api.vercel.app/api/v1/auth/interview/${_id}/schedule`, {
                 dateString,
                 startedAt,
                 endsAt,
@@ -118,7 +118,7 @@ function AdminInterviewSchedule() {
 
     const fetchInterviewers = async (day) => {
         try {
-            const response = await axios.get(`http://dkte-interview-portal-api.vercel.app/api/v1/auth/interviewer/${day}/all`, {
+            const response = await axios.get(`https://dkte-interview-portal-api.vercel.app/api/v1/auth/interviewer/${day}/all`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },

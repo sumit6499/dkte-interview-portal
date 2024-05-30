@@ -54,7 +54,7 @@ const ProfileDetailsForm = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch(`http://dkte-interview-portal-api.vercel.app/api/v1/auth/students/${stdId}`, {
+            const response = await fetch(`https://dkte-interview-portal-api.vercel.app/api/v1/auth/students/${stdId}`, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
@@ -204,7 +204,7 @@ const UpdateResume = () => {
             formData.append('resume', resumeFile);
             console.log("The resumeFile os ", resumeFile)
             console.log("The foprmdata os ", formData)
-            const response = await fetch(`http://dkte-interview-portal-api.vercel.app/api/v1/auth/students/${stdId}/upload`, {
+            const response = await fetch(`https://dkte-interview-portal-api.vercel.app/api/v1/auth/students/${stdId}/upload`, {
                 method: 'PATCH',
                 headers: {
                     Authorization: `Bearer ${token}`

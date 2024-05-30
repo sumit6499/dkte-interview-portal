@@ -39,7 +39,7 @@ function StudentSignUp() {
             setStage(2);
         } else if (stage === 2) {
             try {
-                const response = await axios.post('http://dkte-interview-portal-api.vercel.app/students/signup', formData, {
+                const response = await axios.post('https://dkte-interview-portal-api.vercel.app/students/signup', formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
                     }

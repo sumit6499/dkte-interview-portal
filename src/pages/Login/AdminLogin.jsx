@@ -27,7 +27,7 @@ function AdminLogin() {
         e.preventDefault();
         try {
             //  Axios POST    
-            const response = await axios.post('http://dkte-interview-portal-api.vercel.app/admin/login', formValues, {
+            const response = await axios.post('https://dkte-interview-portal-api.vercel.app/admin/login', formValues, {
                 headers: {
                     'Content-Type': 'application/json'
                 }

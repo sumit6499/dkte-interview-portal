@@ -44,7 +44,7 @@ const StudentEvaluationForm = () => {
 
     const getResumeLink = async () => {
         try {
-            const response = await axios.get(`http://dkte-interview-portal-api.vercel.app/api/v1/auth/students/${interview.studentId}/info`, {
+            const response = await axios.get(`https://dkte-interview-portal-api.vercel.app/api/v1/auth/students/${interview.studentId}/info`, {
                 headers: {
                     Authorization: `Bearer ${tok}`
                 }
@@ -72,7 +72,7 @@ const StudentEvaluationForm = () => {
             return;
         }
         try {
-            const response = await axios.post(`http://dkte-interview-portal-api.vercel.app/api/v1/auth/interview/${interview.id}/feedback`, formData, {
+            const response = await axios.post(`https://dkte-interview-portal-api.vercel.app/api/v1/auth/interview/${interview.id}/feedback`, formData, {
                 headers: {
                     Authorization: `Bearer ${tok}`,
                 }
