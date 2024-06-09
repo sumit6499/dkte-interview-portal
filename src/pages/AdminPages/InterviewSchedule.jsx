@@ -64,11 +64,13 @@ function AdminInterviewSchedule() {
             setIsTimeSet(true);
             setInterviewersToDisplay([]);
 
-            const data = interviewers.filter((interview) => {
-                return interview.startTime <= startedAt && interview.endTime >= endsAt;
-            });
+            if (interviewers && interviewers.length > 0) {
+                const data = interviewers.filter((interview) => {
+                    return interview.startTime <= startedAt && interview.endTime >= endsAt;
+                });
 
-            setInterviewersToDisplay(data);
+                setInterviewersToDisplay(data);
+            }
         }
     }, [isStartTimeSet, isEndTimeSet, startedAt, endsAt, interviewers]);
 
@@ -97,7 +99,7 @@ function AdminInterviewSchedule() {
         }
 
         try {
-            await axios.post(`https://dkte-interview-portal-api.vercel.app/api/v1/auth/interview/${_id}/schedule`, {
+            await axios.post(`http://13.126.95.245:3000/api/v1/auth/interview/${_id}/schedule`, {
                 dateString,
                 startedAt,
                 endsAt,
@@ -118,7 +120,7 @@ function AdminInterviewSchedule() {
 
     const fetchInterviewers = async (day) => {
         try {
-            const response = await axios.get(`https://dkte-interview-portal-api.vercel.app/api/v1/auth/interviewer/${day}/all`, {
+            const response = await axios.get(`http://13.126.95.245:3000/api/v1/auth/interviewer/${day}/all`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -191,11 +193,15 @@ function AdminInterviewSchedule() {
                                     className="mt-1 block w-full px-3 py-2 bg-zinc-700 border border-zinc-600 rounded-md shadow-sm focus:outline-none focus:ring-yellow-500 focus:border-yellow-500"
                                 >
                                     <option value="">Select Interviewers</option>
-                                    {interviewersToDisplay.map((interviewer) => (
-                                        <option key={interviewer.id} value={interviewer.name}>
-                                            {interviewer.name}
-                                        </option>
-                                    ))}
+                                    {interviewersToDisplay.length === 0 ? (
+                                        <option disabled>No Interviewers are available</option>
+                                    ) : (
+                                        interviewersToDisplay.map((interviewer) => (
+                                            <option key={interviewer.id} value={interviewer.name}>
+                                                {interviewer.name}
+                                            </option>
+                                        ))
+                                    )}
                                 </select>
                             </div>
                         )}

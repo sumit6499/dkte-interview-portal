@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const url = "https://dkte-interview-portal-api.vercel.app/";
+const url = "http://13.126.95.245:3000/";
 
 const API = axios.create({
   baseURL: url,

@@ -49,11 +49,7 @@ function AdminSignUp() {
 
         console.log("formData", formData)
         try {
-            const response = await axios.post('https://dkte-interview-portal-api.vercel.app/admin/signup', formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
-                }
-            });
+            const response = await adminSignUp(formData)
             const { data, token } = response.data;
             const { id: adminId, name, role } = data;
             const adminAuthToken = token;

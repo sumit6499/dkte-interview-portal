@@ -31,7 +31,7 @@ const BarGraph = ({ interviews }) => {
 
     const fetchFeedBack = async (interviewerId) => {
         try {
-            const response = await axios.get(`https://dkte-interview-portal-api.vercel.app/api/v1/auth/interview/${interviewerId}/feedback`, {
+            const response = await axios.get(`http://13.126.95.245:3000/api/v1/auth/interview/${interviewerId}/feedback`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -43,6 +43,9 @@ const BarGraph = ({ interviews }) => {
             throw error;
         }
     };
+    if (interviews.length === 0) {
+        console.log("Empty re baba");
+    }
 
     useEffect(() => {
         const fetchScores = async () => {
@@ -65,7 +68,10 @@ const BarGraph = ({ interviews }) => {
     }, [interviews, token]);
 
     if (loading) return <div>Loading...</div>;
-    if (error) return <div>Error loading data</div>;
+    if (error) {
+        console.log("The error is ", error);
+        return <div>Error loading data</div>;
+    }
 
     const labels = interviews.map((interview, index) => `Interview ${index + 1}`);
     const data = {
@@ -217,7 +223,7 @@ const StudentDashboard = () => {
 
     const fetchInterviews = async () => {
         try {
-            const response = await axios.get(`https://dkte-interview-portal-api.vercel.app/api/v1/auth/interview/${stdcurretId}/all?filter=previous`, {
+            const response = await axios.get(`http://13.126.95.245:3000/api/v1/auth/interview/${stdcurretId}/all?filter=previous`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -248,7 +254,7 @@ const StudentDashboard = () => {
     const fetchFeedBack = async (interviewerId) => {
 
         try {
-            const response = await axios.get(`https://dkte-interview-portal-api.vercel.app/api/v1/auth/interview/${interviewerId}/feedback`, {
+            const response = await axios.get(`http://13.126.95.245:3000/api/v1/auth/interview/${interviewerId}/feedback`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }

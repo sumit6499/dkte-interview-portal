@@ -27,16 +27,10 @@ function AdminLogin() {
         e.preventDefault();
         try {
             //  Axios POST    
-            const response = await axios.post('https://dkte-interview-portal-api.vercel.app/admin/login', formValues, {
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            });
+            const response = await adminLogin(formValues)
             const { id: adminId, name, role, token } = response.data;
             // const { id: adminId, name, role } = data;
             const adminAuthToken = token;
-
-
             localStorage.setItem("adminId", adminId);
             localStorage.setItem("adminAuthToken", adminAuthToken);
             console.log("adminId is fro mlocal", localStorage.getItem("adminId"));
@@ -44,7 +38,7 @@ function AdminLogin() {
 
             if (response.data) {
                 dispatch(authenticate(true));
-                dispatch(setUserInfo({ user: data, token, Uid: adminId, Name: name, Role: role }));
+                dispatch(setUserInfo({ user: response.data, token, Uid: adminId, Name: name, Role: role }));
                 navigate('/login/admin/students');
                 console.log("stored i guess ")
             } else {

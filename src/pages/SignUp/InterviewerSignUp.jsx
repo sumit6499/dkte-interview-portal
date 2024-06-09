@@ -86,12 +86,11 @@ const InterviewerSignUp = () => {
         });
         // console.log("fomrdata is ", formData)
         try {
-            //https://dkte-interview-portal-api.vercel.app
-            // const response = await interviewerSignUp(formDataToSend);
-            const response = await axios.post('https://dkte-interview-portal-api.vercel.app/interviewer/signup', formData, {
+           
+            const response = await axios.post("http://localhost:3000/interviewer/signup",formData,{
                 headers: {
-                    'Content-Type': 'multipart/form-data'
-                }
+                    "Content-Type": "multipart/form-data",
+                },
             })
             const { data, token } = response.data;
             const { id: interviewerId, name, role, day, startTime, endTime } = data;
@@ -102,16 +101,13 @@ const InterviewerSignUp = () => {
             if (response.data) {
                 dispatch(authenticate(true));
                 dispatch(setUserInfo({ user: data, token, Uid: interviewerId, Name: name, Role: role, Day: day, StartTime: startTime, EndTime: endTime }));
-                // toast.success('Signup Successful!', { position: toast.POSITION.TOP_CENTER });
                 navigate('/login/student/profile');
             } else {
                 setUserExists(false);
             }
-            // toast.success('Signup Successful!', { position: toast.POSITION.TOP_CENTER });
             navigate('/login/interviewer')
         } catch (error) {
             console.error('Error submitting form:', error);
-            // toast.error('An error occurred while submitting the form!', { position: toast.POSITION.TOP_CENTER });
         }
     };
     const showToast = (message) => {

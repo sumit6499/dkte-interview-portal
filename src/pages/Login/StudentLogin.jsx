@@ -28,14 +28,9 @@ function StudentLogin() {
         e.preventDefault();
 
         try {
-            const response = await axios.post('https://dkte-interview-portal-api.vercel.app/students/login', formValues, {
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            }); (formValues);
+            const response = await studentLogin(formValues)
             const { data, token } = response.data;
             const { id: studentId, name, role } = data;
-
             localStorage.setItem("studentId", studentId);
             localStorage.setItem("stdAuthToken", token);
 

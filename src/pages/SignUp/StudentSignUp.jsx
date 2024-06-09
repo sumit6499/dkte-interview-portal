@@ -8,7 +8,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useDispatch, useSelector } from "react-redux";
 import { authenticate, setUserInfo } from "@/redux/authSlice";
-
+import { studentSignUp } from "@/api";
 function StudentSignUp() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -39,11 +39,7 @@ function StudentSignUp() {
             setStage(2);
         } else if (stage === 2) {
             try {
-                const response = await axios.post('https://dkte-interview-portal-api.vercel.app/students/signup', formData, {
-                    headers: {
-                        'Content-Type': 'multipart/form-data'
-                    }
-                });
+                const response = await studentSignUp(formData)
                 const { data, token } = response.data;
                 const { id: studentId, name, role, PRN, dept } = data;
                 const stdAuthToken = token;

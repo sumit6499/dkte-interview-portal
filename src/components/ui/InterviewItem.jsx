@@ -28,7 +28,7 @@ const InterviewItem = ({ interview, onPerformanceClick, feedbackData }) => {
     const fetchFeedBack = async (interviewerId) => {
 
         try {
-            const response = await axios.get(`https://dkte-interview-portal-api.vercel.app/api/v1/auth/interview/${interviewerId}/feedback`, {
+            const response = await axios.get(`http://13.126.95.245:3000/api/v1/auth/interview/${interviewerId}/feedback`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
