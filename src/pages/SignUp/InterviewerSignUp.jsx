@@ -87,11 +87,7 @@ const InterviewerSignUp = () => {
         // console.log("fomrdata is ", formData)
         try {
            
-            const response = await axios.post("http://localhost:3000/interviewer/signup",formData,{
-                headers: {
-                    "Content-Type": "multipart/form-data",
-                },
-            })
+            const response = await interviewerSignUp(formData)
             const { data, token } = response.data;
             const { id: interviewerId, name, role, day, startTime, endTime } = data;
             const interviewerAuthToken = token;
