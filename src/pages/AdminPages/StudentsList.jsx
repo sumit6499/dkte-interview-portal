@@ -91,7 +91,7 @@ function StudentsList() {
 
             <div className={`container mx-auto px-4 bg-zinc-100 ${isSticky ? 'sticky-offset' : ''}`}>
                 <header className="py-5">
-                    <h1 className="text-3xl font-bold text-center">Students</h1>
+                    <h1 className="text-3xl font-bold text-center ">Students</h1>
                 </header>
                 <div>
                     <div className={`bg-yellow-400 p-5 rounded-lg shadow-md ${isSticky ? 'sticky-search-bar' : 'fixed top-20 left-0 w-full z-50'}`}>
@@ -133,7 +133,7 @@ function StudentsList() {
                         </div>
                     </div>
                 </div>
-                <div className="mt-20 bg-zinc-100">
+                <div className="mt-20 bg-zinc-100 ">
                     {loading ? (
                         <Loader />
                     ) : error ? (
