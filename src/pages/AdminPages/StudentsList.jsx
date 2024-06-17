@@ -76,12 +76,12 @@ function StudentsList() {
         <>
             <NavBar links={AdminStudentsNavlinks} drop={true} isAdmin={true} />
 
-            <div className="container mx-auto px-4 bg-zinc-100">
+            <div className="container mx-auto px-4 bg-zinc-100  overflow-y-auto ">
                 <header className="py-5">
-                    <h1 className="text-3xl font-bold text-center">Students</h1>
+                    <h1 className="text-3xl font-bold text-center ">Students</h1>
                 </header>
                 <div>
-                    <div className="bg-yellow-400 p-5 rounded-lg shadow-md fixed top-20 left-0 w-full z-50">
+                    <div className="bg-yellow-400 p-5 rounded-lg shadow-md  top-20 left-0 w-full z-50">
                         <div className="flex gap-4 mb-4 mr-3">
                             <input
                                 type="text"
@@ -120,7 +120,7 @@ function StudentsList() {
                         </div>
                     </div>
                 </div>
-                <div className="mt-20 bg-zinc-100">
+                <div className="mt-20 bg-zinc-100 ">
                     {loading ? (
                         // <p>Loading students...</p>
                         <Loader /> 

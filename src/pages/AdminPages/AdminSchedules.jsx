@@ -4,13 +4,16 @@ import '@/App.css'
 import Schedule from '@/components/ui/Schedules';
 import { AdminSchedulesNavlinks } from '@/components/variables/formVariables';
 import axios from 'axios';
-import { selectCurrentToken } from '@/redux/authSlice';
+import { selectCurrentToken,selectCurrentUid } from '@/redux/authSlice';
 import { BASE_URL } from '@/api';
 import { useSelector } from 'react-redux';
+import {ToastContainer,toast} from 'react-toastify'
 const AdminSchedules = () => {
     const drop = true;
     const isAdmin = true;
     const token = useSelector(selectCurrentToken)
+    const localID=JSON.parse(localStorage.getItem('userID')).id
+    const id=useSelector(selectCurrentUid)||localID;
     const [interviews, setInterviews] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -24,7 +27,7 @@ const AdminSchedules = () => {
         setError(null);
 
         try {
-            const response = await axios.get(`${BASE_URL}/api/v1/auth/interview/:id/all?filter=${filterOption}`, {
+            const response = await axios.get(`${BASE_URL}/api/v1/auth/interview/${id}/all?filter=${filterOption}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -38,6 +41,7 @@ const AdminSchedules = () => {
 
         } catch (error) {
             console.error('Error fetching students data:', error);
+            toast.error("Error fetching interviews")
             setError('Error fetching data from server. Please check your network connection or the server URL.');
         } finally {
             setLoading(false);
@@ -55,6 +59,7 @@ const AdminSchedules = () => {
     return (
         <>
             <NavBar links={AdminSchedulesNavlinks} drop={drop} isAdmin={isAdmin} />
+            <ToastContainer/>
             <div className="bg-zinc-100 h-screen">
                 <div className="flex h-screen">
                     {interviews !== null &&
