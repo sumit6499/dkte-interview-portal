@@ -123,3 +123,16 @@
         padding: 0.5rem 1rem; /* Larger button padding for easier click */
     }
 }
+
+.sticky-search-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 50;
+    transition: top 0.3s;
+}
+
+.sticky-offset {
+    margin-top: 70px; 
+}
