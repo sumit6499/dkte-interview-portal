@@ -54,8 +54,11 @@ function InterviewerLogin() {
         } catch (error) {
             if (error.response.data.msg === "User does not exist")
                 {
-                setUserExists(false)
+                setUserExists(false);
+                 toast.error(error.response.data.msg);
                 }
+            setLoading(false);
+
             console.error("Error submitting form:", error.response.data.msg);
             //  error
         }
@@ -66,7 +69,7 @@ function InterviewerLogin() {
     return (
         <>
             <NavBar links={InterviewerNavLinks} />
-            {loading ? (<Loader />) : (<LoginForm
+            {(loading && userExists) ? (<Loader />) : (<LoginForm
                 title="Interviewer Login"
                 fields={InterviewerLoginfields}
                 formData={formData}

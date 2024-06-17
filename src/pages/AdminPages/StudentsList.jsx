@@ -49,7 +49,7 @@ function StudentsList() {
                 }
             } catch (error) {
                 console.error('Error fetching students data:', error);
-                setError('Error fetching data from server. Please check your network connection or the server URL.');
+                setError('Error fetching data from server. Please check your network connection or the server URL. Try Reloading the Website ');
             } finally {
                 setLoading(false);
             }

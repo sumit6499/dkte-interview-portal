@@ -32,6 +32,11 @@ function AdminLogin() {
         try {
             //  Axios POST    
             const response = await adminLogin(formValues)
+            console.log("THe msg is ", response.msg);
+            if (response.msg == "User does not exist") {
+                console.log("thoadign")
+                toast.error(response.msg);
+            }
             const { id: adminId, name, role, token } = response.data;
             // const { id: adminId, name, role } = data;
             const adminAuthToken = token;
@@ -39,7 +44,7 @@ function AdminLogin() {
             localStorage.setItem("adminAuthToken", adminAuthToken);
             console.log("adminId is fro mlocal", localStorage.getItem("adminId"));
             console.log("adminAuthToken is from local", localStorage.getItem("adminAuthToken"));
-
+            
             if (response.data) {
                 console.log("data is",response.data.data)
                 dispatch(authenticate(true));
@@ -52,14 +57,21 @@ function AdminLogin() {
             } else {
                 setUserExists(false);
             }
+            
 
         } catch (error) {
             // if (error.response.data.msg === "User does not exist") {
             //     setUserExists(false)
             // }
-            console.error("Error submitting form:", error);
-            toast.error("Wrong credentials. Please try again.");
+            setLoading(false);
+            if (error.response.data.msg === "User does not exist") {
+                setUserExists(false)
+                toast.error(error.response.data.msg);
+            }
 
+            
+            console.error("Error submitting form:", error);
+            // toast.error("Wrong credentials. Please try again.");
             //  error
         }
     };
@@ -74,24 +86,17 @@ function AdminLogin() {
     return (
         <>
             <NavBar links={AdminNavLinks} />
-            {loading ?(
+            {(loading && userExists) ?(
                 <Loader/>
             ) : <LoginForm
                 title="Admin Login"
                 fields={AdminLoginfields}
                 formData={formData}
+                formValues= {formValues}
                 onSubmit={handleSubmit}
                 handleChange={handleChange}
-                formValues={formValues}
                 userExists={userExists} />}
-            {/* <LoginForm
-                title="Admin Login"
-                fields={AdminLoginfields}
-                formData={formData}
-                onSubmit={handleSubmit}
-                handleChange={handleChange}
-                formValues={formValues}
-                userExists={userExists}/> */}
+          
         </>
     );
 }

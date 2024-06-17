@@ -4,6 +4,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { interviewComposition, NotVisibleEye, visibleEye } from '@/assets/';
 import { useNavigate } from 'react-router';
+
 function LoginForm({ title, fields, formData, formValues, onSubmit, handleChange, userExists }) {
     const navigate = useNavigate();
     const [showPassword, setShowPassword] = useState(false);
@@ -57,8 +58,12 @@ function LoginForm({ title, fields, formData, formValues, onSubmit, handleChange
                                 </div>
                             </div>
                         ))}
-                        {!userExists && (
-                            <div className="text-red-500 text-center">User does not exist</div>
+                        {!userExists && (<>
+                            
+                            <div className="text-red-500 text-center pb-3">
+                                User does not exist
+                            </div>
+                        </>
                         )}
                         <div className="flex justify-center">
                             <button type="submit" className="w-30 bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
