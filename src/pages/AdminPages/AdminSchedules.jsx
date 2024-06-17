@@ -12,7 +12,7 @@ import { useSelector } from 'react-redux';
 import {ToastContainer,toast} from 'react-toastify'
 const AdminSchedules = () => {
 
-    const id = useSelector(selectCurrentUid)
+    
     const drop = true;
     const isAdmin = true;
     const token = useSelector(selectCurrentToken)
