@@ -1,6 +1,9 @@
 import axios from "axios";
 
-const url = "http://13.126.95.245:3000/";
+// const url = "http://13.126.95.245:3000/";
+const url = "http://localhost:3000";
+
+export const BASE_URL = url;
 
 const API = axios.create({
   baseURL: url,
@@ -39,3 +42,5 @@ export const interviewerLogin = async (formData) =>
 
 export const interviewerSignUp = async (formData) =>
   await API.post("interviewer/signup", formData);
+
+

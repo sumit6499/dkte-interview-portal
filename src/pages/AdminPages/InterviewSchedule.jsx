@@ -5,7 +5,7 @@ import axios from 'axios';
 import { AdminSchedulesNavlinks, days } from '@/components/variables/formVariables';
 import { useSelector } from 'react-redux';
 import { selectAllUsers, selectCurrentToken } from '@/redux/authSlice';
-
+import { BASE_URL } from '@/api';
 function AdminInterviewSchedule() {
     const token = useSelector(selectCurrentToken);
     const navigate = useNavigate();
@@ -99,7 +99,7 @@ function AdminInterviewSchedule() {
         }
 
         try {
-            await axios.post(`http://13.126.95.245:3000/api/v1/auth/interview/${_id}/schedule`, {
+            await axios.post(`${BASE_URL}/api/v1/auth/interview/${_id}/schedule`, {
                 dateString,
                 startedAt,
                 endsAt,
@@ -120,7 +120,7 @@ function AdminInterviewSchedule() {
 
     const fetchInterviewers = async (day) => {
         try {
-            const response = await axios.get(`http://13.126.95.245:3000/api/v1/auth/interviewer/${day}/all`, {
+            const response = await axios.get(`${BASE_URL}/api/v1/auth/interviewer/${day}/all`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },

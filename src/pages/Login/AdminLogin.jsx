@@ -8,6 +8,7 @@ import { AdminNavLinks, AdminLoginfields } from '@/components/variables/formVari
 import { adminLogin } from '@/api/index';
 import { useDispatch } from "react-redux";
 import { authenticate, setUserInfo } from "@/redux/authSlice";
+import Loader from '@/components/ui/loading';
 import axios from 'axios';
 function AdminLogin() {
     const dispatch = useDispatch();
@@ -22,8 +23,10 @@ function AdminLogin() {
         email: "",
         password: ""
     });
-
+    const [loading,setLoading] = useState(false);
     const handleSubmit = async (e) => {
+        setLoading(true);
+        
         e.preventDefault();
         try {
             //  Axios POST    
@@ -41,6 +44,8 @@ function AdminLogin() {
                 dispatch(setUserInfo({ user: response.data, token, Uid: adminId, Name: name, Role: role }));
                 navigate('/login/admin/students');
                 console.log("stored i guess ")
+                toast.success("Login successful!");
+
             } else {
                 setUserExists(false);
             }
@@ -50,6 +55,8 @@ function AdminLogin() {
             //     setUserExists(false)
             // }
             console.error("Error submitting form:", error);
+            toast.error("Wrong credentials. Please try again.");
+
             //  error
         }
     };
@@ -64,6 +71,16 @@ function AdminLogin() {
     return (
         <>
             <NavBar links={AdminNavLinks} />
+            {/* {loading ?(
+                <Loader/>
+            ) : <LoginForm
+                title="Admin Login"
+                fields={AdminLoginfields}
+                formData={formData}
+                onSubmit={handleSubmit}
+                handleChange={handleChange}
+                formValues={formValues}
+                userExists={userExists} />} */}
             <LoginForm
                 title="Admin Login"
                 fields={AdminLoginfields}
@@ -71,7 +88,7 @@ function AdminLogin() {
                 onSubmit={handleSubmit}
                 handleChange={handleChange}
                 formValues={formValues}
-                userExists={userExists} />
+                userExists={userExists}/>
         </>
     );
 }

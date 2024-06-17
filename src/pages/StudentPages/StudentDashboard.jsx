@@ -9,6 +9,7 @@ import { SampleBarGraph } from '@/assets/index.js';
 import { registerables } from 'chart.js';
 import { useSelector } from 'react-redux';
 import { selectAllUsers, selectCurrentToken, selectCurrentUid, selectCurrentUser } from '@/redux/authSlice';
+import { BASE_URL } from '@/api';
 Chart.register(...registerables);
 Chart.register(ArcElement);
 
@@ -31,7 +32,7 @@ const BarGraph = ({ interviews }) => {
 
     const fetchFeedBack = async (interviewerId) => {
         try {
-            const response = await axios.get(`http://13.126.95.245:3000/api/v1/auth/interview/${interviewerId}/feedback`, {
+            const response = await axios.get(`${BASE_URL}/api/v1/auth/interview/${interviewerId}/feedback`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -223,7 +224,7 @@ const StudentDashboard = () => {
 
     const fetchInterviews = async () => {
         try {
-            const response = await axios.get(`http://13.126.95.245:3000/api/v1/auth/interview/${stdcurretId}/all?filter=previous`, {
+            const response = await axios.get(`${BASE_URL}/api/v1/auth/interview/${stdcurretId}/all?filter=previous`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -254,7 +255,7 @@ const StudentDashboard = () => {
     const fetchFeedBack = async (interviewerId) => {
 
         try {
-            const response = await axios.get(`http://13.126.95.245:3000/api/v1/auth/interview/${interviewerId}/feedback`, {
+            const response = await axios.get(`${BASE_URL}/api/v1/auth/interview/${interviewerId}/feedback`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }

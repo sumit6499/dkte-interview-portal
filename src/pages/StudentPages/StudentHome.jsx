@@ -6,6 +6,7 @@ import Schedule from '@/components/ui/Schedules';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { selectAllUsers, selectCurrentToken } from '@/redux/authSlice';
+import { BASE_URL } from '@/api';
 const StudentHome = () => {
     const profileLink = 1
     const token = useSelector(selectCurrentToken);
@@ -30,7 +31,7 @@ const StudentHome = () => {
         setLoading(true);
         setError(null);
         try {
-            const response = await axios.get(`http://13.126.95.245:3000/api/v1/auth/interview/${studentId}/all?filter=${filterOption}`, {
+            const response = await axios.get(`${BASE_URL}/api/v1/auth/interview/${studentId}/all?filter=${filterOption}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }

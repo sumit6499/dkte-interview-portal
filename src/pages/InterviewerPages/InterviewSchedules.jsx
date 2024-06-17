@@ -6,6 +6,7 @@ import Schedule from '@/components/ui/Schedules';
 import { InterviewerProfileNavLinks } from '@/components/variables/formVariables';
 import { useSelector } from 'react-redux';
 import { selectCurrentToken, selectCurrentUid } from '@/redux/authSlice';
+import { BASE_URL } from '@/api';
 import axios from 'axios';
 const InterviewerIntervieweSchedules = () => {
     const token = useSelector(selectCurrentToken)
@@ -26,7 +27,7 @@ const InterviewerIntervieweSchedules = () => {
         setInterviewerError(false);
 
         try {
-            const response = await axios.get(`http://13.126.95.245:3000/api/v1/auth/interview/${interviewerId}/all?filter=${filterOption}`, {
+            const response = await axios.get(`${BASE_URL}/api/v1/auth/interview/${interviewerId}/all?filter=${filterOption}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }

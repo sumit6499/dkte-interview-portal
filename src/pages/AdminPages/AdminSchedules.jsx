@@ -5,6 +5,7 @@ import Schedule from '@/components/ui/Schedules';
 import { AdminSchedulesNavlinks } from '@/components/variables/formVariables';
 import axios from 'axios';
 import { selectCurrentToken } from '@/redux/authSlice';
+import { BASE_URL } from '@/api';
 import { useSelector } from 'react-redux';
 const AdminSchedules = () => {
     const drop = true;
@@ -23,7 +24,7 @@ const AdminSchedules = () => {
         setError(null);
 
         try {
-            const response = await axios.get(`http://13.126.95.245:3000/api/v1/auth/interview/:id/all?filter=${filterOption}`, {
+            const response = await axios.get(`${BASE_URL}/api/v1/auth/interview/:id/all?filter=${filterOption}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }

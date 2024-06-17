@@ -7,6 +7,8 @@ import { AdminStudentsNavlinks } from '@/components/variables/formVariables';
 import { selectCurrentToken } from '@/redux/authSlice';
 import { useSelector } from 'react-redux';
 import '@/App.css'
+import { BASE_URL } from '@/api'; 
+import Loader from '@/components/ui/loading';
 function StudentsList() {
     const navigate = useNavigate();
     const token = useSelector(selectCurrentToken);
@@ -17,7 +19,7 @@ function StudentsList() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [isSmallScreen, setIsSmallerScreen] = useState(false);
-
+    
     useEffect(() => {
         const checkScreenSize = () => {
             setIsSmallerScreen(window.innerWidth <= 640);
@@ -32,7 +34,7 @@ function StudentsList() {
             setLoading(true);
             setError(null);
             try {
-                const response = await axios.get('http://13.126.95.245:3000/api/v1/auth/students/all', {
+                const response = await axios.get(`${BASE_URL}/api/v1/auth/students/all`, {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }
@@ -120,7 +122,8 @@ function StudentsList() {
                 </div>
                 <div className="mt-20 bg-zinc-100">
                     {loading ? (
-                        <p>Loading students...</p>
+                        // <p>Loading students...</p>
+                        <Loader /> 
                     ) : error ? (
                         <p className="text-red-500">{error}</p>
                     ) : filteredStudents.length === 0 ? (

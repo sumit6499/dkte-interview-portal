@@ -8,7 +8,7 @@ import { fileInputClasses } from '@/components/styles/sharedStyles';
 import { StudentProfileNavlinks } from '@/components/variables/formVariables';
 import { useSelector } from 'react-redux';
 import { selectCurrentName, selectCurrentToken, selectCurrentUid } from '@/redux/authSlice';
-
+import { BASE_URL } from '@/api';
 
 const Login = () => {
     //  store user details
@@ -54,7 +54,7 @@ const ProfileDetailsForm = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch(`http://13.126.95.245:3000/api/v1/auth/students/${stdId}`, {
+            const response = await fetch(`${BASE_URL}/api/v1/auth/students/${stdId}`, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',

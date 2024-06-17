@@ -26,7 +26,7 @@ function StudentLogin() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+        console.log("The form is ",formValues)
         try {
             const response = await studentLogin(formValues)
             const { data, token } = response.data;

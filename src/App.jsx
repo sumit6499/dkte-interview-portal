@@ -23,6 +23,7 @@ import ErrorPage from './components/ui/error';
 import StudentEvaluationForm from './pages/Screen/EvaluationForm';
 import FormBase64 from './components/ui/form64';
 import AllUsers from './components/Allusers';
+import Loader from './components/ui/loading';
 import { useEffect } from 'react';
 
 const PrivateRoute = ({ element }) => {
@@ -66,6 +67,7 @@ function App() {
         <Route path="/eval" element={<PrivateRoute element={<StudentEvaluationForm />} />} />
         <Route path="/FormBase64" element={<PrivateRoute element={<FormBase64 />} />} />
         <Route path="/all-users" element={<AllUsers />} />
+        <Route path="/load" element={<Loader />} />
 
         <Route path="*" element={<ErrorPage />} />
       </Routes>

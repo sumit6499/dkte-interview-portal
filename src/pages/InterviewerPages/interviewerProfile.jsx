@@ -7,6 +7,7 @@ import { InterviewerProfileNavLinks, days } from '@/components/variables/formVar
 import { useSelector } from 'react-redux';
 import { selectCurrentName, selectCurrentToken, selectCurrentUid } from '@/redux/authSlice';
 import { fileInputClasses } from '@/components/styles/sharedStyles';
+import { BASE_URL } from '@/api';
 const ProfileDetailsForm = () => {
     const profileLink = 2;
     const [selectedDays, setSelectedDays] = useState([]);
@@ -32,7 +33,7 @@ const ProfileDetailsForm = () => {
         e.preventDefault();
         console.log("The formdata is ", formData)
         try {
-            const response = await fetch(`http://13.126.95.245:3000/api/v1/auth/interviewer/${interviewerId}`, {
+            const response = await fetch(`${BASE_URL}/api/v1/auth/interviewer/${interviewerId}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 },
