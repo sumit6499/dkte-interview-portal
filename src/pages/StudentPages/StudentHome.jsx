@@ -18,6 +18,7 @@ const StudentHome = () => {
     const [stdLoading, setLoading] = useState(true);
     const [stdError, setError] = useState(null);
     const [isStudentSchedules, setIsStudentSchedules] = useState(true);
+    const [TimeOption,setTimeOption] = useState('today');
     const users = useSelector(selectAllUsers)
     let studentId;
     users.map((user, index) => {
@@ -26,7 +27,7 @@ const StudentHome = () => {
         }
     })
     useEffect(() => {
-        fetchInterviews('today');
+        fetchInterviews(TimeOption);
     }, []);
 
     const fetchInterviews = async (filterOption) => {
@@ -54,6 +55,7 @@ const StudentHome = () => {
     const handleFilterChange = async (option) => {
         try {
             await fetchInterviews(option);
+            setTimeOption(option);
         } catch (error) {
             console.error('Error fetching interviews:', error);
         }
@@ -69,7 +71,7 @@ const StudentHome = () => {
                             interviews={interviews.data}
                             onFilterChange={handleFilterChange}
                             isStudentSchedules={true}
-                            // studentsInterviews={studentsInterviews }
+                            studentsInterviews={studentsInterviews }
                             stdLoading={stdLoading}
                             stdError={stdError} />
                     }

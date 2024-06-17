@@ -8,7 +8,7 @@ import { studentLogin } from '@/api/index';
 import { useDispatch } from "react-redux";
 import { authenticate, setUserInfo } from "@/redux/authSlice";
 import axios from 'axios';
-import { Loader } from 'lucide-react';
+import Loader from '@/components/ui/loading';
 function StudentLogin() {
     const dispatch = useDispatch();
     const navigate = useNavigate();

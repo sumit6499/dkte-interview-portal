@@ -10,8 +10,11 @@ import { useSelector } from 'react-redux';
 import { selectAllUsers, selectCurrentToken, selectCurrentUid, selectCurrentUser } from '@/redux/authSlice';
 import { BASE_URL } from '@/api';
 import {ToastContainer,toast} from 'react-toastify'
+import Loader from '@/components/ui/loading';
 Chart.register(...registerables);
 Chart.register(ArcElement);
+import ChartDataLabels from 'chartjs-plugin-datalabels';
+
 
 
 const WelcomeMessage = () => {
@@ -27,10 +30,10 @@ const WelcomeMessage = () => {
 const BarGraph = ({ interviews }) => {
     const token = useSelector(selectCurrentToken);
     const [totalScores, setTotalScores] = useState([]);
-    const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-
+    const [loading,setLoading] = useState(false);
     const fetchFeedBack = async (interviewerId) => {
+        setLoading(true);
         try {
             const response = await axios.get(`${BASE_URL}/api/v1/auth/interview/${interviewerId}/feedback`, {
                 headers: {
@@ -40,6 +43,7 @@ const BarGraph = ({ interviews }) => {
             const feedbackData = response.data.data.feedback;
             return feedbackData;
         } catch (error) {
+            setLoading(false);
             console.error('Error fetching feedback:', error);
             throw error;
         }
@@ -73,7 +77,7 @@ const BarGraph = ({ interviews }) => {
         fetchScores();
     }, [interviews, token]);
 
-    if (loading) return <div>Loading...</div>;
+    if (loading) return <Loader/>;
     if (error) {
         // console.log("The error is ", error);
         return <div>Error loading data</div>;
@@ -104,6 +108,7 @@ const BarGraph = ({ interviews }) => {
     };
 
     return (
+        
         <div className="w-full md:w-1/2 bg-white p-4 shadow-lg">
             <h2 className="font-semibold text-zinc-800">Student Scores in Interviews</h2>
             <div className='h-48 sm:h-64 md:h-72 lg:h-80 xl:h-96'>
@@ -116,11 +121,10 @@ const BarGraph = ({ interviews }) => {
 
 const CircleChart = (props) => {
     const { interview, feedbackData } = props;
-    console.log(feedbackData)
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const token = useSelector(selectCurrentToken);
-    const users = useSelector(selectAllUsers)
+    const users = useSelector(selectAllUsers);
     let studentId;
     let gotdate = false;
     let dataTime;
@@ -130,37 +134,35 @@ const CircleChart = (props) => {
         gotdate = true;
     }
 
-
-    users.map((user, index) => {
+    users.forEach((user) => {
         if (user.token === token) {
             studentId = user.Uid;
         }
-    })
+    });
+
     const handleDate = (Fulldate) => {
-        var today = new Date(Fulldate);
-        var dd = String(today.getDate()).padStart(2, '0');
-        var mm = String(today.getMonth() + 1).padStart(2, '0');
-        var yyyy = today.getFullYear();
-        today = dd + '-' + mm + '-' + yyyy;
-        return today;
+        const today = new Date(Fulldate);
+        const dd = String(today.getDate()).padStart(2, '0');
+        const mm = String(today.getMonth() + 1).padStart(2, '0');
+        const yyyy = today.getFullYear();
+        return `${dd}-${mm}-${yyyy}`;
     };
 
     const handleTime = (FullTime) => {
-        var today = new Date(FullTime);
-        var hh = String(today.getHours()).padStart(2, '0');
-        var mm = String(today.getMinutes()).padStart(2, '0');
-        var ss = String(today.getSeconds()).padStart(2, '0');
-        today = hh + ':' + mm + ':' + ss;
-        return today;
+        const today = new Date(FullTime);
+        const hh = String(today.getHours()).padStart(2, '0');
+        const mm = String(today.getMinutes()).padStart(2, '0');
+        const ss = String(today.getSeconds()).padStart(2, '0');
+        return `${hh}:${mm}:${ss}`;
     };
-    if (feedbackData === null) {
 
+    if (!feedbackData) {
         return (
             <div className="w-full md:w-1/2 bg-white p-4 shadow-lg" style={{ height: '50%' }}>
                 <h2 className="font-semibold text-zinc-800">Chart</h2>
                 <Pie data={data} />
             </div>
-        )
+        );
     }
 
     const data = {
@@ -174,12 +176,58 @@ const CircleChart = (props) => {
         ],
     };
 
-    return (
-        <div className="w-full md:w-1/2 bg-white p-4 shadow-lg md:mt-0 mt-4 " >
-            {!gotdate ? <span>Select an Interview to see its Performance</span> : <h2 className="font-semibold text-zinc-800">Performance of Interview on     {handleDate(dataTime)}  at  {handleTime(dataTime)} </h2>}
+    const options = {
+        plugins: {
+            datalabels: {
+                color: '#fff',
+                display: true,
+                formatter: (value, context) => {
+                    return value;
+                },
+            },
+            tooltip: {
+                callbacks: {
+                    label: (tooltipItem) => {
+                        return `${tooltipItem.label}: ${tooltipItem.raw}`;
+                    },
+                },
+            },
+        },
+    };
 
-            <div className='h-48 sm:h-64 md:h-72 lg:h-80 xl:h-96 flex justify-center'>
-                <Pie data={data} />
+    useEffect(() => {
+        const handleTouchEvent = (e) => {
+            // Handle touch events on mobile
+            const chart = Chart.instances[0];
+            const element = chart.getElementAtEvent(e)[0];
+            if (element) {
+                const { index } = element;
+                const label = data.labels[index];
+                const value = data.datasets[0].data[index];
+                alert(`${label}: ${value}`);
+            }
+        };
+
+        const chartContainer = document.getElementById('chart-container');
+        chartContainer.addEventListener('touchstart', handleTouchEvent);
+
+        return () => {
+            chartContainer.removeEventListener('touchstart', handleTouchEvent);
+        };
+    }, [data]);
+
+    return (
+        <div className="w-full md:w-1/2 bg-white p-4 shadow-lg md:mt-0 mt-4" id="chart-container">
+            {!gotdate ? (
+                <span>Select an Interview to see its Performance</span>
+            ) : (
+                <h2 className="font-semibold text-zinc-800">
+                    Performance of Interview on {handleDate(dataTime)} at {handleTime(dataTime)}
+                </h2>
+            )}
+
+            <div className="h-48 sm:h-64 md:h-72 lg:h-80 xl:h-96 flex justify-center">
+                <Pie data={data} options={options} plugins={[ChartDataLabels]} />
             </div>
         </div>
     );

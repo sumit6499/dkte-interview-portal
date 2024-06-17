@@ -7,7 +7,6 @@ import DropDownProfile from "@/components/ui/DropDownProfile";
 
 function NavBar(props) {
     const { links, drop, profileLink, isAdmin } = props;
-    console.log("Prilelink "+profileLink)
     const navRef = useRef();
     const navLinksRef = useRef();
     const [isSmallScreen, setIsSmallScreen] = useState(false);

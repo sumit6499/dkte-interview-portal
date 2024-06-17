@@ -10,6 +10,7 @@ const Schedule = ({ interviews = [], onFilterChange, isStudentSchedules, student
     const token = useSelector(selectCurrentToken);
     const navigate = useNavigate();
     const [selectedOption, setSelectedOption] = useState('today');
+    let timeOption = "";
     const [error, setError] = useState(null);
     const [studentData, setStudentData] = useState([]);
     const [newCombineData, setNewCombineData] = useState([]);
@@ -19,8 +20,6 @@ const Schedule = ({ interviews = [], onFilterChange, isStudentSchedules, student
         let Name;
         users.map((user, index) => {
             if (user.Uid == studentId) {
-                console.log("hi i m here finall")
-                console.log("the name is " + user.Name);
                 Name = user.Name
             }
         })
@@ -45,8 +44,13 @@ const Schedule = ({ interviews = [], onFilterChange, isStudentSchedules, student
         return dept;
     }
     const handleFilterChange = (option) => {
-        onFilterChange(option);
+        console.log("Filter change triggered:", option);
         setSelectedOption(option);
+        timeOption = option;
+        console.log("THe time changed is ", timeOption)
+        if (onFilterChange) {
+            onFilterChange(option);
+        }
     };
 
     const handleDate = (Fulldate) => {
@@ -77,7 +81,7 @@ const Schedule = ({ interviews = [], onFilterChange, isStudentSchedules, student
 
    
 
-   
+
 
     console.log("the interviews in here ", interviews)
     return (
@@ -97,7 +101,7 @@ const Schedule = ({ interviews = [], onFilterChange, isStudentSchedules, student
                         Upcoming Interview
                     </button>
                     <button
-                        className={`bg-yellow-400 text-white px-12 py-3 rounded m-2 ${selectedOption === 'history' && 'bg-yellow-300'}`}
+                        className={`bg-yellow-400 text-white px-12 py-3 rounded m-2 ${selectedOption === 'previous' && 'bg-yellow-300'}`}
                         onClick={() => handleFilterChange('previous')}
                     >
                         Interviews History
@@ -108,7 +112,7 @@ const Schedule = ({ interviews = [], onFilterChange, isStudentSchedules, student
                 <div className="mt-20 bg-zinc-100">
                     {loading && <p>Loading...</p>}
                     {error && <p>{error}</p>}
-                    {!loading && !error && interviews.length === 0  && <p>No interviews available.</p>}
+                    {!loading && !error && interviews.length === 0 && <p>No interviews available.</p>}
                     {interviews.length > 0 && interviews.map((interview, index) => {
                         const student = interviews[index];
                         return (
@@ -125,18 +129,18 @@ const Schedule = ({ interviews = [], onFilterChange, isStudentSchedules, student
                                         </div>
                                     </div>
                                     <div className="flex items-center space-x-10">
-                                       
+
                                     </div>
-                                    
+
                                     <button onClick={async () => {
                                         const linkToJoin = student.link;
-                                       
+
                                         // window.open(ResumeLink, '_blank');
                                         window.open(linkToJoin, '_blank');
-                                        
+
                                         // window.open(ResumeLink, '_blank');
                                         setTimeout(() => {
-                                            
+
                                             navigate('/eval', {
                                                 state: {
                                                     interview: interview
@@ -152,51 +156,50 @@ const Schedule = ({ interviews = [], onFilterChange, isStudentSchedules, student
                     })}
                 </div>
             ) : (
-                    <div className="mt-20 bg-zinc-100">
-                        {loading && <p>Loading...</p>}
-                        {error && <p>{error}</p>}
-                        {!loading && !error && interviews.length === 0 && <p>No interviews available.</p>}
-                        {interviews.length > 0 && interviews.map((interview, index) => {
-                            const student = interviews[index];
-                            console.log("THe std i s", student.date)
-                            return (
-                                <div key={interview.id} className="bg-white p-4 rounded-lg shadow-md mb-1">
-                                    <div className="flex items-center justify-between space-x-4 py-2 border-b border-zinc-200 h-6">
-                                        <div className="flex items-center space-x-6">
-                                            <img src={MaleUser} alt="Profile" className="rounded-full h-6" />
-                                            <div className='flex space-x-6'>
-                                                
-                                                <p className="text-sm text-zinc-600">{handleDate(student.date)}</p>
-                                                {selectedOption === "previous" ? <p className="text-sm text-zinc-600">Started At      {handleTime(student.startedAt)}</p> : <p className="text-sm text-zinc-600">Starts At      {handleTime(student.startedAt)}</p>}
-                                               
-                                            </div>
+                <div className="mt-20 bg-zinc-100">
+                    {loading && <p>Loading...</p>}
+                    {error && <p>{error}</p>}
+                    {!loading && !error && interviews.length === 0 && <p>No interviews available.</p>}
+                    {interviews.length > 0 && interviews.map((interview, index) => {
+                        const student = interviews[index];
+                        return (
+                            <div key={interview.id} className="bg-white p-4 rounded-lg shadow-md mb-1">
+                                <div className="flex items-center justify-between space-x-4 py-2 border-b border-zinc-200 h-6">
+                                    <div className="flex items-center space-x-6">
+                                        <img src={MaleUser} alt="Profile" className="rounded-full h-6" />
+                                        <div className='flex space-x-6'>
+
+                                            <p className="text-sm text-zinc-600">{handleDate(student.date)}</p>
+                                            {timeOption === "previous" ? <p className="text-sm text-zinc-600">Started At      {handleTime(student.startedAt)}</p> : <p className="text-sm text-zinc-600">Starts At      {handleTime(student.startedAt)}</p>}
+
                                         </div>
-                {selectedOption === "previous" ? <button onClick={() => {
-                    navigate('/login/student/dashboard', {
-                        state: {
-                            interview: interview
-                        }
-                    });
-                    
-                }} className="bg-blue-500 text-white pb-1 mb-3 px-2 py-0.6 rounded">
-                                           Performance
-                                        </button> : <button onClick={() => {
-                                            const linkToJoin = student.link;
-                                            window.open(linkToJoin, '_blank');
-                                            // navigate('/eval', {
-                                            //     state: {
-                                            //         interview: interview
-                                            //     }
-                                            // });
-                                        }} className="bg-blue-500 text-white pb-1 mb-3 px-2 py-0.6 rounded">
-                                            Join Link
-                                        </button>}
-                                       
                                     </div>
+                                    {timeOption == "previous" ?( <button onClick={() => {
+                                        navigate('/login/student/dashboard', {
+                                            state: {
+                                                interview: interview
+                                            }
+                                        });
+                                        console.log("hi there")
+
+                                    }} className="bg-blue-500 text-white pb-1 mb-3 px-2 py-0.6 rounded">
+                                        Performance
+                                    </button> ): (
+                                        <>
+                                            <button onClick={() => {
+                                        const linkToJoin = student.link;
+                                            window.open(linkToJoin, '_blank');
+                                                    console.log("hi there guys ", timeOption) 
+                                    }} className="bg-blue-500 text-white pb-1 mb-3 px-2 py-0.6 rounded">
+                                        
+                                        Join Link
+                                                </button></>)}
+
                                 </div>
-                            );
-                        })}
-                    </div>
+                            </div>
+                        );
+                    })}
+                </div>
             )}
         </div>
     );

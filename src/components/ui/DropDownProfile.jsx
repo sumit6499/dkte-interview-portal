@@ -11,7 +11,6 @@ const DropDownProfile = ({ profileLink, isAdmin }) => {
     const UserName = useSelector(selectCurrentName);
     const timeoutRef = useRef(null);
     const id = useSelector(selectCurrentRole)
-    console.log("id is ", id)
     const logout = () => {
         dispatch(logOut());
         navigate("/");
@@ -40,7 +39,6 @@ const DropDownProfile = ({ profileLink, isAdmin }) => {
     const ProfileClicked = () => {
         isclick = !isclick;
     }
-    console.log("the name is ", UserName)
     return (
         <div className="relative" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} onClick={ProfileClicked()}>
             <button className="flex items-center text-white focus:outline-none">
