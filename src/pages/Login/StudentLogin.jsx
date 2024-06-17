@@ -8,12 +8,13 @@ import { studentLogin } from '@/api/index';
 import { useDispatch } from "react-redux";
 import { authenticate, setUserInfo } from "@/redux/authSlice";
 import axios from 'axios';
+import { Loader } from 'lucide-react';
 function StudentLogin() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const [userExists, setUserExists] = useState(true);
-
+const [loading,setLoading] = useState(false);
     const [formValues, setFormValues] = useState({
         email: "",
         password: ""
@@ -25,6 +26,7 @@ function StudentLogin() {
     };
 
     const handleSubmit = async (e) => {
+        setLoading(true);
         e.preventDefault();
         console.log("The form is ",formValues)
         try {
@@ -52,14 +54,15 @@ function StudentLogin() {
     return (
         <>
             <NavBar links={StudentNavlinks} />
-            <LoginForm
+            {loading ? (<Loader />) : (<LoginForm
                 title="Student Login"
                 fields={StduentLoginfields}
                 formValues={formValues}
                 onSubmit={handleSubmit}
                 handleChange={handleChange}
                 userExists={userExists}
-            />
+            />)}
+            
         </>
     );
 }

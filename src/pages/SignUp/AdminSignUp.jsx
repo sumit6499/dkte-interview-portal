@@ -9,9 +9,11 @@ import { useNavigate } from "react-router";
 import { adminSignUp } from '@/api/index';
 import { useDispatch } from "react-redux";
 import { authenticate, setUserInfo } from "@/redux/authSlice";
+import Loader from "@/components/ui/loading";
 function AdminSignUp() {
     const studentSignup = false;
     const navigate = useNavigate()
+    const [loading,setLoading] = useState(false);
     const isAdminSignUp = true;
     const dispatch = useDispatch();
     const [userExists, setUserExists] = useState(false);
@@ -44,7 +46,7 @@ function AdminSignUp() {
     };
 
     const handleSubmit = async (event) => {
-
+        setLoading(true);
         event.preventDefault();
 
         console.log("formData", formData)
@@ -61,7 +63,7 @@ function AdminSignUp() {
             if (response.data) {
                 dispatch(authenticate(true));
                 dispatch(setUserInfo({ user: data, token, Uid: adminId, Name: name, Role: role }));
-                navigate('/login/student/profile');
+                navigate('/login/admin/');
             } else {
                 setUserExists(false);
             }
@@ -81,7 +83,7 @@ function AdminSignUp() {
         <>
             <NavBar links={AdminNavLinks} />
             <ToastContainer />
-            <CommonSignUp
+            {loading ? (<Loader />) : (<CommonSignUp
                 title="Admin SignUp"
                 fields={Adminfields}
                 onSubmit={handleSubmit}
@@ -93,7 +95,8 @@ function AdminSignUp() {
                 handleChange={handleChange}
                 handleFileChange={handleChange}
 
-            />
+            />)}
+           
         </>
     );
 }

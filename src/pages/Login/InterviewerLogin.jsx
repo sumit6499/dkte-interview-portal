@@ -8,9 +8,11 @@ import { InterviewerNavLinks, InterviewerLoginfields } from '@/components/variab
 import { interviewerLogin } from '@/api/index';
 import { useDispatch } from "react-redux";
 import { authenticate, setUserInfo } from "@/redux/authSlice";
+import Loader from '@/components/ui/loading';
 function InterviewerLogin() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const [loading,setLoading] = useState(false);
     const [userExists, setUserExists] = useState(true); 
     const [formData, setFormData] = useState({
         email: "",
@@ -27,6 +29,7 @@ function InterviewerLogin() {
     };
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true)
         try {
             //  Axios POST    
             const response = await interviewerLogin(formValues); 
@@ -63,7 +66,7 @@ function InterviewerLogin() {
     return (
         <>
             <NavBar links={InterviewerNavLinks} />
-            <LoginForm
+            {loading ? (<Loader />) : (<LoginForm
                 title="Interviewer Login"
                 fields={InterviewerLoginfields}
                 formData={formData}
@@ -71,7 +74,8 @@ function InterviewerLogin() {
                 onSubmit={handleSubmit}
                 handleChange={handleChange}
                 userExists={userExists}
-            />
+            />)}
+            
         </>
     );
 }

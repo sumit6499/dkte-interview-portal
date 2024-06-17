@@ -10,6 +10,7 @@ import { useDispatch } from "react-redux";
 import { authenticate, setUserInfo } from "@/redux/authSlice";
 import Loader from '@/components/ui/loading';
 import axios from 'axios';
+
 function AdminLogin() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -73,7 +74,7 @@ function AdminLogin() {
     return (
         <>
             <NavBar links={AdminNavLinks} />
-            {/* {loading ?(
+            {loading ?(
                 <Loader/>
             ) : <LoginForm
                 title="Admin Login"
@@ -82,15 +83,15 @@ function AdminLogin() {
                 onSubmit={handleSubmit}
                 handleChange={handleChange}
                 formValues={formValues}
-                userExists={userExists} />} */}
-            <LoginForm
+                userExists={userExists} />}
+            {/* <LoginForm
                 title="Admin Login"
                 fields={AdminLoginfields}
                 formData={formData}
                 onSubmit={handleSubmit}
                 handleChange={handleChange}
                 formValues={formValues}
-                userExists={userExists}/>
+                userExists={userExists}/> */}
         </>
     );
 }

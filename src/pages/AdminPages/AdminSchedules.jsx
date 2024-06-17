@@ -16,13 +16,18 @@ const AdminSchedules = () => {
     const drop = true;
     const isAdmin = true;
     const token = useSelector(selectCurrentToken)
-    const localID=JSON.parse(localStorage.getItem('userID')).id
+    let localID;
+    if (JSON.parse(localStorage.getItem('adminId') !== undefined).id){
+        localID = JSON.parse(localStorage.getItem('adminId')).id
+    }
+   
     const id=useSelector(selectCurrentUid)||localID;
+    console.log("The id is ",id)
     const [interviews, setInterviews] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [option, setOption] = useState('today')
-    
+
     useEffect(() => {
         fetchInterviews('today');
     }, []);
