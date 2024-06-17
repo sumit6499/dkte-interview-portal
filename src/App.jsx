@@ -1,5 +1,5 @@
 import './App.css';
-import { BrowserRouter as Router, Routes, Route, Link, useNavigate,  } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Link, useNavigate, } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import LoginPage from "./pages/Login/LoginPage.jsx";
 import Home from './pages/Home/Home';
@@ -60,11 +60,11 @@ function App() {
         <Route path="/login/student/dashboard" element={<PrivateRoute element={<StudentDashboard />} allowedRoles={['Student']} />} />
 
         <Route path="/signup/interviewer" element={<InterviewerSignUp />} />
-        <Route path="/Schedule" element={<PrivateRoute element={<Schedule />} allowedRoles={['Admin', 'Student', 'interviewer']} />} />
+        <Route path="/Schedule" element={<PrivateRoute element={<Schedule />} allowedRoles={['Admin', 'Student', 'Interviewer']} />} />
         <Route path="/login/interviewer" element={<InterviewerLogin />} />
-        <Route path="/login/interviewer/schedules" element={<PrivateRoute element={<InterviewerIntervieweSchedules />} allowedRoles={['interviewer']} />} />
-        <Route path="/login/interviewer/profile" element={<PrivateRoute element={<InterviwerPorfile />} allowedRoles={['interviewer']} />} />
-        <Route path="/eval" element={<PrivateRoute element={<StudentEvaluationForm />} allowedRoles={['Admin', 'interviewer']} />} />
+        <Route path="/login/interviewer/schedules" element={<PrivateRoute element={<InterviewerIntervieweSchedules />} allowedRoles={['Interviewer']} />} />
+        <Route path="/login/interviewer/profile" element={<PrivateRoute element={<InterviwerPorfile />} allowedRoles={['Interviewer']} />} />
+        <Route path="/eval" element={<PrivateRoute element={<StudentEvaluationForm />} allowedRoles={['Admin', 'Interviewer']} />} />
         <Route path="/FormBase64" element={<PrivateRoute element={<FormBase64 />} allowedRoles={['Admin']} />} />
         <Route path="/all-users" element={<AllUsers />} />
         <Route path="/load" element={<Loader />} />
