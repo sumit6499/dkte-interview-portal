@@ -11,7 +11,7 @@ const DropDownProfile = ({ profileLink, isAdmin }) => {
     const UserName = useSelector(selectCurrentName);
     const timeoutRef = useRef(null);
     const id = useSelector(selectCurrentRole)
-    console.log("id is ",id)
+    console.log("id is ", id)
     const logout = () => {
         dispatch(logOut());
         navigate("/");
@@ -36,11 +36,11 @@ const DropDownProfile = ({ profileLink, isAdmin }) => {
         }, 3000);
     };
     let isclick = true;
-    
-    const ProfileClicked = () =>{
+
+    const ProfileClicked = () => {
         isclick = !isclick;
     }
-console.log("the name is ",UserName)
+    console.log("the name is ", UserName)
     return (
         <div className="relative" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} onClick={ProfileClicked()}>
             <button className="flex items-center text-white focus:outline-none">
@@ -50,14 +50,20 @@ console.log("the name is ",UserName)
                     <path fillRule="evenodd" d="M6.293 7.293a1 1 0 011.414 1.414L10 10.414l2.293-2.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clipRule="evenodd" />
                 </svg>
             </button>
-            {(isOpen||isclick) && (
+            {isAdmin ? (isOpen || isclick) && (
+                <div className="absolute top-0 left-20 bottom-0 mt-2 py-2 w-48 bg-white rounded shadow-lg z-10">
+                    <a href="#" id="logoutsyb" className={`block px-4 py-2 text-gray-800 bg-gray-200 z-40`} onClick={logout}>Logout</a>
+                </div>
+            ) : (isOpen || isclick) && (
                 <div className="absolute right-0 mt-2 py-2 w-48 bg-white rounded shadow-lg z-10">
-                    {!isAdmin ? <a href="#" className="block px-4 py-2 text-gray-800 hover:bg-gray-200" onClick={Profile}>Profile</a> : null}
-                    <a href="#" id="logoutsyb"className="block px-4 py-2 text-gray-800 hover:bg-gray-200 " onClick={logout}>Logout</a>
+                    {!isAdmin && <a href="#" className="block px-4 py-2 text-gray-800 hover:bg-gray-200" onClick={Profile}>Profile</a>}
+                    <a href="#" id="logoutsyb" className={`block px-4 py-2 text-gray-800 bg-gray-200 z-40`} onClick={logout}>Logout</a>
                 </div>
             )}
         </div>
     );
 };
+
+
 
 export default DropDownProfile;

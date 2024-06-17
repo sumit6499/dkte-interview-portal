@@ -46,7 +46,7 @@ function NavBar(props) {
 
                 </div>
 
-                {drop && <DropDownProfile profileLink={profileLink} isAdmin={isAdmin}/>}
+                {drop && <DropDownProfile  profileLink={profileLink} isAdmin={isAdmin}/>}
                 <div className="menu block lg:hidden">
                     <MobileNav drops={drop} links={links}  />
                 </div>

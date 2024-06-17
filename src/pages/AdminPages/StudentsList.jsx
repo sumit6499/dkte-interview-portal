@@ -84,10 +84,11 @@ function StudentsList() {
             }
         });
     };
-
+    let val = 30;
     return (
         <>
-            <NavBar links={AdminStudentsNavlinks} drop={true} isAdmin={true} />
+
+            <NavBar links={AdminStudentsNavlinks} drop={true} isAdmin={true} className="z-20" val={val}/>
 
             <div className={`container mx-auto px-4 bg-zinc-100 ${isSticky ? 'sticky-offset' : ''}`}>
                 <header className="py-5">
@@ -104,7 +105,7 @@ function StudentsList() {
                                 className="flex-1 p-2 rounded border border-zinc-300"
                             />
                         </div>
-                        <div className='flex space-x-4'>
+                        <div className='flex space-x-4 z-10'>
                             <select
                                 value={selectedBranch}
                                 onChange={(e) => setSelectedBranch(e.target.value)}

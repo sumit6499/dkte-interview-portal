@@ -22,9 +22,11 @@ const AdminSchedules = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [option, setOption] = useState('today')
+    
     useEffect(() => {
         fetchInterviews('today');
     }, []);
+
 
     const fetchInterviews = async (filterOption) => {
         setLoading(true);
