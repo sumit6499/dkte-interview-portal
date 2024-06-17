@@ -1,9 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
-//load state from local storage
+
+// Load state from local storage
 const loadState = () => {
   try {
     const serializedState = localStorage.getItem("authState");
-    // console.log("Serialized State:", serializedState);
     if (serializedState === null) {
       return undefined;
     }
@@ -12,15 +12,18 @@ const loadState = () => {
     return undefined;
   }
 };
-// save state to local storage
+
+// Save state to local storage
 const saveState = (state) => {
   try {
     const serializedState = JSON.stringify(state);
     localStorage.setItem("authState", serializedState);
   } catch {
-    //  error
+    // Ignore write errors
   }
 };
+
+// Initial state
 const initialState = loadState() || {
   users: [],
   currentUser: null,
@@ -35,6 +38,8 @@ const initialState = loadState() || {
   PRN: null,
   isAuthenticated: false,
 };
+
+// Create slice
 export const authSlice = createSlice({
   name: "auth",
   initialState: initialState,
@@ -65,7 +70,6 @@ export const authSlice = createSlice({
       state.Day = Day;
       state.StartTime = StartTime;
       state.EndTime = EndTime;
-
       state.Role = Role;
       state.isAuthenticated = true;
 
@@ -112,12 +116,17 @@ export const authSlice = createSlice({
       state.Dept = null;
       state.PRN = null;
       state.isAuthenticated = false;
-      saveState(state);
+
+      // Clear the local storage
+      localStorage.removeItem("authState");
     },
   },
 });
+
 export const { authenticate, setUserInfo, logOut } = authSlice.actions;
 export default authSlice.reducer;
+
+// Selectors
 export const selectCurrentUser = (state) => state.auth.currentUser;
 export const selectCurrentToken = (state) => state.auth.token;
 export const selectCurrentUid = (state) => state.auth.Uid;
@@ -129,6 +138,7 @@ export const selectCurrentEndTime = (state) => state.auth.EndTime;
 export const selectCurrentDept = (state) => state.auth.Dept;
 export const selectCurrentPRN = (state) => state.auth.PRN;
 export const selectAllUsers = (state) => state.auth.users;
+
 export const setUsers = (users) => {
   console.log("Dispatching setUsers action with users:", users);
   return {
