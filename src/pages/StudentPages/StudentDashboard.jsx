@@ -5,11 +5,11 @@ import { Pie, Bar } from 'react-chartjs-2';
 import { Chart, ArcElement } from 'chart.js';
 import InterviewItem from '@/components/ui/InterviewItem';
 import { StudentDashboardNavlinks } from '@/components/variables/formVariables';
-import { SampleBarGraph } from '@/assets/index.js';
 import { registerables } from 'chart.js';
 import { useSelector } from 'react-redux';
 import { selectAllUsers, selectCurrentToken, selectCurrentUid, selectCurrentUser } from '@/redux/authSlice';
 import { BASE_URL } from '@/api';
+import {ToastContainer,toast} from 'react-toastify'
 Chart.register(...registerables);
 Chart.register(ArcElement);
 
@@ -45,7 +45,7 @@ const BarGraph = ({ interviews }) => {
         }
     };
     if (interviews.length === 0) {
-        console.log("Empty re baba");
+        // console.log("Empty re baba");
     }
 
     useEffect(() => {
@@ -53,8 +53,13 @@ const BarGraph = ({ interviews }) => {
             try {
                 const scoresPromises = interviews.map(async (interview) => {
                     const feedbackData = await fetchFeedBack(interview.id);
-                    const sum = feedbackData.apperance + feedbackData.communication + feedbackData.behaviour + feedbackData.technical;
-                    return sum;
+                    if (feedbackData) {
+                        const sum = feedbackData.apperance + feedbackData.communication + feedbackData.behaviour + feedbackData.technical;
+                        return sum;
+                    } else {
+                        return 0; // Handle cases where feedbackData is null
+                    }
+                   
                 });
                 const scores = await Promise.all(scoresPromises);
                 setTotalScores(scores);
@@ -70,7 +75,7 @@ const BarGraph = ({ interviews }) => {
 
     if (loading) return <div>Loading...</div>;
     if (error) {
-        console.log("The error is ", error);
+        // console.log("The error is ", error);
         return <div>Error loading data</div>;
     }
 
@@ -111,6 +116,7 @@ const BarGraph = ({ interviews }) => {
 
 const CircleChart = (props) => {
     const { interview, feedbackData } = props;
+    console.log(feedbackData)
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const token = useSelector(selectCurrentToken);
@@ -152,7 +158,7 @@ const CircleChart = (props) => {
         return (
             <div className="w-full md:w-1/2 bg-white p-4 shadow-lg" style={{ height: '50%' }}>
                 <h2 className="font-semibold text-zinc-800">Chart</h2>
-                {/* <Pie data={data} /> */}
+                <Pie data={data} />
             </div>
         )
     }
@@ -202,7 +208,7 @@ const InterviewsList = ({ interviews, onPerformanceClick, feedbackData }) => {
             <h2 className="font-semibold text-zinc-800 mb-4">Interviews List</h2>
             <ul>
                 {interviews.map((interview, index) => (
-                    <InterviewItem key={index} interview={interview} onPerformanceClick={handlePerformanceClick} feedbackData={feedbackData} />
+                    <InterviewItem key={index} interview={interview} onPerformanceClick={handlePerformanceClick} feedbackData={feedbackData} toast={toast}/>
                 ))}
             </ul>
         </div>
@@ -233,11 +239,12 @@ const StudentDashboard = () => {
             if (Array.isArray(response.data.data)) {
                 setInterviews(response.data.data);
             } else {
-                console.log("The response data is " + response.data);
+                // console.log("The response data is " + response.data);
                 console.error("Invalid response format :", response);
                 setInterviews([]);
             }
         } catch (error) {
+            toast.error("Error fetching interviews")
             console.error("Error fetching interviews:", error);
             setInterviews([]);
         }
@@ -261,15 +268,16 @@ const StudentDashboard = () => {
                 }
             });
             const data = response.data;
-            console.log("feedback data is", data)
         }
         catch (error) {
             console.log(error);
+            toast.error("Internal server error please try again later")
         }
     }
     return (
         <>
             <NavBar links={StudentDashboardNavlinks} profileLink={profileLink} drop={drop} />
+            <ToastContainer/>
             <div className="bg-zinc-100">
                 <div className="container mx-auto px-4">
                     <WelcomeMessage />

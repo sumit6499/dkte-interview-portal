@@ -37,7 +37,7 @@ function StudentLogin() {
             if (response.data) {
                 dispatch(authenticate(true));
                 dispatch(setUserInfo({ user: data, token, Uid: studentId, Name: name, Role: role }));
-                navigate('/login/student/profile');
+                navigate('/login/student/studentHome');
             } else {
                 setUserExists(false);
             }

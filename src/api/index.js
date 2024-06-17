@@ -34,11 +34,9 @@ API.interceptors.request.use((req) => {
 export const studentLogin = async (formData) =>
   await API.post("students/login", formData);
 
-export const studentSignUp = async (formData) =>{
-  
-  await API.post("students/signup", formData,options);
+export const studentSignUp = async (formData) =>
+    await API.post("students/signup", formData,options);
 
-}
 
 export const adminLogin = async (formData) =>
   await API.post("admin/login", formData);

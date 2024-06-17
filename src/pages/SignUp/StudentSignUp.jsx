@@ -39,9 +39,11 @@ function StudentSignUp() {
             setStage(2);
         } else if (stage === 2) {
             try {
-                console.log(formData)
+                
                 const response = await studentSignUp(formData)
-                const { data, token } = response.data;
+                console.log(response)
+                // eslint-disable-next-line no-unsafe-optional-chaining
+                const { data, token } = response?.data;
                 const { id: studentId, name, role, PRN, dept } = data;
                 const stdAuthToken = token;
 
@@ -52,7 +54,7 @@ function StudentSignUp() {
                     const userData = { user: data, token: stdAuthToken, Uid: studentId, Name: name, Role: role, Dept: dept, PRN: PRN };
                     dispatch(authenticate(true));
                     dispatch(setUserInfo(userData));
-                    toast.success('Signup Successful!', { position: toast.POSITION.TOP_CENTER });
+                    toast.success('Signup Successful!');
                     navigate("/login/student");
                 }
             } catch (error) {
