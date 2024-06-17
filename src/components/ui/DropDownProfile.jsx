@@ -2,15 +2,16 @@ import React, { useState, useRef } from "react";
 import { MaleUser } from '@/assets/index';
 import { useNavigate } from "react-router";
 import { useSelector, useDispatch } from "react-redux";
-import { selectCurrentName, logOut } from "@/redux/authSlice";
-
+import { selectCurrentName, logOut, selectCurrentUid, selectCurrentRole } from "@/redux/authSlice";
+import '@/App.css';
 const DropDownProfile = ({ profileLink, isAdmin }) => {
     const [isOpen, setIsOpen] = useState(false);
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const UserName = useSelector(selectCurrentName);
     const timeoutRef = useRef(null);
-
+    const id = useSelector(selectCurrentRole)
+    console.log("id is ",id)
     const logout = () => {
         dispatch(logOut());
         navigate("/");
@@ -34,9 +35,14 @@ const DropDownProfile = ({ profileLink, isAdmin }) => {
             setIsOpen(false);
         }, 3000);
     };
-
+    let isclick = true;
+    
+    const ProfileClicked = () =>{
+        isclick = !isclick;
+    }
+console.log("the name is ",UserName)
     return (
-        <div className="relative" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+        <div className="relative" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} onClick={ProfileClicked()}>
             <button className="flex items-center text-white focus:outline-none">
                 <img src={MaleUser} alt="Profile" className="h-8 w-8 rounded-full" />
                 <span className="ml-2">{UserName}</span>
@@ -44,10 +50,10 @@ const DropDownProfile = ({ profileLink, isAdmin }) => {
                     <path fillRule="evenodd" d="M6.293 7.293a1 1 0 011.414 1.414L10 10.414l2.293-2.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clipRule="evenodd" />
                 </svg>
             </button>
-            {isOpen && (
+            {(isOpen||isclick) && (
                 <div className="absolute right-0 mt-2 py-2 w-48 bg-white rounded shadow-lg z-10">
                     {!isAdmin ? <a href="#" className="block px-4 py-2 text-gray-800 hover:bg-gray-200" onClick={Profile}>Profile</a> : null}
-                    <a href="#" className="block px-4 py-2 text-gray-800 hover:bg-gray-200" onClick={logout}>Logout</a>
+                    <a href="#" id="logoutsyb"className="block px-4 py-2 text-gray-800 hover:bg-gray-200 " onClick={logout}>Logout</a>
                 </div>
             )}
         </div>

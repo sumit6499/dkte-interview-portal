@@ -25,20 +25,20 @@ import FormBase64 from './components/ui/form64';
 import AllUsers from './components/Allusers';
 import Loader from './components/ui/loading';
 import { useEffect } from 'react';
+import PrivateRoute from './components/services/private';
+// const PrivateRoute = ({ element }) => {
+//   const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
+//   const navigate = useNavigate();
 
-const PrivateRoute = ({ element }) => {
-  const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
-  const navigate = useNavigate();
+//   useEffect(() => {
+//     if (!isAuthenticated) {
+//       console.log("login karo");
+//       navigate('/login');
+//     }
+//   }, [isAuthenticated, navigate]);
 
-  useEffect(() => {
-    if (!isAuthenticated) {
-      console.log("login karo");
-      navigate('/login');
-    }
-  }, [isAuthenticated, navigate]);
-
-  return isAuthenticated ? element : null;
-};
+//   return isAuthenticated ? element : null;
+// };
 function App() {
   return (
     <Router>
@@ -51,21 +51,21 @@ function App() {
         <Route path="/signup/student" element={<StudentSignUp />} />
         <Route path="/signup/admin" element={<AdminSignUp />} />
 
-        <Route path="/login/admin/students" element={<StudentsList />}  />
-        <Route path="/login/admin/adminschedules" element={<PrivateRoute element={<AdminSchedules />} />} />
-        <Route path="/login/admin/interviewschedules" element={<PrivateRoute element={<AdminInterviewSchedule />} />} />
+        <Route path="/login/admin/students" element={<PrivateRoute element={<StudentsList />} allowedRoles={['Admin']} />} />
+        <Route path="/login/admin/adminschedules" element={<PrivateRoute element={<AdminSchedules />} allowedRoles={['Admin']} />} />
+        <Route path="/login/admin/interviewschedules" element={<PrivateRoute element={<AdminInterviewSchedule />} allowedRoles={['Admin']} />} />
 
-        <Route path="/login/student/studenthome" element={<PrivateRoute element={<StudentHome />} />} />
-        <Route path="/login/student/profile" element={<PrivateRoute element={<UserProfile />} />} />
-        <Route path="/login/student/dashboard" element={<PrivateRoute element={<StudentDashboard />} />} />
-        
+        <Route path="/login/student/studenthome" element={<PrivateRoute element={<StudentHome />} allowedRoles={['Student']} />} />
+        <Route path="/login/student/profile" element={<PrivateRoute element={<UserProfile />} allowedRoles={['Student']} />} />
+        <Route path="/login/student/dashboard" element={<PrivateRoute element={<StudentDashboard />} allowedRoles={['Student']} />} />
+
         <Route path="/signup/interviewer" element={<InterviewerSignUp />} />
-        <Route path="/Schedule" element={<PrivateRoute element={<Schedule />} />} />
+        <Route path="/Schedule" element={<PrivateRoute element={<Schedule />} allowedRoles={['Admin', 'Student', 'interviewer']} />} />
         <Route path="/login/interviewer" element={<InterviewerLogin />} />
-        <Route path="/login/interviewer/schedules" element={<PrivateRoute element={<InterviewerIntervieweSchedules />} />} />
-        <Route path="/login/interviewer/profile" element={<PrivateRoute element={<InterviwerPorfile />} />} />
-        <Route path="/eval" element={<PrivateRoute element={<StudentEvaluationForm />} />} />
-        <Route path="/FormBase64" element={<PrivateRoute element={<FormBase64 />} />} />
+        <Route path="/login/interviewer/schedules" element={<PrivateRoute element={<InterviewerIntervieweSchedules />} allowedRoles={['interviewer']} />} />
+        <Route path="/login/interviewer/profile" element={<PrivateRoute element={<InterviwerPorfile />} allowedRoles={['interviewer']} />} />
+        <Route path="/eval" element={<PrivateRoute element={<StudentEvaluationForm />} allowedRoles={['Admin', 'interviewer']} />} />
+        <Route path="/FormBase64" element={<PrivateRoute element={<FormBase64 />} allowedRoles={['Admin']} />} />
         <Route path="/all-users" element={<AllUsers />} />
         <Route path="/load" element={<Loader />} />
 
@@ -74,5 +74,7 @@ function App() {
     </Router>
   );
 }
+
+
 
 export default App;

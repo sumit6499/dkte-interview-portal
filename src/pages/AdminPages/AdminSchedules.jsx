@@ -4,10 +4,12 @@ import '@/App.css'
 import Schedule from '@/components/ui/Schedules';
 import { AdminSchedulesNavlinks } from '@/components/variables/formVariables';
 import axios from 'axios';
-import { selectCurrentToken } from '@/redux/authSlice';
+import { selectCurrentToken, selectCurrentUid } from '@/redux/authSlice';
 import { BASE_URL } from '@/api';
 import { useSelector } from 'react-redux';
 const AdminSchedules = () => {
+
+    const id = useSelector(selectCurrentUid)
     const drop = true;
     const isAdmin = true;
     const token = useSelector(selectCurrentToken)
@@ -24,12 +26,13 @@ const AdminSchedules = () => {
         setError(null);
 
         try {
-            const response = await axios.get(`${BASE_URL}/api/v1/auth/interview/:id/all?filter=${filterOption}`, {
+            const response = await axios.get(`${BASE_URL}/api/v1/auth/interview/${id}/all?filter=${filterOption}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
             });
             if (response.data.success && Array.isArray(response.data.data)) {
+                console.log("The response is "+response.data.data)
                 setInterviews(response.data.data || []);
             } else {
                 console.error('Fetched data is not an array:', response.data);
@@ -51,7 +54,9 @@ const AdminSchedules = () => {
             console.error('Error fetching interviews:', error);
         }
     };
+
     console.log("interviews", interviews)
+
     return (
         <>
             <NavBar links={AdminSchedulesNavlinks} drop={drop} isAdmin={isAdmin} />
