@@ -5,6 +5,12 @@ const url = "http://localhost:3000";
 
 export const BASE_URL = url;
 
+const options={
+  headers:{
+    "Content-Type":"multipart/form-data"
+  }
+}
+
 const API = axios.create({
   baseURL: url,
 });
@@ -28,19 +34,22 @@ API.interceptors.request.use((req) => {
 export const studentLogin = async (formData) =>
   await API.post("students/login", formData);
 
-export const studentSignUp = async (formData) =>
-  await API.post("students/signup", formData);
+export const studentSignUp = async (formData) =>{
+  
+  await API.post("students/signup", formData,options);
+
+}
 
 export const adminLogin = async (formData) =>
   await API.post("admin/login", formData);
 
 export const adminSignUp = async (formData) =>
-  await API.post("admin/signup", formData);
+  await API.post("admin/signup", formData,options);
 
 export const interviewerLogin = async (formData) =>
   await API.post("interviewer/login", formData);
 
 export const interviewerSignUp = async (formData) =>
-  await API.post("interviewer/signup", formData);
+  await API.post("interviewer/signup", formData,options);
 
 

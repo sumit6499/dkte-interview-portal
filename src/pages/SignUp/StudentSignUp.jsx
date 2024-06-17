@@ -39,6 +39,7 @@ function StudentSignUp() {
             setStage(2);
         } else if (stage === 2) {
             try {
+                console.log(formData)
                 const response = await studentSignUp(formData)
                 const { data, token } = response.data;
                 const { id: studentId, name, role, PRN, dept } = data;
