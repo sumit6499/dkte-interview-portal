@@ -132,30 +132,26 @@ const Schedule = ({
             {!isStudentSchedules ? (
                 isSmallScreen ? (
                     <div className="mt-20 bg-zinc-100" id="scheduleAdInt">
-                        {loading && <p>Loading...</p>}
-                        {error && <p>{error}</p>}
-                        {!loading && !error && interviews.length === 0 && <p>No interviews available.</p>}
+                        {loading && <p className="text-center text-lg font-semibold">Loading...</p>}
+                        {error && <p className="text-center text-lg text-red-500">{error}</p>}
+                        {!loading && !error && interviews.length === 0 && <p className="text-center text-lg">No interviews available.</p>}
                         {interviews.length > 0 && interviews.map((interview, index) => {
                             const student = interviews[index];
                             return (
-                                <div key={interview.id} className="p-4 rounded-lg shadow-md mb-4 border-zinc-200 ">
-                                    <div className="flex-col  items-center justify-between space-x-4 py-2 border-b border-zinc-200 h-6">
-
-                                        <div className="flex items-center space-x-6 mb-2">
-                                            <img src={MaleUser} alt="Profile" className="rounded-full h-8" />
-                                            <div className="flex space-x-3 ">
-                                                
-                                                <p className="text-sm text-zinc-600 ">{handleStudentName(student.studentId)}</p>
+                                <div key={interview.id} className="p-4 rounded-lg shadow-md mb-4 bg-white border border-zinc-200">
+                                    <div className="flex flex-col items-start space-y-2 pb-2 border-b border-zinc-200 mb-2">
+                                        <div className="flex items-center space-x-4 mb-2">
+                                            <img src={MaleUser} alt="Profile" className="rounded-full h-10 w-10" />
+                                            <div className="flex flex-col space-y-1">
+                                                <p className="text-base text-zinc-800 font-semibold">{handleStudentName(student.studentId)}</p>
                                                 <p className="text-sm text-zinc-600">{handleStudentPRN(student.studentId)}</p>
                                                 <p className="text-sm text-zinc-600">{handleStudentDept(student.studentId)}</p>
                                                 <p className="text-sm text-zinc-600">{handleDate(student.date)}</p>
                                                 <p className="text-sm text-zinc-600">Starts At {handleTime(student.startedAt)}</p>
                                             </div>
                                         </div>
-                                      
-                                        
                                     </div>
-                                    <div className="flex justify-center mt-5 px-4 ">
+                                    <div className="flex justify-center mt-4">
                                         <button onClick={async () => {
                                             const linkToJoin = student.link;
                                             window.open(linkToJoin, '_blank');
@@ -166,7 +162,7 @@ const Schedule = ({
                                                     });
                                                 }, 500);
                                             }
-                                        }} className="bg-blue-500 p-1.5 text-white px-4 py-0.6 rounded flex justify-center">
+                                        }} className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded transition-colors duration-200 ease-in-out">
                                             Join Link
                                         </button>
                                     </div>
@@ -174,7 +170,9 @@ const Schedule = ({
                             );
                         })}
                     </div>
-                ) : (
+                ) : 
+
+                (
                     <div className="mt-20 bg-zinc-100" id="scheduleAdInt">
                         {loading && <p>Loading...</p>}
                         {error && <p>{error}</p>}
