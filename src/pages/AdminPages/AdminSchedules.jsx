@@ -62,7 +62,7 @@ const AdminSchedules = () => {
 
     const handleFilterChange = async (option) => {
         try {
-            await fetchInterviews(option);
+             fetchInterviews(option);
         } catch (error) {
             console.error('Error fetching interviews:', error);
         }

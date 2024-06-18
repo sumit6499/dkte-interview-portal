@@ -34,10 +34,17 @@ const DropDownProfile = ({ profileLink, isAdmin }) => {
             setIsOpen(false);
         }, 3000);
     };
-    let isclick = true;
+    let isClick = true;
 
     const ProfileClicked = () => {
-        isclick = !isclick;
+        if(isClick)
+            {
+                setIsOpen(true);
+                isClick = false;
+            }
+            else{
+                setIsOpen(false);
+            }
     }
     return (
         <div className="relative" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} onClick={ProfileClicked()}>
@@ -48,7 +55,7 @@ const DropDownProfile = ({ profileLink, isAdmin }) => {
                     <path fillRule="evenodd" d="M6.293 7.293a1 1 0 011.414 1.414L10 10.414l2.293-2.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clipRule="evenodd" />
                 </svg>
             </button>
-            {isAdmin ? (isOpen || isclick) && (
+            {isAdmin ? (isOpen) && (
                 <div className="absolute top-0 left-20 w-40 bg-white rounded-md shadow-lg z-10 ">
                     <a
                         href="#"
@@ -59,7 +66,7 @@ const DropDownProfile = ({ profileLink, isAdmin }) => {
                         Logout
                     </a>
                 </div>
-            ) : (isOpen || isclick) && (
+            ) : (isOpen) && (
                 <div className="absolute right-0 mt-2 py-2 w-48 bg-white rounded shadow-lg z-10">
                         {!isAdmin && <a href="#" className="block px-4 py-2 text-gray-800 hover:bg-green-500 transition duration-300 ease-in-out transform hover:scale-105 rounded-md " onClick={Profile}>Profile</a>}
                         <a

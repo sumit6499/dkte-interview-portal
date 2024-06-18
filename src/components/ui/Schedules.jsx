@@ -16,13 +16,14 @@ const Schedule = ({
     stdError,
     isAdmin
 }) => {
+  
     const users = useSelector(selectAllUsers);
     const token = useSelector(selectCurrentToken);
     const navigate = useNavigate();
     const [selectedOption, setSelectedOption] = useState('today');
     const [error, setError] = useState(null);
     const [isSmallScreen, setIsSmallerScreen] = useState(false);
-
+    const [isPrevious,setIsPrevious] = useState(false);
     function handleStudentName(studentId) {
         let Name;
         users.forEach((user) => {
@@ -55,11 +56,20 @@ const Schedule = ({
 
     const handleFilterChange = (option) => {
         setSelectedOption(option);
+      
+        console.log("the changes is ",selectedOption)
         if (onFilterChange) {
             onFilterChange(option);
         }
     };
+    const handleHistory =()=>{
 
+        setIsPrevious(true);
+        handleFilterChange('previous');
+       
+        console.log("the isprevious is", isPrevious)
+    }
+    
     const handleDate = (Fulldate) => {
         const today = new Date(Fulldate);
         const dd = String(today.getDate()).padStart(2, '0');
@@ -93,6 +103,8 @@ const Schedule = ({
         return () => window.removeEventListener("resize", checkScreenSize);
     }, []);
 
+   
+
     return (
         <div className="flex-1 p-10 justify-center items-center bg-zinc-100">
             <div className="flex justify-center items-center">
@@ -111,7 +123,7 @@ const Schedule = ({
                     </button>
                     <button
                         className={`bg-yellow-400 text-white px-12 py-3 rounded m-2 ${selectedOption === 'previous' && 'bg-yellow-300'}`}
-                        onClick={() => handleFilterChange('previous')}
+                        onClick={() => handleHistory()}
                     >
                         Interviews History
                     </button>
@@ -210,7 +222,7 @@ const Schedule = ({
                                             <img src={MaleUser} alt="Profile" className="rounded-full h-10 w-10" />
                                             <div className="flex flex-col space-y-1">
                                                 <p className="text-base text-zinc-800 font-semibold">{handleDate(interview.date)}</p>
-                                                {selectedOption === "previous" ? (
+                                                {isPrevious ? (
                                                     <p className="text-sm text-zinc-600">Started At {handleTime(interview.startedAt)}</p>
                                                 ) : (
                                                     <p className="text-sm text-zinc-600">Starts At {handleTime(interview.startedAt)}</p>
@@ -219,7 +231,7 @@ const Schedule = ({
                                         </div>
                                     </div>
                                     <div className="flex justify-center mt-4">
-                                        {selectedOption === "previous" ? (
+                                        {isPrevious  ? (
                                             <button onClick={() => {
                                                 navigate('/login/student/dashboard', {
                                                     state: { interview }
@@ -229,6 +241,7 @@ const Schedule = ({
                                             </button>
                                         ) : (
                                             <button onClick={() => {
+                                                console.log("THe previous is ",isPrevious)
                                                 const linkToJoin = interview.link;
                                                 window.open(linkToJoin, '_blank');
                                             }} className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded transition-colors duration-200 ease-in-out">
@@ -253,14 +266,15 @@ const Schedule = ({
                                             <img src={MaleUser} alt="Profile" className="rounded-full h-6" />
                                             <div className="flex space-x-6">
                                                 <p className="text-sm text-zinc-600">{handleDate(interview.date)}</p>
-                                                {selectedOption === "previous" ? (
+                                                {isPrevious ? (
                                                     <p className="text-sm text-zinc-600">Started At {handleTime(interview.startedAt)}</p>
                                                 ) : (
                                                     <p className="text-sm text-zinc-600">Starts At {handleTime(interview.startedAt)}</p>
                                                 )}
                                             </div>
                                         </div>
-                                        {selectedOption === "previous" ? (
+                                        {isPrevious ? (
+                                            
                                             <button onClick={() => {
                                                 navigate('/login/student/dashboard', {
                                                     state: { interview }
@@ -270,6 +284,7 @@ const Schedule = ({
                                             </button>
                                         ) : (
                                             <button onClick={() => {
+                                                    console.log("the previiuys us ", isPrevious);
                                                 const linkToJoin = interview.link;
                                                 window.open(linkToJoin, '_blank');
                                             }} className="bg-blue-500 text-white pb-1 mb-3 px-2 py-0.6 rounded">
