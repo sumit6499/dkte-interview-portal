@@ -29,7 +29,7 @@ const [loading,setLoading] = useState(false);
     const handleSubmit = async (e) => {
         setLoading(true);
         e.preventDefault();
-        console.log("The form is ",formValues)
+        // console.log("The form is ",formValues)
         try {
             const response = await studentLogin(formValues)
             const { data, token } = response.data;

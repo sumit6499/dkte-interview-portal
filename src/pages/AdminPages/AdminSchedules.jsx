@@ -62,7 +62,7 @@ const AdminSchedules = () => {
 
     const handleFilterChange = async (option) => {
         try {
-             fetchInterviews(option);
+            await fetchInterviews(option);
         } catch (error) {
             console.error('Error fetching interviews:', error);
         }
@@ -83,7 +83,8 @@ const AdminSchedules = () => {
                             onFilterChange={handleFilterChange}
                             loading1={loading}
                             error={error}
-                        isAdmin={isAdmin}
+                            isAdmin={isAdmin}
+                            
                         />}
                 </div>
             </div>

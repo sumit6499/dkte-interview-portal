@@ -56,6 +56,7 @@ const StudentHome = () => {
         try {
             await fetchInterviews(option);
             setTimeOption(option);
+            console.log("here there option is ",TimeOption)
         } catch (error) {
             console.error('Error fetching interviews:', error);
         }
@@ -73,7 +74,9 @@ const StudentHome = () => {
                             isStudentSchedules={true}
                             studentsInterviews={studentsInterviews }
                             stdLoading={stdLoading}
-                            stdError={stdError} />
+                            stdError={stdError} 
+                        TimeOption={TimeOption}
+                        />
                     }
                 </div>
             </div>)}

@@ -11,12 +11,10 @@ const Schedule = ({
     isStudentSchedules,
     studentsInterviews = [],
     loading,
-    error1,
-    stdLoading,
-    stdError,
-    isAdmin
+    TimeOption,
+    isAdmin,
 }) => {
-  
+  console.log("tiomner ooption sis ",TimeOption)
     const users = useSelector(selectAllUsers);
     const token = useSelector(selectCurrentToken);
     const navigate = useNavigate();
@@ -58,18 +56,25 @@ const Schedule = ({
         setSelectedOption(option);
       
         console.log("the changes is ",selectedOption)
-        if (onFilterChange) {
+        if (onFilterChange && option!='previous') {
             onFilterChange(option);
         }
+        else if(option=="previous")
+            {
+                console.log("hi i m here dear ")
+                setIsPrevious(true);
+            }
+        console.log("the isprevious is in fuction", isPrevious)
     };
-    const handleHistory =()=>{
-
+    function PreviousChange() {
         setIsPrevious(true);
-        handleFilterChange('previous');
-       
-        console.log("the isprevious is", isPrevious)
     }
-    
+    const handleHistory =()=>{
+        PreviousChange();
+        handleFilterChange('previous');
+        console.log("the isprevious is in fuction in hisotry ", isPrevious)
+    }
+   
     const handleDate = (Fulldate) => {
         const today = new Date(Fulldate);
         const dd = String(today.getDate()).padStart(2, '0');
@@ -102,8 +107,20 @@ const Schedule = ({
         window.addEventListener("resize", checkScreenSize);
         return () => window.removeEventListener("resize", checkScreenSize);
     }, []);
+    useEffect(() => {
+        if(isPrevious)
+            {
+                // onFilterChange('previous');
+                // setIsPrevious(false);
+            console.log("the isprevious is in effect", isPrevious)///gives true
+            onFilterChange('previous');
+            console.log("the isprevious is in effect after", isPrevious)
+            }
+    }, [isPrevious]);
 
-   
+    console.log("tiomner ooption sis after", TimeOption)
+
+console.log("the isprevious outside",isPrevious)//gives false why?
 
     return (
         <div className="flex-1 p-10 justify-center items-center bg-zinc-100">
@@ -123,7 +140,9 @@ const Schedule = ({
                     </button>
                     <button
                         className={`bg-yellow-400 text-white px-12 py-3 rounded m-2 ${selectedOption === 'previous' && 'bg-yellow-300'}`}
-                        onClick={() => handleHistory()}
+                        onClick={() => handleFilterChange('previous')
+                            
+                        }
                     >
                         Interviews History
                     </button>
@@ -222,7 +241,7 @@ const Schedule = ({
                                             <img src={MaleUser} alt="Profile" className="rounded-full h-10 w-10" />
                                             <div className="flex flex-col space-y-1">
                                                 <p className="text-base text-zinc-800 font-semibold">{handleDate(interview.date)}</p>
-                                                {isPrevious ? (
+                                                {TimeOption == "previous" ? (
                                                     <p className="text-sm text-zinc-600">Started At {handleTime(interview.startedAt)}</p>
                                                 ) : (
                                                     <p className="text-sm text-zinc-600">Starts At {handleTime(interview.startedAt)}</p>
@@ -231,7 +250,7 @@ const Schedule = ({
                                         </div>
                                     </div>
                                     <div className="flex justify-center mt-4">
-                                        {isPrevious  ? (
+                                        {TimeOption == "previous"  ? (
                                             <button onClick={() => {
                                                 navigate('/login/student/dashboard', {
                                                     state: { interview }
@@ -266,14 +285,14 @@ const Schedule = ({
                                             <img src={MaleUser} alt="Profile" className="rounded-full h-6" />
                                             <div className="flex space-x-6">
                                                 <p className="text-sm text-zinc-600">{handleDate(interview.date)}</p>
-                                                {isPrevious ? (
+                                                {TimeOption == "previous" ? (
                                                     <p className="text-sm text-zinc-600">Started At {handleTime(interview.startedAt)}</p>
                                                 ) : (
                                                     <p className="text-sm text-zinc-600">Starts At {handleTime(interview.startedAt)}</p>
                                                 )}
                                             </div>
                                         </div>
-                                        {isPrevious ? (
+                                        {TimeOption =="previous" ? (
                                             
                                             <button onClick={() => {
                                                 navigate('/login/student/dashboard', {
@@ -284,7 +303,7 @@ const Schedule = ({
                                             </button>
                                         ) : (
                                             <button onClick={() => {
-                                                    console.log("the previiuys us ", isPrevious);
+                                                    console.log("the TimeOption us ", TimeOption);
                                                 const linkToJoin = interview.link;
                                                 window.open(linkToJoin, '_blank');
                                             }} className="bg-blue-500 text-white pb-1 mb-3 px-2 py-0.6 rounded">
