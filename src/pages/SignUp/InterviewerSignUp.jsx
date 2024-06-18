@@ -97,6 +97,9 @@ const InterviewerSignUp = () => {
             if (response.data) {
                 dispatch(authenticate(true));
                 dispatch(setUserInfo({ user: data, token, Uid: interviewerId, Name: name, Role: role, Day: day, StartTime: startTime, EndTime: endTime }));
+               
+                toast.success("SingUp Successful")
+                setLoading(false)
                 navigate('/login/student/profile');
             } else {
                 setUserExists(false);

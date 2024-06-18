@@ -11,7 +11,7 @@ import axios from 'axios';
 import Loader from '@/components/ui/loading';
 const InterviewerIntervieweSchedules = () => {
     const token = useSelector(selectCurrentToken)
-
+const isAdmin = false;
     const drop = true;
     const profileLink = 2;
     const [interviewerLoading, setInterviewerLoading] = useState(true)
@@ -19,7 +19,7 @@ const InterviewerIntervieweSchedules = () => {
     const [interviewersInterviews, setInterviewersInterviews] = useState([])
     const [isInterviewerInterviews, setIsInterviewerInterviews] = useState(true)
     const interviewerId = useSelector(selectCurrentUid);
-    
+
 
     useEffect(() => {
         fetchInterviews('today');
@@ -66,6 +66,7 @@ const InterviewerIntervieweSchedules = () => {
                             stdLoading={interviewerLoading}
                             studentsInterviews={interviewersInterviews}
                             isStudentSchedules={false}
+                            isAdmin={isAdmin}
                         />
                     }
                 </div>

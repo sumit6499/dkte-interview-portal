@@ -139,7 +139,7 @@ const Schedule = ({ interviews = [], onFilterChange, isStudentSchedules, student
                                         window.open(linkToJoin, '_blank');
 
                                         // window.open(ResumeLink, '_blank');
-                                        if (!isAdmin)
+                                        if (isAdmin===false)
                                             {
                                                 console.log("i m in ")
                                             setTimeout(() => {

@@ -46,10 +46,11 @@ function AdminLogin() {
             console.log("adminAuthToken is from local", localStorage.getItem("adminAuthToken"));
             
             if (response.data) {
+                toast.success("Login successful!");
                 console.log("data is",response.data.data)
                 dispatch(authenticate(true));
                 dispatch(setUserInfo({ user: response.data.data,token, Uid: response.data.data.id, Name: response.data.data.name, Role: response.data.data.role }));
-                toast.success("Login successful!");
+                
                 navigate('/login/admin/students');
                 console.log("stored i guess ")
                 
