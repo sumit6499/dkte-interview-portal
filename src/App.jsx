@@ -51,7 +51,7 @@ function App() {
         <Route path="/login/admin" element={<AdminLogin />} />
         <Route path="/signup/student" element={<StudentSignUp />} />
         <Route path="/signup/admin" element={<AdminSignUp />} />
-        <Route path="/login/admin/interviewschedules/CustomAlert" element={<CustomAlert />} />
+        <Route path="/CustomAlert" element={<CustomAlert />} />
 
         <Route path="/login/admin/students" element={<PrivateRoute element={<StudentsList />} allowedRoles={['Admin']} />} />
         <Route path="/login/admin/adminschedules" element={<PrivateRoute element={<AdminSchedules />} allowedRoles={['Admin']} />} />

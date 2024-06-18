@@ -9,6 +9,7 @@ import { StudentProfileNavlinks } from '@/components/variables/formVariables';
 import { useSelector } from 'react-redux';
 import { selectCurrentName, selectCurrentToken, selectCurrentUid } from '@/redux/authSlice';
 import { BASE_URL } from '@/api';
+import { ToastContainer, toast } from 'react-toastify'
 
 const Login = () => {
     //  store user details
@@ -65,7 +66,8 @@ const ProfileDetailsForm = () => {
             if (response.ok) {
                 alert('Profile details updated successfully!');
             } else {
-                alert('Failed to update profile details. Please try again.');
+                console.log("hi ther ")
+                alert("Failed to update profile details. Please try again.");
             }
         } catch (error) {
             console.error('Error updating profile:', error);
@@ -140,7 +142,7 @@ const ProfilePicture = () => {
             formData.append('image', file);
 
             try {
-                // Send the image to the server
+                // image to the server
                 const response = await axios.post('/api/upload', formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
@@ -199,8 +201,13 @@ const UpdateResume = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        const formData = new FormData();
+        if (formData.length==0) {
+            console.log("upload file")
+            alert('Select File');
+        }
         try {
-            const formData = new FormData();
+           
             formData.append('resume', resumeFile);
             console.log("The resumeFile os ", resumeFile)
             console.log("The foprmdata os ", formData)
@@ -218,6 +225,7 @@ const UpdateResume = () => {
             }
         } catch (error) {
             console.error('Error uploading resume: ', error);
+            
             alert('An error occurred while uploading');
         }
     };

@@ -226,7 +226,7 @@ const CircleChart = (props) => {
                 </h2>
             )}
 
-            <div className="h-48 sm:h-64 md:h-72 lg:h-80 xl:h-96 flex justify-center">
+            <div className="h-72 sm:h-96 md:h-80 lg:h-80 xl:h-96 flex justify-center">
                 <Pie data={data} options={options} plugins={[ChartDataLabels]} />
             </div>
         </div>
