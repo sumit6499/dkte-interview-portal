@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import { selectAllUsers, selectCurrentToken } from "@/redux/authSlice";
 import axios from "axios";
 
-const Schedule = ({ interviews = [], onFilterChange, isStudentSchedules, studentsInterviews = [], loading, error1, stdLoading, stdError }) => {
+const Schedule = ({ interviews = [], onFilterChange, isStudentSchedules, studentsInterviews = [], loading, error1, stdLoading, stdError ,isAdmin}) => {
     const users = useSelector(selectAllUsers)
     const token = useSelector(selectCurrentToken);
     const navigate = useNavigate();
@@ -139,14 +139,19 @@ const Schedule = ({ interviews = [], onFilterChange, isStudentSchedules, student
                                         window.open(linkToJoin, '_blank');
 
                                         // window.open(ResumeLink, '_blank');
-                                        setTimeout(() => {
+                                        if (!isAdmin)
+                                            {
+                                                console.log("i m in ")
+                                            setTimeout(() => {
 
-                                            navigate('/eval', {
-                                                state: {
-                                                    interview: interview
-                                                }
-                                            });
-                                        }, 500); // Delay for 500 milliseconds
+                                                navigate('/eval', {
+                                                    state: {
+                                                        interview: interview
+                                                    }
+                                                });
+                                            }, 500); 
+                                            }
+                                      // Delay for 500 milliseconds
                                     }} className="bg-blue-500 text-white pb-1 mb-3 px-2 py-0.6 rounded">
                                         Join Link
                                     </button>

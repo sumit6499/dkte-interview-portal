@@ -4,7 +4,7 @@ import '@/App.css'
 import Schedule from '@/components/ui/Schedules';
 import { AdminSchedulesNavlinks } from '@/components/variables/formVariables';
 import axios from 'axios';
-
+import Loader from '@/components/ui/loading';
 import { selectCurrentToken,selectCurrentUid } from '@/redux/authSlice';
 
 import { BASE_URL } from '@/api';
@@ -69,11 +69,12 @@ const AdminSchedules = () => {
     };
 
     console.log("interviews", interviews)
-
+    
     return (
         <>
             <NavBar links={AdminSchedulesNavlinks} drop={drop} isAdmin={isAdmin} />
             <ToastContainer/>
+            {loading? (<Loader/>):(
             <div className="bg-zinc-100 h-screen">
                 <div className="flex h-screen">
                     {interviews !== null &&
@@ -82,9 +83,11 @@ const AdminSchedules = () => {
                             onFilterChange={handleFilterChange}
                             loading1={loading}
                             error={error}
+                        isAdmin={isAdmin}
                         />}
                 </div>
             </div>
+            )}
         </>
     );
 };

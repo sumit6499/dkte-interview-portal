@@ -26,6 +26,7 @@ import AllUsers from './components/Allusers';
 import Loader from './components/ui/loading';
 import { useEffect } from 'react';
 import PrivateRoute from './components/services/private';
+import CustomAlert from './components/ui/CustomAlert';
 // const PrivateRoute = ({ element }) => {
 //   const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
 //   const navigate = useNavigate();
@@ -50,6 +51,7 @@ function App() {
         <Route path="/login/admin" element={<AdminLogin />} />
         <Route path="/signup/student" element={<StudentSignUp />} />
         <Route path="/signup/admin" element={<AdminSignUp />} />
+        <Route path="/login/admin/interviewschedules/CustomAlert" element={<CustomAlert />} />
 
         <Route path="/login/admin/students" element={<PrivateRoute element={<StudentsList />} allowedRoles={['Admin']} />} />
         <Route path="/login/admin/adminschedules" element={<PrivateRoute element={<AdminSchedules />} allowedRoles={['Admin']} />} />

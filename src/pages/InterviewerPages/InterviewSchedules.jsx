@@ -19,7 +19,7 @@ const InterviewerIntervieweSchedules = () => {
     const [interviewersInterviews, setInterviewersInterviews] = useState([])
     const [isInterviewerInterviews, setIsInterviewerInterviews] = useState(true)
     const interviewerId = useSelector(selectCurrentUid);
-
+    
 
     useEffect(() => {
         fetchInterviews('today');

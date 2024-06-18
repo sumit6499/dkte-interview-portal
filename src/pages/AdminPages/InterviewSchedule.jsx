@@ -6,6 +6,7 @@ import { AdminSchedulesNavlinks, days } from '@/components/variables/formVariabl
 import { useSelector } from 'react-redux';
 import { selectAllUsers, selectCurrentToken,selectCurrentUid } from '@/redux/authSlice';
 import { BASE_URL } from '@/api';
+import CustomAlert from '@/components/ui/CustomAlert';
 function AdminInterviewSchedule() {
     const token = useSelector(selectCurrentToken);
     const facultyID=useSelector(selectCurrentUid);
@@ -36,8 +37,11 @@ function AdminInterviewSchedule() {
     const [interviewers, setInterviewers] = useState([]);
     const [interviewID, setInterviewId] = useState('');
     const [interviewersToDisplay, setInterviewersToDisplay] = useState([])
-    let _id = student.id;
+    const [showAlert, setShowAlert] = useState(false);
+    const [alertMessage, setAlertMessage] = useState('');
 
+    let _id = student.id;
+    console.log("The student id is",_id)
     const handleDateChange = (e) => {
         const selectedDate = e.target.value;
         setDate(selectedDate);
@@ -75,6 +79,14 @@ function AdminInterviewSchedule() {
             }
         }
     }, [isStartTimeSet, isEndTimeSet, startedAt, endsAt, interviewers]);
+    function onClose(){
+        navigate('/login/admin/students');
+    }
+
+    const closeAlert = () => {
+        setShowAlert(false);
+        navigate('/login/admin/students');
+    };
 
 
     useEffect(() => {
@@ -114,11 +126,13 @@ function AdminInterviewSchedule() {
                     Authorization: `Bearer ${token}`
                 }
             });
-            alert('Interview scheduled successfully!');
-            navigate('/login/admin/students');
+            setAlertMessage('Interview scheduled successfully!');
+            setShowAlert(true);
+            
         } catch (error) {
             console.error('Error scheduling interview:', error);
-            alert('Failed to schedule interview. Please try again later.');
+            setAlertMessage('Failed to schedule interview. Please try again later.');
+            setShowAlert(true);
         }
     };
 
@@ -142,14 +156,14 @@ function AdminInterviewSchedule() {
     const handleDayChange = async (day) => {
         setInterviewers([]);
         const data = await fetchInterviewers(day);
-
         setInterviewers(data);
-
     };
 
     return (
         <>
             <NavBar links={AdminSchedulesNavlinks} drop={true} isAdmin={true} />
+            {showAlert ?( <CustomAlert message={alertMessage} onClose={closeAlert} />):(
+
             <div className="text-white mb-10">
                 <div className="max-w-lg mx-auto mt-10 p-6 bg-zinc-800 rounded-lg">
                     <h1 className="text-xl font-bold mb-4 border-b border-zinc-600 pb-2">Schedule Interview</h1>
@@ -237,7 +251,9 @@ function AdminInterviewSchedule() {
                     </div>
                 </div>
             </div>
+            )}
         </>
+        
     );
 }
 
