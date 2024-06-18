@@ -42,8 +42,8 @@ const DropDownProfile = ({ profileLink, isAdmin }) => {
     return (
         <div className="relative" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} onClick={ProfileClicked()}>
             <button className="flex items-center text-white focus:outline-none">
-                <img src={MaleUser} alt="Profile" className="h-10 w-10 rounded-full border-2 border-white" />
-                <span className="ml-2">{UserName}</span>
+                <img src={MaleUser} alt="Profile" className="h-10 w-10 rounded-full border-2 border-white ml-7" />
+                <span className="ml-2 ">{UserName}</span>
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" viewBox="0 0 20 20" fill="currentColor">
                     <path fillRule="evenodd" d="M6.293 7.293a1 1 0 011.414 1.414L10 10.414l2.293-2.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clipRule="evenodd" />
                 </svg>

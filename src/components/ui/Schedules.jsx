@@ -4,9 +4,20 @@ import { useNavigate } from "react-router";
 import { useSelector } from "react-redux";
 import { selectAllUsers, selectCurrentToken } from "@/redux/authSlice";
 import axios from "axios";
+import '@/App.css';
 
-const Schedule = ({ interviews = [], onFilterChange, isStudentSchedules, studentsInterviews = [], loading, error1, stdLoading, stdError ,isAdmin}) => {
-    const users = useSelector(selectAllUsers)
+const Schedule = ({
+    interviews = [],
+    onFilterChange,
+    isStudentSchedules,
+    studentsInterviews = [],
+    loading,
+    error1,
+    stdLoading,
+    stdError,
+    isAdmin
+}) => {
+    const users = useSelector(selectAllUsers);
     const token = useSelector(selectCurrentToken);
     const navigate = useNavigate();
     const [selectedOption, setSelectedOption] = useState('today');
@@ -15,39 +26,43 @@ const Schedule = ({ interviews = [], onFilterChange, isStudentSchedules, student
     const [studentData, setStudentData] = useState([]);
     const [newCombineData, setNewCombineData] = useState([]);
     const [ObtainedData, setObtainedData] = useState([]);
+    const [isSmallScreen, setIsSmallerScreen] = useState(false);
 
     function handleStudentName(studentId) {
         let Name;
-        users.map((user, index) => {
-            if (user.Uid == studentId) {
-                Name = user.Name
+        users.map((user) => {
+            if (user.Uid === studentId) {
+                Name = user.Name;
             }
-        })
+        });
         return Name;
     }
+
     function handleStudentPRN(studentId) {
         let prn;
-        users.map((user, index) => {
-            if (user.Uid == studentId) {
-                prn = user.PRN
+        users.map((user) => {
+            if (user.Uid === studentId) {
+                prn = user.PRN;
             }
-        })
+        });
         return prn;
     }
+
     function handleStudentDept(studentId) {
         let dept;
-        users.map((user, index) => {
-            if (user.Uid == studentId) {
-                dept = user.Dept
+        users.map((user) => {
+            if (user.Uid === studentId) {
+                dept = user.Dept;
             }
-        })
+        });
         return dept;
     }
+
     const handleFilterChange = (option) => {
         console.log("Filter change triggered:", option);
         setSelectedOption(option);
         timeOption = option;
-        console.log("THe time changed is ", timeOption)
+        console.log("The time changed is", timeOption);
         if (onFilterChange) {
             onFilterChange(option);
         }
@@ -79,11 +94,16 @@ const Schedule = ({ interviews = [], onFilterChange, isStudentSchedules, student
         }));
     }, [studentsInterviews]);
 
-   
+    useEffect(() => {
+        const checkScreenSize = () => {
+            setIsSmallerScreen(window.innerWidth <= 640);
+        };
+        checkScreenSize();
+        window.addEventListener("resize", checkScreenSize);
+        return () => window.removeEventListener("resize", checkScreenSize);
+    }, []);
 
-
-
-    console.log("the interviews in here ", interviews)
+    console.log("the interviews in here ", interviews);
     return (
         <div className="flex-1 p-10 justify-center items-center bg-zinc-100">
             <div className="flex justify-center items-center">
@@ -108,58 +128,91 @@ const Schedule = ({ interviews = [], onFilterChange, isStudentSchedules, student
                     </button>
                 </div>
             </div>
+
             {!isStudentSchedules ? (
-                <div className="mt-20 bg-zinc-100">
-                    {loading && <p>Loading...</p>}
-                    {error && <p>{error}</p>}
-                    {!loading && !error && interviews.length === 0 && <p>No interviews available.</p>}
-                    {interviews.length > 0 && interviews.map((interview, index) => {
-                        const student = interviews[index];
-                        return (
-                            <div key={interview.id} className="bg-white p-4 rounded-lg shadow-md mb-1">
-                                <div className="flex items-center justify-between space-x-4 py-2 border-b border-zinc-200 h-6">
-                                    <div className="flex items-center space-x-6">
-                                        <img src={MaleUser} alt="Profile" className="rounded-full h-6" />
-                                        <div className='flex space-x-6'>
-                                            <p className="text-sm text-zinc-600">{handleStudentName(student.studentId)}</p>
-                                            <p className="text-sm text-zinc-600">{handleStudentPRN(student.studentId)}</p>
-                                            <p className="text-sm text-zinc-600">{handleStudentDept(student.studentId)}</p>
-                                            <p className="text-sm text-zinc-600">{handleDate(student.date)}</p>
-                                            <p className="text-sm text-zinc-600">Starts At      {handleTime(student.startedAt)}</p>
+                isSmallScreen ? (
+                    <div className="mt-20 bg-zinc-100" id="scheduleAdInt">
+                        {loading && <p>Loading...</p>}
+                        {error && <p>{error}</p>}
+                        {!loading && !error && interviews.length === 0 && <p>No interviews available.</p>}
+                        {interviews.length > 0 && interviews.map((interview, index) => {
+                            const student = interviews[index];
+                            return (
+                                <div key={interview.id} className="p-4 rounded-lg shadow-md mb-4 border-zinc-200 ">
+                                    <div className="flex-col  items-center justify-between space-x-4 py-2 border-b border-zinc-200 h-6">
+
+                                        <div className="flex items-center space-x-6 mb-2">
+                                            <img src={MaleUser} alt="Profile" className="rounded-full h-8" />
+                                            <div className="flex space-x-3 ">
+                                                
+                                                <p className="text-sm text-zinc-600 ">{handleStudentName(student.studentId)}</p>
+                                                <p className="text-sm text-zinc-600">{handleStudentPRN(student.studentId)}</p>
+                                                <p className="text-sm text-zinc-600">{handleStudentDept(student.studentId)}</p>
+                                                <p className="text-sm text-zinc-600">{handleDate(student.date)}</p>
+                                                <p className="text-sm text-zinc-600">Starts At {handleTime(student.startedAt)}</p>
+                                            </div>
                                         </div>
+                                      
+                                        
                                     </div>
-                                    <div className="flex items-center space-x-10">
-
-                                    </div>
-
-                                    <button onClick={async () => {
-                                        const linkToJoin = student.link;
-
-                                        // window.open(ResumeLink, '_blank');
-                                        window.open(linkToJoin, '_blank');
-
-                                        // window.open(ResumeLink, '_blank');
-                                        if (isAdmin===false)
-                                            {
-                                                console.log("i m in ")
-                                            setTimeout(() => {
-
-                                                navigate('/eval', {
-                                                    state: {
-                                                        interview: interview
-                                                    }
-                                                });
-                                            }, 500); 
+                                    <div className="flex justify-center mt-5 px-4 ">
+                                        <button onClick={async () => {
+                                            const linkToJoin = student.link;
+                                            window.open(linkToJoin, '_blank');
+                                            if (!isAdmin) {
+                                                setTimeout(() => {
+                                                    navigate('/eval', {
+                                                        state: { interview }
+                                                    });
+                                                }, 500);
                                             }
-                                      // Delay for 500 milliseconds
-                                    }} className="bg-blue-500 text-white pb-1 mb-3 px-2 py-0.6 rounded">
-                                        Join Link
-                                    </button>
+                                        }} className="bg-blue-500 p-1.5 text-white px-4 py-0.6 rounded flex justify-center">
+                                            Join Link
+                                        </button>
+                                    </div>
                                 </div>
-                            </div>
-                        );
-                    })}
-                </div>
+                            );
+                        })}
+                    </div>
+                ) : (
+                    <div className="mt-20 bg-zinc-100" id="scheduleAdInt">
+                        {loading && <p>Loading...</p>}
+                        {error && <p>{error}</p>}
+                        {!loading && !error && interviews.length === 0 && <p>No interviews available.</p>}
+                        {interviews.length > 0 && interviews.map((interview, index) => {
+                            const student = interviews[index];
+                            return (
+                                <div key={interview.id} className="bg-white p-4 rounded-lg shadow-md mb-1">
+                                    <div className="flex items-center justify-between space-x-4 py-2 border-b border-zinc-200 h-6">
+                                        <div className="flex items-center space-x-6">
+                                            <img src={MaleUser} alt="Profile" className="rounded-full h-6" />
+                                            <div className="flex space-x-6">
+                                                <p className="text-sm text-zinc-600">{handleStudentName(student.studentId)}</p>
+                                                <p className="text-sm text-zinc-600">{handleStudentPRN(student.studentId)}</p>
+                                                <p className="text-sm text-zinc-600">{handleStudentDept(student.studentId)}</p>
+                                                <p className="text-sm text-zinc-600">{handleDate(student.date)}</p>
+                                                <p className="text-sm text-zinc-600">Starts At {handleTime(student.startedAt)}</p>
+                                            </div>
+                                        </div>
+                                        <button onClick={async () => {
+                                            const linkToJoin = student.link;
+                                            window.open(linkToJoin, '_blank');
+                                            if (!isAdmin) {
+                                                setTimeout(() => {
+                                                    navigate('/eval', {
+                                                        state: { interview }
+                                                    });
+                                                }, 500);
+                                            }
+                                        }} className="bg-blue-500 text-white pb-1 mb-3 px-2 py-0.6 rounded">
+                                            Join Link
+                                        </button>
+                                    </div>
+                                </div>
+                            );
+                        })}
+                    </div>
+                )
             ) : (
                 <div className="mt-20 bg-zinc-100">
                     {loading && <p>Loading...</p>}
@@ -172,34 +225,33 @@ const Schedule = ({ interviews = [], onFilterChange, isStudentSchedules, student
                                 <div className="flex items-center justify-between space-x-4 py-2 border-b border-zinc-200 h-6">
                                     <div className="flex items-center space-x-6">
                                         <img src={MaleUser} alt="Profile" className="rounded-full h-6" />
-                                        <div className='flex space-x-6'>
-
+                                        <div className="flex space-x-6">
                                             <p className="text-sm text-zinc-600">{handleDate(student.date)}</p>
-                                            {timeOption === "previous" ? <p className="text-sm text-zinc-600">Started At      {handleTime(student.startedAt)}</p> : <p className="text-sm text-zinc-600">Starts At      {handleTime(student.startedAt)}</p>}
-
+                                            {timeOption === "previous" ? (
+                                                <p className="text-sm text-zinc-600">Started At {handleTime(student.startedAt)}</p>
+                                            ) : (
+                                                <p className="text-sm text-zinc-600">Starts At {handleTime(student.startedAt)}</p>
+                                            )}
                                         </div>
                                     </div>
-                                    {timeOption == "previous" ?( <button onClick={() => {
-                                        navigate('/login/student/dashboard', {
-                                            state: {
-                                                interview: interview
-                                            }
-                                        });
-                                        console.log("hi there")
-
-                                    }} className="bg-blue-500 text-white pb-1 mb-3 px-2 py-0.6 rounded">
-                                        Performance
-                                    </button> ): (
-                                        <>
-                                            <button onClick={() => {
-                                        const linkToJoin = student.link;
+                                    {timeOption === "previous" ? (
+                                        <button onClick={() => {
+                                            navigate('/login/student/dashboard', {
+                                                state: { interview }
+                                            });
+                                            console.log("hi there");
+                                        }} className="bg-blue-500 text-white pb-1 mb-3 px-2 py-0.6 rounded">
+                                            Performance
+                                        </button>
+                                    ) : (
+                                        <button onClick={() => {
+                                            const linkToJoin = student.link;
                                             window.open(linkToJoin, '_blank');
-                                                    console.log("hi there guys ", timeOption) 
-                                    }} className="bg-blue-500 text-white pb-1 mb-3 px-2 py-0.6 rounded">
-                                        
-                                        Join Link
-                                                </button></>)}
-
+                                            console.log("hi there guys ", timeOption);
+                                        }} className="bg-blue-500 text-white pb-1 mb-3 px-2 py-0.6 rounded">
+                                            Join Link
+                                        </button>
+                                    )}
                                 </div>
                             </div>
                         );

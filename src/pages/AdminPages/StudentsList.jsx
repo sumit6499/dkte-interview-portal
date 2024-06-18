@@ -84,11 +84,11 @@ function StudentsList() {
             }
         });
     };
-    let val = 30;
+
     return (
         <>
 
-            <NavBar links={AdminStudentsNavlinks} drop={true} isAdmin={true} className="z-20" val={val}/>
+            <NavBar links={AdminStudentsNavlinks} drop={true} isAdmin={true} className="z-20" />
 
             <div className={`container mx-auto px-4 bg-zinc-100 ${isSticky ? 'sticky-offset' : ''}`}>
                 <header className="py-5">
@@ -158,6 +158,7 @@ function StudentsList() {
                                             <div className="flex items-center space-x-2">
                                                 <p className="text-sm">{student.class}</p>
                                             </div>
+                                            
                                         </div>
                                         <div className='flex justify-center'>
                                             <button
