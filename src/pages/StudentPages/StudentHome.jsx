@@ -5,7 +5,7 @@ import { StudentHomeNavlinks } from '@/components/variables/formVariables';
 import Schedule from '@/components/ui/Schedules';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
-import { selectAllUsers, selectCurrentToken } from '@/redux/authSlice';
+import { selectAllUsers, selectCurrentToken, selectCurrentUid } from '@/redux/authSlice';
 import { BASE_URL } from '@/api';
 import Loader from '@/components/ui/loading';
 
@@ -20,12 +20,12 @@ const StudentHome = () => {
     const [isStudentSchedules, setIsStudentSchedules] = useState(true);
     const [TimeOption,setTimeOption] = useState('today');
     const users = useSelector(selectAllUsers)
-    let studentId;
-    users.map((user, index) => {
-        if (user.token == token) {
-            studentId = user.Uid;
-        }
-    })
+    let studentId=useSelector(selectCurrentUid);
+    // users.map((user, index) => {
+    //     if (user.token == token) {
+    //         studentId = user.Uid;
+    //     }
+    // })
     useEffect(() => {
         fetchInterviews(TimeOption);
     }, []);

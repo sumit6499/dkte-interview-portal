@@ -85,7 +85,6 @@ const InterviewerSignUp = () => {
         Object.keys(formData).forEach((key) => {
             formDataToSend.append(key, formData[key]);
         });
-        console.log("fomrdata is ", formData)
         try {
             const response = await interviewerSignUp(formData)
             const { data, token } = response.data;
@@ -94,6 +93,7 @@ const InterviewerSignUp = () => {
 
             localStorage.setItem("interviewerId", interviewerId);
             localStorage.setItem("interviewerAuthToken", interviewerAuthToken);
+
             if (response.data) {
                 dispatch(authenticate(true));
                 dispatch(setUserInfo({ user: data, token, Uid: interviewerId, Name: name, Role: role, Day: day, StartTime: startTime, EndTime: endTime }));
@@ -102,15 +102,12 @@ const InterviewerSignUp = () => {
                 setUserExists(false);
             }
             navigate('/login/interviewer');
-            if (response.message === "User already present") {
-                showToast("User already present");
+        } catch (error) {
+            setLoading(false);
+            if (error.response.data.msg) {
+                showToast(error.response.data.msg);
                 setLoading(false);
             }
-        } catch (error) {
-            
-            setLoading(false);
-            
-            console.error('Error submitting form:', error);
         }
     };
     const showToast = (message) => {

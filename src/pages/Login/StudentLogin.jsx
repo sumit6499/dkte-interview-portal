@@ -9,6 +9,7 @@ import { useDispatch } from "react-redux";
 import { authenticate, setUserInfo } from "@/redux/authSlice";
 import axios from 'axios';
 import Loader from '@/components/ui/loading';
+import { toast } from 'react-toastify';
 function StudentLogin() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -44,8 +45,10 @@ const [loading,setLoading] = useState(false);
                 setUserExists(false);
             }
         } catch (error) {
-            if (error.response.data.msg === "User does not exist") {
+            if (error.response.data.msg) {
                 setUserExists(false)
+                setLoading(false)
+                toast.error(error.response.data.msg)
             }
             console.error("Error submitting form:", error);
         }

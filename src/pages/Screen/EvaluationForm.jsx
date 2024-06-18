@@ -1,16 +1,18 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { criteria, InterviewerProfileNavLinks } from '@/components/variables/formVariables';
-import { useLocation } from 'react-router';
+import { useLocation,useNavigate } from 'react-router';
 import { useSelector } from 'react-redux';
 import { selectAllUsers, selectCurrentName, selectCurrentToken, selectCurrentUid } from '@/redux/authSlice';
 import NavBar from '../NavBar/NavBar';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import {BASE_URL} from '@/api/index'
 
 const StudentEvaluationForm = () => {
     const location = useLocation();
     const interview = location.state.interview;
+    const navigate=useNavigate();
     const tok = useSelector(selectCurrentToken);
     const curname = useSelector(selectCurrentName);
     const getCurrentId = useSelector(selectCurrentUid);
@@ -44,7 +46,7 @@ const StudentEvaluationForm = () => {
 
     const getResumeLink = async () => {
         try {
-            const response = await axios.get(`http://13.126.95.245:3000/api/v1/auth/students/${interview.studentId}/info`, {
+            const response = await axios.get(`${BASE_URL}/api/v1/auth/students/${interview.studentId}/info`, {
                 headers: {
                     Authorization: `Bearer ${tok}`
                 }
@@ -72,7 +74,7 @@ const StudentEvaluationForm = () => {
             return;
         }
         try {
-            const response = await axios.post(`http://13.126.95.245:3000/api/v1/auth/interview/${interview.id}/feedback`, formData, {
+            const response = await axios.post(`${BASE_URL}/api/v1/auth/interview/${interview.id}/feedback/create`, formData, {
                 headers: {
                     Authorization: `Bearer ${tok}`,
                 }
@@ -80,9 +82,11 @@ const StudentEvaluationForm = () => {
             console.log('Response from server:', response.data);
             setFormSubmitted(true);
             toast.success("Feedback submitted successfully!");
+            navigate('/login/interviewer/schedules')
         } catch (error) {
-            console.error('Error submitting form:', error);
-            toast.error("Error submitting feedback. Please try again.");
+            if(error.response.data.msg){
+                toast.error(error.response.data.msg)
+            }
         }
     };
 

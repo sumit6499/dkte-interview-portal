@@ -40,7 +40,6 @@ function InterviewerLogin() {
            
             localStorage.setItem("interviewerId", interviewerId);
             localStorage.setItem("interviewerAuthToken", interviewerAuthToken);
-           console.log("The response message",response.data)
             if (response.data) {
                 dispatch(authenticate(true));
                 dispatch(setUserInfo({ user: data, token, Uid: interviewerId, Name: name, Role: role, Day: freeday, StartTime: startTime, EndTime: endTime }));
@@ -52,11 +51,12 @@ function InterviewerLogin() {
             }
            
         } catch (error) {
-            if (error.response.data.msg === "User does not exist")
+            if (error.response.data.msg)
                 {
                 setUserExists(false);
-                 toast.error(error.response.data.msg);
                 }
+
+            
             setLoading(false);
 
             console.error("Error submitting form:", error.response.data.msg);

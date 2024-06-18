@@ -4,10 +4,12 @@ import { useLocation, useNavigate } from 'react-router';
 import axios from 'axios';
 import { AdminSchedulesNavlinks, days } from '@/components/variables/formVariables';
 import { useSelector } from 'react-redux';
-import { selectAllUsers, selectCurrentToken } from '@/redux/authSlice';
+import { selectAllUsers, selectCurrentToken,selectCurrentUid } from '@/redux/authSlice';
 import { BASE_URL } from '@/api';
 function AdminInterviewSchedule() {
     const token = useSelector(selectCurrentToken);
+    const facultyID=useSelector(selectCurrentUid);
+    console.log(facultyID)
     const navigate = useNavigate();
     const location = useLocation();
     const users = useSelector(selectAllUsers);
@@ -104,7 +106,9 @@ function AdminInterviewSchedule() {
                 startedAt,
                 endsAt,
                 link,
-                _id, interviewID
+                _id, 
+                interviewID,
+                facultyID,
             }, {
                 headers: {
                     Authorization: `Bearer ${token}`
