@@ -53,7 +53,7 @@ const DropDownProfile = ({ profileLink, isAdmin }) => {
                     <a
                         href="#"
                         id="logoutsyb"
-                        className="block px-4 text-center pl-1 py-2 text-xl text-white bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-500 rounded-md shadow-lg transform hover:scale-105 transition duration-300 ease-in-out"
+                        className="block px-4 text-center pl-1 py-2 text-xl text-white bg-gradient-to-r from-red-500 to-red-600 hover:to-red-500 rounded-md shadow-lg transform hover:scale-105 transition duration-300 ease-in-out"
                         onClick={logout}
                     >
                         Logout
@@ -61,7 +61,7 @@ const DropDownProfile = ({ profileLink, isAdmin }) => {
                 </div>
             ) : (isOpen || isclick) && (
                 <div className="absolute right-0 mt-2 py-2 w-48 bg-white rounded shadow-lg z-10">
-                    {!isAdmin && <a href="#" className="block px-4 py-2 text-gray-800 hover:bg-gray-200" onClick={Profile}>Profile</a>}
+                        {!isAdmin && <a href="#" className="block px-4 py-2 text-gray-800 hover:bg-green-500 transition duration-300 ease-in-out transform hover:scale-105 rounded-md " onClick={Profile}>Profile</a>}
                         <a
                             href="#"
                             id="logoutsyb"
