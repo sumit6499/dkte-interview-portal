@@ -20,6 +20,10 @@ function StudentsList() {
     const [studentsData, setStudentsData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    if (window.innerWidth <= 640)
+        {
+        setStudentsData(true);
+        }
     const [isSmallScreen, setIsSmallerScreen] = useState(false);
     const [isSticky, setIsSticky] = useState(false);
 
