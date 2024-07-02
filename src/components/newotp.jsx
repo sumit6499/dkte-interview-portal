@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { authenticate, setUserInfo } from "@/redux/authSlice";
 import { studentSignUp } from "@/api";
 import Loader from "@/components/ui/loading";
-import OtpInput from "@/components/ui/otpInput";
+import OtpInput from './OtpInput';
 
 function StudentSignUp() {
     const dispatch = useDispatch();
@@ -37,7 +37,6 @@ function StudentSignUp() {
     };
 
     const requestOtp = async () => {
-        console.log("hi there i m here ")
         try {
             const response = await axios.post('http://localhost:3001/send-otp', {
                 phoneNumber: formData.phone
@@ -73,11 +72,6 @@ function StudentSignUp() {
     };
 
     const handleSubmit = async (event) => {
-        // if(!showOtpInput)
-        //     {
-        //         alert("Otp is not sent to the phone number ,Re-enter the phone number");
-        //         return ;
-        //     }
         setLoading(true);
         event.preventDefault();
 

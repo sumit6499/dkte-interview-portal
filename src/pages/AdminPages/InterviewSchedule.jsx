@@ -41,7 +41,6 @@ function AdminInterviewSchedule() {
     const [alertMessage, setAlertMessage] = useState('');
 
     let _id = student.id;
-    console.log("The student id is",_id)
     const handleDateChange = (e) => {
         const selectedDate = e.target.value;
         setDate(selectedDate);

@@ -8,7 +8,7 @@ import NavBar from '../NavBar/NavBar';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {BASE_URL} from '@/api/index'
-
+import CustomAlert from '@/components/ui/CustomAlert';
 const StudentEvaluationForm = () => {
     const location = useLocation();
     const interview = location.state.interview;
@@ -16,6 +16,8 @@ const StudentEvaluationForm = () => {
     const tok = useSelector(selectCurrentToken);
     const curname = useSelector(selectCurrentName);
     const getCurrentId = useSelector(selectCurrentUid);
+    const [showAlert,setShowAlert] = useState(false);
+    const [alertMessage, setAlertMessage] = useState('');
 
     const [isNightMode, setIsNightMode] = useState(false);
     const [formData, setFormData] = useState({
@@ -66,7 +68,10 @@ const StudentEvaluationForm = () => {
             window.open(link, '_blank');
         }
     };
-
+    const closeAlert = () =>{
+        setShowAlert(false);
+        navigate('/login/interviewer/schedules')
+    }
     const handleSubmit = async (event) => {
         event.preventDefault();
         if (formSubmitted) {
@@ -81,6 +86,8 @@ const StudentEvaluationForm = () => {
             });
             console.log('Response from server:', response.data);
             setFormSubmitted(true);
+            setAlertMessage("FeedBack Submitted Successfully");
+            setShowAlert(true)
             toast.success("Feedback submitted successfully!");
             navigate('/login/interviewer/schedules')
         } catch (error) {
@@ -100,6 +107,7 @@ const StudentEvaluationForm = () => {
         <>
             <NavBar links={InterviewerProfileNavLinks} />
             <ToastContainer />
+            {showAlert ?( <CustomAlert message={alertMessage} onClose={closeAlert}/>):(
             <div className={`container mx-auto p-10 px-10 ${isNightMode ? 'bg-gray-900' : 'bg-gray-200'}`}>
                 <h1 className={`text-2xl font-bold text-center mb-4 ${textClasses}`}>Student Interview Performance Evaluation</h1>
                 <button className="mt-24 absolute top-0 right-0 m-4 p-2 rounded-full bg-gray-300 dark:bg-gray-700" onClick={toggleMode}>
@@ -145,6 +153,7 @@ const StudentEvaluationForm = () => {
                     </button>
                 </div>
             </div>
+            )}
         </>
     );
 };

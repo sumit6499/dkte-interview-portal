@@ -145,3 +145,11 @@
     
 }
 
+.otpInput{
+    border: solid 1px black;
+    width: 40px;
+    height: 40px;
+    margin: 5px;
+    text-align: center;
+    font-size: 1.2em;
+}

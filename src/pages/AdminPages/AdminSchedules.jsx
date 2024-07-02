@@ -17,6 +17,7 @@ const AdminSchedules = () => {
     const isAdmin = true;
     const token = useSelector(selectCurrentToken)
     let localID;
+    
     if (JSON.parse(localStorage.getItem('adminId') !== undefined).id){
         localID = JSON.parse(localStorage.getItem('adminId')).id
     }

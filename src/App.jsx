@@ -27,6 +27,7 @@ import Loader from './components/ui/loading';
 import { useEffect } from 'react';
 import PrivateRoute from './components/services/private';
 import CustomAlert from './components/ui/CustomAlert';
+import PhoneOtpLogin from './components/ui/PhoneOtpLogin';
 // const PrivateRoute = ({ element }) => {
 //   const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
 //   const navigate = useNavigate();
@@ -70,6 +71,7 @@ function App() {
         <Route path="/FormBase64" element={<PrivateRoute element={<FormBase64 />} allowedRoles={['Admin']} />} />
         <Route path="/all-users" element={<AllUsers />} />
         <Route path="/load" element={<Loader />} />
+        <Route path="/otp" element={<PhoneOtpLogin />} />
 
         <Route path="*" element={<ErrorPage />} />
       </Routes>

@@ -22,6 +22,18 @@ const Schedule = ({
     const [error, setError] = useState(null);
     const [isSmallScreen, setIsSmallerScreen] = useState(false);
     const [isPrevious,setIsPrevious] = useState(false);
+    const [isTommorow,setIsTommorow] = useState(false);
+
+
+    function isDateTommorow(date) {
+        const today = new Date;
+        const tomorrow = new Date(today);
+        tomorrow.setDate(today.getDate()+1);
+        console.log("the input is " + date.toDateString());
+        console.log("the function is " + tomorrow.toDateString());
+
+        return date.toDateString() === tomorrow.toDateString();
+    }
     function handleStudentName(studentId) {
         let Name;
         users.forEach((user) => {
@@ -161,13 +173,21 @@ console.log("the isprevious outside",isPrevious)//gives false why?
                                     <div className="flex flex-col items-start space-y-2 pb-2 border-b border-zinc-200 mb-2">
                                         <div className="flex items-center space-x-4 mb-2">
                                             <img src={MaleUser} alt="Profile" className="rounded-full h-10 w-10" />
-                                            <div className="flex flex-col space-y-1">
+                                            {isDateTommorow(handleDate(interview.date)) ? (<div className="flex flex-col space-y-1">
+                                                <p>Its tommorow</p>
                                                 <p className="text-base text-zinc-800 font-semibold">{handleStudentName(interview.studentId)}</p>
                                                 <p className="text-sm text-zinc-600">{handleStudentPRN(interview.studentId)}</p>
                                                 <p className="text-sm text-zinc-600">{handleStudentDept(interview.studentId)}</p>
                                                 <p className="text-sm text-zinc-600">{handleDate(interview.date)}</p>
                                                 <p className="text-sm text-zinc-600">Starts At {handleTime(interview.startedAt)}</p>
-                                            </div>
+                                            </div>) : (<div className="flex flex-col space-y-1">
+                                                <p className="text-base text-zinc-800 font-semibold">{handleStudentName(interview.studentId)}</p>
+                                                <p className="text-sm text-zinc-600">{handleStudentPRN(interview.studentId)}</p>
+                                                <p className="text-sm text-zinc-600">{handleStudentDept(interview.studentId)}</p>
+                                                <p className="text-sm text-zinc-600">{handleDate(interview.date)}</p>
+                                                <p className="text-sm text-zinc-600">Starts At {handleTime(interview.startedAt)}</p>
+                                            </div>)}
+                                            
                                         </div>
                                     </div>
                                     <div className="flex justify-center mt-4">
