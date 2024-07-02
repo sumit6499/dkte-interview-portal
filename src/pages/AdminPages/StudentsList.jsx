@@ -6,9 +6,10 @@ import { useNavigate } from 'react-router-dom';
 import { AdminStudentsNavlinks } from '@/components/variables/formVariables';
 import { selectCurrentToken } from '@/redux/authSlice';
 import { useSelector } from 'react-redux';
-import '@/App.css'
+import '@/App.css';
 import { BASE_URL } from '@/api';
-import Loader from '@/components/ui/loading';
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
 
 function StudentsList() {
     const navigate = useNavigate();
@@ -49,7 +50,7 @@ function StudentsList() {
                 }
             } catch (error) {
                 console.error('Error fetching students data:', error);
-                setError('Error fetching data from server. Please check your network connection or the server URL. Try Reloading the Website ');
+                setError('Error fetching data from server. Please check your network connection or the server URL. Try Reloading the Website');
             } finally {
                 setLoading(false);
             }
@@ -85,14 +86,34 @@ function StudentsList() {
         });
     };
 
+    const renderSkeletons = (count) => {
+        return Array.from({ length: count }).map((_, index) => (
+            <div key={index} className="bg-white p-4 rounded-lg shadow-md mb-4">
+                <div className="flex items-center justify-between space-x-4 py-2 border-b border-zinc-200 h-6">
+                    <div className="flex items-center space-x-2">
+                        <Skeleton circle height={24} width={24} />
+                        <div className='flex flex-col'>
+                            <Skeleton width={100} />
+                            <Skeleton width={60} />
+                        </div>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                        <Skeleton width={80} />
+                        <Skeleton width={40} />
+                    </div>
+                    <Skeleton width={120} height={30} />
+                </div>
+            </div>
+        ));
+    };
+
     return (
         <>
-
             <NavBar links={AdminStudentsNavlinks} drop={true} isAdmin={true} className="z-20" />
 
             <div className={`container mx-auto px-4 bg-zinc-100 ${isSticky ? 'sticky-offset' : ''}`}>
                 <header className="py-5">
-                    <h1 className="text-3xl font-bold text-center ">Students</h1>
+                    <h1 className="text-3xl font-bold text-center">Students</h1>
                 </header>
                 <div>
                     <div className={`bg-yellow-400 p-5 rounded-lg shadow-md ${isSticky ? 'sticky-search-bar' : 'fixed top-20 left-0 w-full z-50'}`}>
@@ -136,7 +157,7 @@ function StudentsList() {
                 </div>
                 <div className="mt-20 bg-zinc-100 ">
                     {loading ? (
-                        <Loader />
+                        renderSkeletons(5)
                     ) : error ? (
                         <p className="text-red-500">{error}</p>
                     ) : filteredStudents.length === 0 ? (
@@ -158,7 +179,7 @@ function StudentsList() {
                                             <div className="flex items-center space-x-2">
                                                 <p className="text-sm">{student.class}</p>
                                             </div>
-                                            
+
                                         </div>
                                         <div className='flex justify-center'>
                                             <button

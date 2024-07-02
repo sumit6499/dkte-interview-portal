@@ -42,6 +42,7 @@
     "react-file-base64": "^1.0.3",
     "react-gapi": "^1.0.2",
     "react-hook-form": "^7.51.4",
+    "react-loading-skeleton": "^3.4.0",
     "react-redux": "^9.1.2",
     "react-router": "^6.23.0",
     "react-router-dom": "^6.23.0",

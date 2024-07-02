@@ -65,10 +65,10 @@ function AdminLogin() {
             //     setUserExists(false)
             // }
             setLoading(false);
-            if (error.response.data.msg === "User does not exist") {
-                setUserExists(false)
-                toast.error(error.response.data.msg);
-            }
+            // if (error.response.data.msg === "User does not exist") {
+            //     setUserExists(false)
+            //     toast.error(error.response.data.msg);
+            // }
 
             
             console.error("Error submitting form:", error);
