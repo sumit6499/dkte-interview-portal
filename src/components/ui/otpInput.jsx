@@ -43,15 +43,26 @@ const OtpInput = ({ length = 4, onOtpSubmit = () => { } }) => {
     console.log(inputRefs);
     return (
         <>
-      <NavBar links ={Navlink}/>
-        <div>
-            {otp.map((value, index) => {
-                return <input type="text" key={index} value={value} ref={(input)=>(inputRefs.current[index]=input)} onChange={(e) => handleChange(index, e)} onClick={() => handleClick(index)}
-                    onKeyDown={(e) => handleKeyDown(index, e)} className='otpInput' />
-            })}
-        </div>
+            {/* Add a label for entering OTP */}
+            <label className='flex justify-center mt-10' htmlFor="otpInput">Enter OTP:</label>
+            <div className="flex justify-center">
+                {otp.map((value, index) => (
+                    <input
+                        type="text"
+                        key={index}
+                        value={value}
+                        ref={(input) => (inputRefs.current[index] = input)}
+                        onChange={(e) => handleChange(index, e)}
+                        onClick={() => handleClick(index)}
+                        onKeyDown={(e) => handleKeyDown(index, e)}
+                        className="otpInput"
+                        id="otpInput" // Add an ID for the label association
+                    />
+                ))}
+            </div>
         </>
-    )
+    );
+
 }
 
 export default OtpInput;

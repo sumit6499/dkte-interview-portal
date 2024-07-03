@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import FormField from "./Formfield";
 import PaymentComponent from "./Payment";
 import SubmitButton from "./SubmitButton";
@@ -22,10 +22,12 @@ const CommonSignUp = ({
     showOtpInput,
     verifyOtp
 }) => {
-    const handleOtpNotSend = () =>{
-        alert("otp not sent");
-        return ;
-    }
+    const [isSubmitted, setIsSubmitted] = useState(false);
+
+    const handleOtpNotSend = () => {
+        alert("OTP not sent");
+    };
+
     const renderFormFields = () => {
         return fields.map((field) => (
             <FormField
@@ -39,12 +41,18 @@ const CommonSignUp = ({
         ));
     };
 
+    const handleSubmit = (event) => {
+        event.preventDefault(); // Prevent default form submission
+        setIsSubmitted(true);
+        onSubmit(event); // Call the onSubmit function passed as prop
+    };
+
     return (
         <div className={`white text-white font-sans animate-slideFromBottom ${className}`}>
             <div className="flex justify-center items-center min-h-screen">
                 <div className="w-full max-w-4xl p-8 bg-zinc-800 rounded-lg shadow-lg">
                     <h1 className="text-2xl font-bold mb-8 text-center">{title}</h1>
-                    <form className="space-y-6">
+                    <form className="space-y-6" onSubmit={handleSubmit}>
                         {showOtpInput ? (
                             <OtpInput length={4} onOtpSubmit={verifyOtp} />
                         ) : (
@@ -66,15 +74,20 @@ const CommonSignUp = ({
                                         </button>
                                     )}
                                     {currentStage === 1 && !studentSignup && (
-
-                                        <SubmitButton label="SignUp" onSubmit={onSubmit} />
+                                        <SubmitButton
+                                            label="SignUp"
+                                            onSubmit={handleSubmit}
+                                            disabled={isSubmitted}
+                                        />
                                     )}
                                     {currentStage === 2 && studentSignup && (
                                         <>
-                                            {/* {!showOtpInput ? (<> <PrevButton onClick={handlePrev} />
-                                                <SubmitButton label="SignUp" onSubmit={onSubmit} /></>) : (<h1>{()=>handleOtpNotSend}</h1>)} */}
-                                                <PrevButton onClick={handlePrev} />
-                                                <SubmitButton label="SignUp" onSubmit={onSubmit} />
+                                            <PrevButton onClick={handlePrev} />
+                                            <SubmitButton
+                                                label="SignUp"
+                                                onSubmit={handleSubmit}
+                                                disabled={isSubmitted}
+                                            />
                                         </>
                                     )}
                                 </div>

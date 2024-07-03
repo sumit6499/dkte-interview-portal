@@ -10,10 +10,11 @@ import { adminSignUp } from '@/api/index';
 import { useDispatch } from "react-redux";
 import { authenticate, setUserInfo } from "@/redux/authSlice";
 import Loader from "@/components/ui/loading";
+
 function AdminSignUp() {
     const studentSignup = false;
-    const navigate = useNavigate()
-    const [loading,setLoading] = useState(false);
+    const navigate = useNavigate();
+    const [loading, setLoading] = useState(false);
     const isAdminSignUp = true;
     const dispatch = useDispatch();
     const [userExists, setUserExists] = useState(false);
@@ -31,13 +32,13 @@ function AdminSignUp() {
     };
 
     const handleChange = (e) => {
-
         const { name, value, files } = e.target;
         setFormData((prevState) => ({
             ...prevState,
             [name]: files ? files[0] : value,
         }));
     };
+
     const handleRemoveFile = () => {
         setFormData((prevState) => ({
             ...prevState,
@@ -46,16 +47,15 @@ function AdminSignUp() {
     };
 
     const handleSubmit = async (event) => {
-        setLoading(true);
         event.preventDefault();
+        setLoading(true);
 
-        console.log("formData", formData)
+        console.log("formData", formData);
         try {
-            const response = await adminSignUp(formData)
+            const response = await adminSignUp(formData);
             const { data, token } = response.data;
             const { id: adminId, name, role } = data;
             const adminAuthToken = token;
-
 
             localStorage.setItem("adminId", adminId);
             localStorage.setItem("adminAuthToken", adminAuthToken);
@@ -71,11 +71,10 @@ function AdminSignUp() {
             console.log("Success: " + response.data);
             toast.success('Signup Successful!', { position: toast.POSITION.TOP_CENTER });
             navigate("/login/admin");
-        }
-
-        catch (error) {
+        } catch (error) {
             console.error("Error submitting form:", error);
-            // Handle error
+            showToast('Error submitting form');
+            setLoading(false);
         }
     };
 
@@ -83,20 +82,19 @@ function AdminSignUp() {
         <>
             <NavBar links={AdminNavLinks} />
             <ToastContainer />
-            {loading ? (<Loader />) : (<CommonSignUp
-                title="Admin SignUp"
-                fields={Adminfields}
-                onSubmit={handleSubmit}
-                studentSignup={studentSignup}
-                currentStage={1}
-                handleSubmit={handleSubmit}
-                formData={formData}
-                handleRemoveFile={handleRemoveFile}
-                handleChange={handleChange}
-                handleFileChange={handleChange}
-
-            />)}
-           
+            {loading ? (<Loader />) : (
+                <CommonSignUp
+                    title="Admin SignUp"
+                    fields={Adminfields}
+                    onSubmit={handleSubmit}
+                    studentSignup={studentSignup}
+                    currentStage={1}
+                    formData={formData}
+                    handleRemoveFile={handleRemoveFile}
+                    handleChange={handleChange}
+                    handleFileChange={handleChange}
+                />
+            )}
         </>
     );
 }
