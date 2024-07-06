@@ -75,9 +75,9 @@ function StudentSignUp() {
         setLoading(true);
         event.preventDefault();
 
-        if (stage === 1) {
+        if (stage === 2) {
             requestOtp();
-        } else if (stage === 2) {
+        } else if (stage === 3) {
             try {
                 const response = await studentSignUp(formData)
                 const { data, token } = response?.data;
@@ -111,7 +111,8 @@ function StudentSignUp() {
     };
 
     const handleNext = () => {
-        setStage(2);
+        console.log("hi i m here ")
+        setStage(stage+1);
     };
 
     const handlePrev = () => {

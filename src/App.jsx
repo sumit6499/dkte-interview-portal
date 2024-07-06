@@ -28,6 +28,7 @@ import { useEffect } from 'react';
 import PrivateRoute from './components/services/private';
 import CustomAlert from './components/ui/CustomAlert';
 import PhoneOtpLogin from './components/ui/PhoneOtpLogin';
+import Contact from './pages/Contact/Contact';
 // const PrivateRoute = ({ element }) => {
 //   const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
 //   const navigate = useNavigate();
@@ -46,6 +47,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/contact" element={<Contact />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/login/student" element={<StudentLogin />} />

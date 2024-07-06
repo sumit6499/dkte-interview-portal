@@ -81,7 +81,7 @@ export const Navlink = [
   { label: "Home", url: "/" },
   { label: "Login", url: "/login" },
   { label: "Register", url: "/signup" },
-  { label: "Contact", url: "/" },
+  { label: "Contact", url: "/contact" },
 ];
 export const AdminNavLinks = [
   { label: "Home", url: "/" },

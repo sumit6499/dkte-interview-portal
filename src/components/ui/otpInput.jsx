@@ -55,7 +55,7 @@ const OtpInput = ({ length = 4, onOtpSubmit = () => { } }) => {
                         onChange={(e) => handleChange(index, e)}
                         onClick={() => handleClick(index)}
                         onKeyDown={(e) => handleKeyDown(index, e)}
-                        className="otpInput"
+                        className="otpInput text-black"
                         id="otpInput" // Add an ID for the label association
                     />
                 ))}
