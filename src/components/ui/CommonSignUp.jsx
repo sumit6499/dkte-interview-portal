@@ -6,7 +6,7 @@ import PaymentComponent from "./Payment";
 import SubmitButton from "./SubmitButton";
 import PrevButton from "./PrevButton";
 import OtpInput from "./otpInput";
-
+import { BASE_URL } from "@/api";
 const CommonSignUp = ({
     title,
     fields,
@@ -29,13 +29,18 @@ const CommonSignUp = ({
     const [otp, setOtp] = useState('');
     const [otpSent, setOtpSent] = useState(false);
     const [otpTimer, setOtpTimer] = useState(0);
-
+    const [roleOtp, setRoleOtp] = useState('');
     const notifySuccess = (message) => toast.success(message);
     const notifyError = (message) => toast.error(message);
+    useEffect(() => {
+        if (studentSignup) {
+            setRoleOtp('students');
+        }
+    }, [studentSignup,])
 
     const handleSendOtp = async () => {
         try {
-            const response = await fetch('/send-otp', {
+            const response = await fetch(`${BASE_URL}/${roleOtp}/signup-otp`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email })
@@ -55,7 +60,7 @@ const CommonSignUp = ({
 
     const handleVerifyOtp = async () => {
         try {
-            const response = await fetch('/verify-otp', {
+            const response = await fetch(`${BASE_URL}/${roleOtp}/validate-otp`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email, otp })

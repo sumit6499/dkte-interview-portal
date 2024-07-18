@@ -29,6 +29,8 @@ import PrivateRoute from './components/services/private';
 import CustomAlert from './components/ui/CustomAlert';
 import PhoneOtpLogin from './components/ui/PhoneOtpLogin';
 import Contact from './pages/Contact/Contact';
+import ForgotPassword from './components/ui/ForgotPassword';
+import ResetPassword from './components/ui/ResetPassword';
 // const PrivateRoute = ({ element }) => {
 //   const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
 //   const navigate = useNavigate();
@@ -55,6 +57,8 @@ function App() {
         <Route path="/signup/student" element={<StudentSignUp />} />
         <Route path="/signup/admin" element={<AdminSignUp />} />
         <Route path="/CustomAlert" element={<CustomAlert />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
 
         <Route path="/login/admin/students" element={<PrivateRoute element={<StudentsList />} allowedRoles={['Admin']} />} />
         <Route path="/login/admin/adminschedules" element={<PrivateRoute element={<AdminSchedules />} allowedRoles={['Admin']} />} />

@@ -154,6 +154,13 @@ export const StudentProfileNavlinks = [
   { label: "Contact", url: "/" },
  
 ];
+export const LoginNavlinks = [
+  { label: "Home", url: "/" },
+  { label: "Login", url: "/login" },
+  { label: "Register", url: "/signup" },
+  { label: "Contact", url: "/" },
+ 
+];
 
 //fotter
 import { Instagram, Twitter, Facebook } from "@/assets/index.js";

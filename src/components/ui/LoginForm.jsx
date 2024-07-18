@@ -1,25 +1,17 @@
+// src/components/LoginForm.js
 import React, { useState } from 'react';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { interviewComposition, NotVisibleEye, visibleEye } from '@/assets/';
-import { useNavigate } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 
 function LoginForm({ title, fields, formData, formValues, onSubmit, handleChange, userExists }) {
     const navigate = useNavigate();
     const [showPassword, setShowPassword] = useState(false);
-    const [showForgotPassword, setShowForgotPassword] = useState(false);
-    const [forgotPasswordEmail, setForgotPasswordEmail] = useState('');
 
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
-    };
-    const handleForgotPasswordSubmit = async (e) => {
-        e.preventDefault();
-
-        console.log("Forgot Password email submitted:", forgotPasswordEmail);
-        setShowForgotPassword(false);
-        toast.success('Password reset instructions sent to your email');
     };
 
     return (
@@ -58,12 +50,10 @@ function LoginForm({ title, fields, formData, formValues, onSubmit, handleChange
                                 </div>
                             </div>
                         ))}
-                        {!userExists && (<>
-                            
+                        {!userExists && (
                             <div className="text-red-500 text-center pb-3">
                                 User does not exist
                             </div>
-                        </>
                         )}
                         <div className="flex justify-center">
                             <button type="submit" className="w-30 bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
@@ -72,7 +62,7 @@ function LoginForm({ title, fields, formData, formValues, onSubmit, handleChange
                             <button
                                 type="button"
                                 className="ml-2 text-sm text-yellow-500 hover:text-yellow-600 focus:outline-none"
-                                onClick={() => setShowForgotPassword(true)}
+                                onClick={() => navigate('/forgot-password')}
                             >
                                 Forgot Password?
                             </button>
@@ -87,30 +77,7 @@ function LoginForm({ title, fields, formData, formValues, onSubmit, handleChange
                             </button>
                         </div>
                     </form>
-                    {showForgotPassword && (
-                        <form onSubmit={handleForgotPasswordSubmit}>
-                            <div className="mt-4 text-center">
-                                <input
-                                    type="email"
-                                    placeholder="Enter your email"
-                                    value={forgotPasswordEmail}
-                                    onChange={(e) => setForgotPasswordEmail(e.target.value)}
-                                    className="input-field font-bold p-1 focus:border-yellow-500 focus:ring-yellow-500 text-black"
-                                    required
-                                />
-                            </div>
-                            <div className="flex justify-center mt-4">
-                                <button
-                                    type="submit"
-                                    className="w-30 bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                                >
-                                    Reset Password
-                                </button>
-                            </div>
-                        </form>
-                    )}
                 </div>
-
             </div>
             <img src={interviewComposition} alt="" />
         </div>

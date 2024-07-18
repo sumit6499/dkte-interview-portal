@@ -1,68 +1,75 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react';
 import '@/App.css';
-import NavBar from '@/pages/NavBar/NavBar';
-import { Navlink } from '../variables/formVariables';
+
 const OtpInput = ({ length = 4, onOtpSubmit = () => { } }) => {
-    const [otp, setOtp] = useState(new Array(length).fill(""));
-    const handleChange = (index,e) => {
-        var value = e.target.value;
-        if(isNaN(value)) return;
-
-        const newOtp = [...otp];
-        //allow only one input
-        newOtp[index] = value.substring(value.length-1);
-        setOtp(newOtp);
-
-        //submit trigger
-        const combinedOtp = newOtp.join("");
-       if(combinedOtp.length===length) onOtpSubmit(combinedOtp);
-
-       //Move to next input if current field is filled 
-        if(value && index<length-1 && inputRefs.current[index+1])
-            {
-                inputRefs.current[index+1].focus();
-            }
-    }
-    const handleClick = (index) => {
-        inputRefs.current[index].setSelectionRange(0,1);
-    }
-    const handleKeyDown = (index,e) => {
-        if(e.key==="Backspace"&& !otp[index]&& index>0&& inputRefs.current[index-1])
-            {
-            inputRefs.current[index - 1].focus();
-            }
-    }
+    const [otp, setOtp] = useState(new Array(length).fill(''));
     const inputRefs = useRef([]);
 
-    useEffect(()=>{
-        if(inputRefs.current[0])
-            {
-                inputRefs.current[0].focus();
-            }
-    },[])
-    console.log(inputRefs);
+    const handleChange = (index, e) => {
+        var value = e.target.value;
+        if (isNaN(value)) return;
+
+        const newOtp = [...otp];
+        newOtp[index] = value.substring(value.length - 1);
+        setOtp(newOtp);
+
+        if (value && index < length - 1 && inputRefs.current[index + 1]) {
+            inputRefs.current[index + 1].focus();
+        }
+    };
+
+    const handleClick = (index) => {
+        inputRefs.current[index].setSelectionRange(0, 1);
+    };
+
+    const handleKeyDown = (index, e) => {
+        if (e.key === 'Backspace' && !otp[index] && index > 0 && inputRefs.current[index - 1]) {
+            inputRefs.current[index - 1].focus();
+        }
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        const combinedOtp = otp.join('');
+        onOtpSubmit(combinedOtp);
+    };
+
+    useEffect(() => {
+        if (inputRefs.current[0]) {
+            inputRefs.current[0].focus();
+        }
+    }, []);
+
     return (
         <>
-            {/* Add a label for entering OTP */}
-            <label className='flex justify-center mt-10' htmlFor="otpInput">Enter OTP:</label>
-            <div className="flex justify-center">
-                {otp.map((value, index) => (
-                    <input
-                        type="text"
-                        key={index}
-                        value={value}
-                        ref={(input) => (inputRefs.current[index] = input)}
-                        onChange={(e) => handleChange(index, e)}
-                        onClick={() => handleClick(index)}
-                        onKeyDown={(e) => handleKeyDown(index, e)}
-                        className="otpInput text-black"
-                        id="otpInput" // Add an ID for the label association
-                    />
-                ))}
-            </div>
+            <label className="block text-white text-lg font-semibold mb-2 flex justify-center mt-10" htmlFor="otpInput">
+                Enter OTP:
+            </label>
+            <form onSubmit={handleSubmit} className="flex flex-col items-center">
+                <div className="flex justify-center mb-4">
+                    {otp.map((value, index) => (
+                        <input
+                            type="text"
+                            key={index}
+                            value={value}
+                            ref={(input) => (inputRefs.current[index] = input)}
+                            onChange={(e) => handleChange(index, e)}
+                            onClick={() => handleClick(index)}
+                            onKeyDown={(e) => handleKeyDown(index, e)}
+                            className="otpInput text-black w-12 h-12 mx-1 text-center border border-gray-300 rounded"
+                            id="otpInput"
+                        />
+                    ))}
+                </div>
+                <button
+                    type="submit"
+                    className="w-30 bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                >
+                    Submit
+                </button>
+            </form>
         </>
     );
-
-}
+};
 
 export default OtpInput;
