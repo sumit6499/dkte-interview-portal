@@ -60,7 +60,7 @@ const CommonSignUp = ({
 
     const handleVerifyOtp = async () => {
         try {
-            const response = await fetch(`${BASE_URL}/${roleOtp}/validate-otp`, {
+            const response = await fetch(`${BASE_URL}/${roleOtp}/signup-validate`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email, otp })
