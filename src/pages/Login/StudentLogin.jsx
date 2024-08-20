@@ -14,6 +14,7 @@ function StudentLogin() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
+    const [role,setRole] = useState("students");
     const [userExists, setUserExists] = useState(true);
 const [loading,setLoading] = useState(false);
     const [formValues, setFormValues] = useState({
@@ -64,6 +65,7 @@ const [loading,setLoading] = useState(false);
                 onSubmit={handleSubmit}
                 handleChange={handleChange}
                 userExists={userExists}
+                role = {role}
             />)}
             
         </>

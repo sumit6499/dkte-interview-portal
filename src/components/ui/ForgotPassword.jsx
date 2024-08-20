@@ -1,12 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import OtpInput from './otpInput';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import NavBar from '@/pages/NavBar/NavBar';
 import { LoginNavlinks } from '../variables/formVariables';
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-// import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+
 
 import axios from 'axios';
 import ResetPassword from './ResetPassword';
@@ -19,11 +18,20 @@ const ForgotPassword = () => {
     const [otpVerified, setOtpVerified] = useState(false);
     const [otp, setOtp] = useState('');
     const [newPassword, setNewPassword] = useState('');
+   
     const navigate = useNavigate();
 
+    const location = useLocation();
+
+    const role = location.state&& location.state.role;
+    
+    useEffect(()=>{
+        
+    })
     const handleSendOtp = async  (e) => {
+        console.log("The rorle is ",role);
         e.preventDefault();
-        const response = await fetch(`${BASE_URL}/${role}/`, {
+        const response = await fetch(`${BASE_URL}/${role}/signup-otp`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -43,22 +51,22 @@ const ForgotPassword = () => {
 
     const handleOtpSubmit = async(submittedOtp) => {
         // Logic to verify OTP
+        console.log("hi i min submti ")
+        const response = await fetch(`${BASE_URL}/${role}/validate-otp`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email, otp }),
+        });
 
-        // const response = await fetch('/verify-otp', {
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-Type': 'application/json',
-        //     },
-        //     body: JSON.stringify({ email, otp }),
-        // });
-
-        // if (response.ok) {
-        //     setOtpVerified(true);
-        //     toast.success('OTP verified. You can now reset your password.');
-        //     navigate('/reset-password'); // Navigate to reset password page
-        // } else {
-        //     toast.error('Invalid OTP. Please try again.');
-        // }
+        if (response.ok) {
+            setOtpVerified(true);
+            toast.success('OTP verified. You can now reset your password.');
+            navigate('/reset-password'); // Navigate to reset password page
+        } else {
+            toast.error('Invalid OTP. Please try again.');
+        }
 
 
         if (submittedOtp === otp) { // Replace with actual OTP verification logic
@@ -112,7 +120,7 @@ const ForgotPassword = () => {
                         <h2 className="text-white text-2xl mb-6 border-b border-gray-600 pb-2 text-center">
                             Enter OTP
                         </h2>
-                        <OtpInput length={6} onOtpSubmit={handleOtpSubmit} />
+                        <OtpInput length={4} onOtpSubmit={handleOtpSubmit} />
                     </>
                 )}
 

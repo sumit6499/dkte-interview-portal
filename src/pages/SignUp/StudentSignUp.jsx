@@ -8,7 +8,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useDispatch, useSelector } from "react-redux";
 import { authenticate, setUserInfo } from "@/redux/authSlice";
-import { studentSignUp } from "@/api";
+import { BASE_URL, studentSignUp } from "@/api";
 import Loader from "@/components/ui/loading";
 import OtpInput from "@/components/ui/otpInput";
 
@@ -39,8 +39,8 @@ function StudentSignUp() {
     const requestOtp = async () => {
         console.log("hi there i m here ")
         try {
-            const response = await axios.post('http://localhost:3001/send-otp', {
-                phoneNumber: formData.phone
+            const response = await axios.post(`${BASE_URL}/students/signupOtp`, {
+                email: formData.email
             });
             if (response.data.success) {
                 setShowOtpInput(true);
@@ -56,8 +56,8 @@ function StudentSignUp() {
 
     const verifyOtp = async (otp) => {
         try {
-            const response = await axios.post('http://localhost:3001/verify-otp', {
-                phoneNumber: formData.phone,
+            const response = await axios.post(`${BASE_URL}/students/signupValidate`, {
+                email: formData.email,
                 otp
             });
             if (response.data.success) {
@@ -71,6 +71,7 @@ function StudentSignUp() {
             toast.error('Error verifying OTP. Please try again.');
         }
     };
+
 
     const handleSubmit = async (event) => {
         // if(!showOtpInput)

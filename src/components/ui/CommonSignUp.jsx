@@ -7,6 +7,7 @@ import SubmitButton from "./SubmitButton";
 import PrevButton from "./PrevButton";
 import OtpInput from "./otpInput";
 import { BASE_URL } from "@/api";
+import axios from "axios";
 const CommonSignUp = ({
     title,
     fields,
@@ -30,8 +31,10 @@ const CommonSignUp = ({
     const [otpSent, setOtpSent] = useState(false);
     const [otpTimer, setOtpTimer] = useState(0);
     const [roleOtp, setRoleOtp] = useState('');
+    const [token,setToken] = useState('');
     const notifySuccess = (message) => toast.success(message);
     const notifyError = (message) => toast.error(message);
+    
     useEffect(() => {
         if (studentSignup) {
             setRoleOtp('students');
@@ -40,14 +43,20 @@ const CommonSignUp = ({
 
     const handleSendOtp = async () => {
         try {
-            const response = await fetch(`${BASE_URL}/${roleOtp}/signup-otp`, {
+            const response = await fetch(`${BASE_URL}/${roleOtp}/signupotp`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email })
             });
+
+
             if (response.ok) {
+                const responseData = await response.json(); // Parse the response as JSON
                 setOtpSent(true);
-                setOtpTimer(30); // Start 30-second timer
+                setOtpTimer(30);
+                console.log("Response data:", responseData);
+                console.log("Token is:", responseData.token); // Access the token from the parsed data
+                setToken(responseData.token);
                 notifySuccess('OTP sent to your email');
             } else {
                 notifyError('OTP not sent');
@@ -58,17 +67,26 @@ const CommonSignUp = ({
         }
     };
 
+
     const handleVerifyOtp = async () => {
         try {
-            const response = await fetch(`${BASE_URL}/${roleOtp}/signup-validate`, {
+            console.log("token i s", token)
+            const response = await fetch(`${BASE_URL}/${roleOtp}/signupValidate`, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email, otp })
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify({ email,otp })
             });
+            console.log("I am in verify");
             if (response.ok) {
                 notifySuccess('OTP verified successfully');
                 setIsSubmitted(true);
-                onSubmit(); // Call the onSubmit function passed as prop
+                toast.success("Email Verified Successfully");
+                // onSubmit(); 
+                setOtpSent(false);
+                // setOtpTimer(0);
             } else {
                 notifyError('Invalid OTP');
             }
@@ -77,6 +95,8 @@ const CommonSignUp = ({
             notifyError('Error verifying OTP');
         }
     };
+
+
 
     useEffect(() => {
         if (otpTimer > 0) {
@@ -146,16 +166,17 @@ const CommonSignUp = ({
                             {otpSent && (
                                 <div className="mt-6">
                                     <OtpInput
+                                        length={4}
                                         value={otp}
-                                        onChange={(e) => setOtp(e.target.value)}
-                                        numInputs={6}
-                                        separator={<span>-</span>}
+                                        onChange={setOtp}
+                                        onOtpSubmit={handleVerifyOtp}
                                     />
                                     <div className="text-sm text-gray-400 mt-2">
                                         {otpTimer > 0 ? `You can resend OTP in ${otpTimer}s` : 'You can resend OTP now'}
                                     </div>
                                 </div>
                             )}
+
                             <div className="flex justify-between">
                                 {currentStage === 1 && studentSignup && (
                                     <button

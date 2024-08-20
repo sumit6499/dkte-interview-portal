@@ -6,7 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { interviewComposition, NotVisibleEye, visibleEye } from '@/assets/';
 import { useNavigate } from 'react-router-dom';
 
-function LoginForm({ title, fields, formData, formValues, onSubmit, handleChange, userExists }) {
+function LoginForm({ title, fields, formData, formValues, onSubmit, handleChange, userExists,role }) {
     const navigate = useNavigate();
     const [showPassword, setShowPassword] = useState(false);
 
@@ -61,14 +61,19 @@ function LoginForm({ title, fields, formData, formValues, onSubmit, handleChange
                             </button>
                             <button
                                 type="button"
-                                className="ml-2 text-sm text-yellow-500 hover:text-yellow-600 focus:outline-none"
-                                onClick={() => navigate('/forgot-password')}
-                            >
-                                Forgot Password?
-                            </button>
-                        </div>
-                        <div className='flex justify-center pt-6'>
-                            <button
+            className="ml-2 text-sm text-yellow-500 hover:text-yellow-600 focus:outline-none"
+            onClick={() => navigate('/forgot-password',{
+
+                state:{
+                    role: role
+                }
+            })}
+        >
+            Forgot Password?
+        </button>
+    </div>
+    <div className='flex justify-center pt-6'>
+        <button
                                 type="button"
                                 className="ml-2 text-lg text-yellow-500 hover:text-yellow-600 focus:outline-none"
                                 onClick={() => navigate('/signup')}

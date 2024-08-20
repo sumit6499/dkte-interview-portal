@@ -1,19 +1,18 @@
 import React, { useEffect, useRef, useState } from 'react';
 import '@/App.css';
 
-const OtpInput = ({ length = 4, onOtpSubmit = () => { } }) => {
-    const [otp, setOtp] = useState(new Array(length).fill(''));
+const OtpInput = ({ length = 4, value, onChange, onOtpSubmit = () => { } }) => {
     const inputRefs = useRef([]);
 
     const handleChange = (index, e) => {
-        var value = e.target.value;
-        if (isNaN(value)) return;
+        var inputValue = e.target.value;
+        if (isNaN(inputValue)) return;
 
-        const newOtp = [...otp];
-        newOtp[index] = value.substring(value.length - 1);
-        setOtp(newOtp);
+        const newOtp = [...value];
+        newOtp[index] = inputValue.substring(inputValue.length - 1);
+        onChange(newOtp.join(''));
 
-        if (value && index < length - 1 && inputRefs.current[index + 1]) {
+        if (inputValue && index < length - 1 && inputRefs.current[index + 1]) {
             inputRefs.current[index + 1].focus();
         }
     };
@@ -23,15 +22,14 @@ const OtpInput = ({ length = 4, onOtpSubmit = () => { } }) => {
     };
 
     const handleKeyDown = (index, e) => {
-        if (e.key === 'Backspace' && !otp[index] && index > 0 && inputRefs.current[index - 1]) {
+        if (e.key === 'Backspace' && !value[index] && index > 0 && inputRefs.current[index - 1]) {
             inputRefs.current[index - 1].focus();
         }
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const combinedOtp = otp.join('');
-        onOtpSubmit(combinedOtp);
+        onOtpSubmit(value);
     };
 
     useEffect(() => {
@@ -45,13 +43,13 @@ const OtpInput = ({ length = 4, onOtpSubmit = () => { } }) => {
             <label className="block text-white text-lg font-semibold mb-2 flex justify-center mt-10" htmlFor="otpInput">
                 Enter OTP:
             </label>
-            <form onSubmit={handleSubmit} className="flex flex-col items-center">
+            <form className="flex flex-col items-center">
                 <div className="flex justify-center mb-4">
-                    {otp.map((value, index) => (
+                    {Array.from({ length }).map((_, index) => (
                         <input
                             type="text"
                             key={index}
-                            value={value}
+                            value={value[index] || ''}
                             ref={(input) => (inputRefs.current[index] = input)}
                             onChange={(e) => handleChange(index, e)}
                             onClick={() => handleClick(index)}
@@ -62,7 +60,8 @@ const OtpInput = ({ length = 4, onOtpSubmit = () => { } }) => {
                     ))}
                 </div>
                 <button
-                    type="submit"
+                    type="button"
+                    onClick={handleSubmit}
                     className="w-30 bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                 >
                     Submit
