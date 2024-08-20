@@ -42,7 +42,7 @@ const DropDownProfile = ({ profileLink, isAdmin }) => {
     };
 
     return (
-        <div className="relative" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} onClick={ProfileClicked}>
+        <div className="relative" onClick={ProfileClicked}>
             <button className="flex items-center text-white focus:outline-none">
                 <img src={MaleUser} alt="Profile" className="h-10 w-10 rounded-full border-2 border-white ml-7" />
                 <span className="ml-2">{UserName}</span>
@@ -57,14 +57,16 @@ const DropDownProfile = ({ profileLink, isAdmin }) => {
                             Profile
                         </a>
                     )}
-                    <a
-                        href="#"
-                        id="logoutsyb"
-                        className="block px-4 py-2 text-gray-800 hover:bg-red-500 hover:text-white transition duration-300 ease-in-out transform hover:scale-105 rounded-md"
-                        onClick={logout}
-                    >
-                        Logout
-                    </a>
+                    <div className="mt-2 py-4.5"> {/* Added margin-top to create space */}
+                        <a
+                            href="#"
+                            id="logoutsyb"
+                            className="block px-4 py-2 text-gray-800 hover:bg-red-500 hover:text-white transition duration-300 ease-in-out transform hover:scale-105 rounded-md"
+                            onClick={logout}
+                        >
+                            Logout
+                        </a>
+                    </div>
                 </div>
             )}
         </div>

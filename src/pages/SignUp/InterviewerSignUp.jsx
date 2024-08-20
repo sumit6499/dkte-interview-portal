@@ -101,9 +101,8 @@ const InterviewerSignUp = () => {
                 toast.success("SingUp Successful")
                 setLoading(false)
                 navigate('/login/student/profile');
-            } else {
-                setUserExists(false);
-            }
+            } 
+            toast.success("SingUp Successful")
             navigate('/login/interviewer');
         } catch (error) {
             setLoading(false);

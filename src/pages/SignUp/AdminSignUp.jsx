@@ -72,8 +72,17 @@ function AdminSignUp() {
             toast.success('Signup Successful!', { position: toast.POSITION.TOP_CENTER });
             navigate("/login/admin");
         } catch (error) {
+            if (error.response.data.msg === "User already present") {
+                // setUserExists(false)
+                toast.error(error.response.data.msg);
+            }
+            if (error.response.data.msg === "Internal Server error") {
+                // setUserExists(false)
+                toast.error("Enter Unique Phone Number");
+            }
+           
             console.error("Error submitting form:", error);
-            showToast('Error submitting form');
+            // showToast('Error submitting form');
             setLoading(false);
         }
     };

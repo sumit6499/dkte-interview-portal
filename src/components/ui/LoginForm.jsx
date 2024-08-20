@@ -50,11 +50,11 @@ function LoginForm({ title, fields, formData, formValues, onSubmit, handleChange
                                 </div>
                             </div>
                         ))}
-                        {!userExists && (
+                        {/* {!userExists && (
                             <div className="text-red-500 text-center pb-3">
                                 User does not exist
                             </div>
-                        )}
+                        )} */}
                         <div className="flex justify-center">
                             <button type="submit" className="w-30 bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
                                 Login

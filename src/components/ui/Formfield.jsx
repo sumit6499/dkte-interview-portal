@@ -1,6 +1,6 @@
 import React from "react";
 
-const FormField = ({ field, formData, handleChange, handleFileChange, handleRemoveFile, handleSendOtp, otpSent, resendTimer }) => {
+const FormField = ({ field, formData, handleChange, handleFileChange, handleRemoveFile, handleSendOtp, otpSent, resendTimer, studentSignup }) => {
     return (
         <div>
             <label htmlFor={field.name} className="block text-sm font-medium">
@@ -51,7 +51,7 @@ const FormField = ({ field, formData, handleChange, handleFileChange, handleRemo
                         required
                         className="mt-1 block w-full px-3 py-2 border border-zinc-600 rounded-md shadow-sm focus:outline-none focus:ring-yellow-500 focus:border-yellow-500 bg-zinc-700"
                     />
-                    {field.name === 'email' && (
+                            {field.name === 'email' && studentSignup && (
                         <button
                             type="button"
                             onClick={handleSendOtp}

@@ -51,13 +51,17 @@ function InterviewerLogin() {
             }
            
         } catch (error) {
-            if (error.response.data.msg)
-                {
-                setUserExists(false);
-                }
+            if (error.response.data.msg === "User does not exist") {
+                setUserExists(false)
+                toast.error(error.response.data.msg);
+            }
+            if (error.response.data.msg === "Invalid credentials") {
+                setUserExists(false)
+                toast.error(error.response.data.msg);
+            }
 
             
-            setLoading(false);
+            // setLoading(false);
 
             console.error("Error submitting form:", error.response.data.msg);
             //  error

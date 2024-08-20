@@ -4,11 +4,27 @@ import NavBar from "../NavBar/NavBar";
 import AuthButton from "@/components/ui/AuthButton";
 import { LogIn } from "lucide-react";
 import { Navlink } from "@/components/variables/formVariables";
+import { useNavigate } from "react-router";
+import { useSelector } from "react-redux";
+import { selectCurrentRole } from "@/redux/authSlice";
 function LoginPage() {
     
-
+    const navigate =  useNavigate();
+    const role = useSelector(selectCurrentRole);
     const [isSmallScreen, setIsSmallerScreen] = useState(false);
 
+    useEffect(() => {
+        console.log("The roel i s", role)
+        if (role) {
+            if (role === "Admin") {
+                navigate("/login/admin/students");
+            } else if (role === "Student") {
+                navigate("/login/student/studentHome");
+            } else if (role === "Interviewer") {
+                navigate("/login/interviewer/schedules");
+            }
+        }
+    }, [role, navigate]);
     useEffect(() => {
         const checkScreenSize = () => {
             setIsSmallerScreen(window.innerWidth <= 600); 

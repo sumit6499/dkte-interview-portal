@@ -39,11 +39,15 @@ const CommonSignUp = ({
         if (studentSignup) {
             setRoleOtp('students');
         }
+        else{
+            setRoleOtp('admin');
+        }
     }, [studentSignup,])
 
     const handleSendOtp = async () => {
         try {
-            const response = await fetch(`${BASE_URL}/${roleOtp}/signupotp`, {
+            console.log("The role is ", roleOtp)
+            const response = await fetch(`${BASE_URL}/${roleOtp}/signupOtp`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email })
@@ -110,6 +114,7 @@ const CommonSignUp = ({
     const renderFormFields = () => {
         return fields.map((field) => (
             <FormField
+                studentSignup={studentSignup}
                 key={field.name}
                 field={field}
                 formData={formData}
@@ -128,12 +133,20 @@ const CommonSignUp = ({
     };
 
     const handleSubmit = (event) => {
-        event.preventDefault(); // Prevent default form submission
+        event.preventDefault(); 
+        if(studentSignup)
+        {
+
+        
         if (!otpSent) {
             handleSendOtp(); // Send OTP first
         } else {
             handleVerifyOtp(); // Verify OTP if already sent
         }
+    }
+    else{
+            onSubmit(event);
+    }
     };
 
     console.log("currentStage:", currentStage, "studentSignup:", studentSignup);
@@ -151,7 +164,7 @@ const CommonSignUp = ({
                             )}
                             {currentStage === 3 && studentSignup && (
                                 <>
-                                    <h1>This is stage 3</h1>
+                                    {/* <h1>This is stage 3</h1> */}
                                     <PrevButton onClick={handlePrev} />
                                     <SubmitButton
                                         label="SignUp"

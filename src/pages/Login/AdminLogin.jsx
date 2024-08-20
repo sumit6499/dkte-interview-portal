@@ -27,7 +27,7 @@ function AdminLogin() {
     const [loading,setLoading] = useState(false);
     const handleSubmit = async (e) => {
         setLoading(true);
-        
+        setUserExists(true);
         e.preventDefault();
         try {
             //  Axios POST    
@@ -45,6 +45,7 @@ function AdminLogin() {
             console.log("adminId is fro mlocal", localStorage.getItem("adminId"));
             console.log("adminAuthToken is from local", localStorage.getItem("adminAuthToken"));
             
+
             if (response.data) {
                 toast.success("Login successful!");
                 console.log("data is",response.data.data)
@@ -52,12 +53,12 @@ function AdminLogin() {
                 dispatch(setUserInfo({ user: response.data.data,token, Uid: response.data.data.id, Name: response.data.data.name, Role: response.data.data.role }));
                 
                 navigate('/login/admin/students');
-                console.log("stored i guess ")
                 
 
-            } else {
-                setUserExists(false);
-            }
+            } 
+            // else {
+            //     setUserExists(false);
+            // }
             
 
         } catch (error) {
@@ -65,11 +66,18 @@ function AdminLogin() {
             //     setUserExists(false)
             // }
             setLoading(false);
-            // if (error.response.data.msg === "User does not exist") {
-            //     setUserExists(false)
-            //     toast.error(error.response.data.msg);
+            if (error.response.data.msg === "User does not exist") {
+                setUserExists(false)
+                toast.error(error.response.data.msg);
+            }
+            if (error.response.data.msg === "Invalid credentials") {
+                setUserExists(false)
+                toast.error(error.response.data.msg);
+            }
+            // if(error.response.data.msg === "User does not exist")
+            // {
+            //     setUserExists(false);
             // }
-
             
             console.error("Error submitting form:", error);
             // toast.error("Wrong credentials. Please try again.");
